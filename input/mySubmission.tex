@@ -127,12 +127,12 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+  \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+  \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 \else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
@@ -352,24 +352,30 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Bare Demo of IEEEtran.cls for IEEECS Conferences}
+\title{VaryLaTeX{{#if SUBTITLE}}
+                \\Cool, right?
+                {{/if}}}
 
 
 % author names and affiliations
 % use a multiple column layout for up to two different
 % affiliations
 
-\author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
+\author{\IEEEauthorblockN{Mathieu Acher, Guillaume B., Paul Temple}
+{{#if LONG_AFFILIATION}}
 \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
 line 2: name of organization, acronyms acceptable\\
 line 3: City, Country\\
 line 4: Email: name@xyz.com}
+{{/if}}
 \and
-\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
+\IEEEauthorblockN{JMJ, Mickael Jackson}
+{{#if LONG_AFFILIATION}}
 \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
 line 2: name of organization, acronyms acceptable\\
 line 3: City, Country\\
 line 4: Email: name@xyz.com}
+{{/if}}
 }
 
 % conference papers do not typically use \thanks and this command
@@ -486,44 +492,57 @@ Wherever Times is specified, Times Roman or Times New Roman may be used. If neit
 % The subfigure.sty package works much the same way, except \subfigure is
 % used instead of \subfloat.
 %
-%\begin{figure*}[!t]
-%\centerline{\subfloat[Case I]\includegraphics[width=2.5in]{subfigcase1}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{subfigcase2}%
-%\label{fig_second_case}}}
-%\caption{Simulation results}
-%\label{fig_sim}
-%\end{figure*}
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.25in]{tux.png}%
+\caption{Simulation results}
+\label{fig_sim}
+{{#if VSPACE_FIGURE_TUX}}
+\vspace*{-{{{vspace_tux}}}mm}
+{{/if}}
+\end{figure}
+
+%%%%{{vspace_tux}}
 %
 % Note that often IEEE papers with subfigures do not employ subfigure
 % captions (using the optional argument to \subfloat), but instead will
 % reference/describe all of them (a), (b), etc., within the main caption.
 
+OpenCompare is a free software for editing and exploiting comparison matrices.
 
-% An example of a floating table. Note that, for IEEE style tables, the 
+History of the project
+The project officially started in October 2014 at IRISA, a French research center.
+
+Who are we?
+Currently, the project is developed by members of the DiverSE research team from IRISA
+
+
+
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
 % \caption command should come BEFORE the table. Table text will default to
 % \footnotesize as IEEE normally uses this smaller font for tables.
 % The \label must come after \caption as always.
 %
-%\begin{table}[!t]
+\begin{table}[!t]
 %% increase table row spacing, adjust to taste
 %\renewcommand{\arraystretch}{1.3}
 % if using array.sty, it might be a good idea to tweak the value of
 % \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
+\caption{An Example of a Table}
+\label{table_example}
+\centering
 %% Some packages, such as MDW tools, offer better commands for making tables
 %% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
+\begin{tabular}{|c||c|}
+\hline
+One & Two\\
+\hline
+Three & Four\\
+\hline
+\end{tabular}
+\end{table}
 
 
 % Note that IEEE does not put floats in the very first column - or typically
@@ -534,6 +553,13 @@ Wherever Times is specified, Times Roman or Times New Roman may be used. If neit
 % command of the stfloats package.
 
 
+BusyBox: The Swiss Army Knife of Embedded Linux
+
+BusyBox combines tiny versions of many common UNIX utilities into a single small executable. It provides replacements for most of the utilities you usually find in GNU fileutils, shellutils, etc. The utilities in BusyBox generally have fewer options than their full-featured GNU cousins; however, the options that are included provide the expected functionality and behave very much like their GNU counterparts. BusyBox provides a fairly complete environment for any small or embedded system.
+
+BusyBox has been written with size-optimization and limited resources in mind. It is also extremely modular so you can easily include or exclude commands (or features) at compile time. This makes it easy to customize your embedded systems. To create a working system, just add some device nodes in /dev, a few configuration files in /etc, and a Linux kernel.
+
+BusyBox is maintained by Denys Vlasenko, and licensed under the GNU GENERAL PUBLIC LICENSE version 2.
 
 \section{Conclusion}
 The conclusion goes here. this is more of the conclusion

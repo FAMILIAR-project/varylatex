@@ -25,6 +25,23 @@
             <version>2.6.2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>fr.inria.familiar</groupId>
+            <artifactId>FAMILIAR</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.inria.familiar</groupId>
+            <artifactId>FAMILIAR-Standalone</artifactId>
+            <version>1.0.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.inria.familiar</groupId>
+            <artifactId>FAMILIAR-Test</artifactId>
+            <version>1.0.10</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 
