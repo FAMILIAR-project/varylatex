@@ -53,4 +53,11 @@ public class DoubleDomainVariable extends VariableImpl {
         // TODO
     }
 
+    public double getMin() {
+        return _min;
+    }
+
+    public double getMax() {
+        return _max;
+    }
 }

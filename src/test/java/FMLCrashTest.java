@@ -1,4 +1,3 @@
-import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.familiar.FMLTest;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.xtext.example.mydsl.fML.SliceMode;
 
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -88,7 +86,7 @@ public class FMLCrashTest extends FMLTest {
             assertNotNull(cfFt);
 
 
-            Map<String, Object> orderedConf = new ConfigurationToMap(fmv1).confs2map(((SetVariable) cf).names());
+            Map<String, Object> orderedConf = new ConfigurationToMap(fmv1).populateAttributeValuesAndConfs2map(((SetVariable) cf).names());
 
             JsonObject confjs = convJson.confs2JSON(orderedConf);
             _log.info("" + confjs);

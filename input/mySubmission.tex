@@ -483,7 +483,7 @@ Wherever Times is specified, Times Roman or Times New Roman may be used. If neit
 % Note that IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
 
-
+% 3.25 by default
 % An example of a double column floating figure using two subfigures.
 % (The subfig.sty package must be loaded for this to work.)
 % The subfigure \label commands are set within each subfloat command, the
@@ -492,9 +492,10 @@ Wherever Times is specified, Times Roman or Times New Roman may be used. If neit
 % The subfigure.sty package works much the same way, except \subfigure is
 % used instead of \subfloat.
 %
+
 \begin{figure}[!t]
 \centering
-\includegraphics[width=3.25in]{tux.png}%
+\includegraphics[width={{{size_tux}}}in]{tux.png}%
 \caption{Simulation results}
 \label{fig_sim}
 {{#if VSPACE_FIGURE_TUX}}
@@ -579,7 +580,7 @@ The conclusion goes here. this is more of the conclusion
 {{/BOLD_ACK}}
 The authors would like to thank...
 {{#if MORE_ACK}}
-More thanks here
+Projects and grants blablabla
 {{/if}}
 {{/if}}
 

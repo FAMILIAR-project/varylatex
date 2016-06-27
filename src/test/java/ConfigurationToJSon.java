@@ -36,6 +36,10 @@ public class ConfigurationToJSon {
         else if (o instanceof Integer) {
             return new JsonPrimitive((Integer) o);
         }
+
+        else if (o instanceof Double) {
+            return new JsonPrimitive((Double) o);
+        }
         return new JsonPrimitive((String) o);
 
 

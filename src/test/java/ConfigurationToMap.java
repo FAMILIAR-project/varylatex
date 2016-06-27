@@ -23,7 +23,13 @@ public class ConfigurationToMap {
     }
 
 
-    public Map<String, Object> confs2map(Set<String> cf) {
+    /**
+     * Given a configuration for Boolean values (true/false), "complete" the configuration with numerical values
+     * (we randomly pick a value)
+     * @param cf
+     * @return
+     */
+    public Map<String, Object> populateAttributeValuesAndConfs2map(Set<String> cf) {
 
         Map<String, Object> lConf = new HashMap<>();
 
@@ -62,6 +68,25 @@ public class ConfigurationToMap {
                     else {
                         _log.info("Value for the attribute: " + confValue);
                         lConf.put(att.getName(), new Integer(confValue));
+                    }
+
+
+                }
+
+                if (domain instanceof DoubleDomainVariable) {
+                    DoubleDomainVariable dom = (DoubleDomainVariable) domain;
+                    double min = dom.getMin();
+                    double max = dom.getMax();
+
+                    double confValue = (Math.random() * (max - min)) + min;
+                    _log.info("" + confValue);
+                    if (!cf.contains(ft)) {
+                        _log.info("Setting default value for the attribute: " + min);
+                        lConf.put(att.getName(), min);
+                    }
+                    else {
+                        _log.info("Value for the attribute: " + confValue);
+                        lConf.put(att.getName(), new Double(confValue));
                     }
 
 

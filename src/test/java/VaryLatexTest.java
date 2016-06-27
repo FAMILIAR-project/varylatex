@@ -2,7 +2,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.org.apache.xalan.internal.utils.FeatureManager;
 import fr.familiar.FMLTest;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
@@ -165,12 +164,12 @@ public class VaryLatexTest extends FMLTest {
 
 
 
-        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] [VSPACE_FIGURE_TUX] [ACK] [LONG_AFFILIATION]; ACK : [MORE_ACK] [BOLD_ACK]; ");
-        fmv.setFeatureAttribute(fmv.getFeature("VSPACE_FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
-        // fmv.setFeatureAttribute(fmv.getFeature("SIZE_FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.2, 3.3)); // TODO: type the attribute
+        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION]; ACK : [MORE_ACK] [BOLD_ACK]; ");
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 6.0)); // TODO: type the attribute
 
-        _log.info(fmv.getFeature("VSPACE_FIGURE_TUX").lookup("vspace_tux").getValue());
-        //_log.info(fmv.getFeature("SIZE_FIGURE_TUX").lookup("size_tux").getValue());
+        _log.info(fmv.getFeature("FIGURE_TUX").lookup("vspace_tux").getValue());
+        _log.info(fmv.getFeature("FIGURE_TUX").lookup("size_tux").getValue());
 
 
         Set<Variable> cfs = fmv.configs();
@@ -191,7 +190,7 @@ public class VaryLatexTest extends FMLTest {
 
            // if (idConf > 3)
              //   break ;
-            Map<String, Object> orderedConf = new ConfigurationToMap(fmv).confs2map(cf);
+            Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
             JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(orderedConf);
 
             renderConfiguration(jSonConf, mustache, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
