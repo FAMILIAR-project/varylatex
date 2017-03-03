@@ -23,6 +23,8 @@ public class ConfigurationToMap {
     }
 
 
+
+
     /**
      * Given a configuration for Boolean values (true/false), "complete" the configuration with numerical values
      * (we randomly pick a value)
@@ -34,6 +36,7 @@ public class ConfigurationToMap {
         Map<String, Object> lConf = new HashMap<>();
 
 
+
         Set<String> allFts = _fmv.features().names();
         for (String ft : allFts) {
             if (cf.contains(ft))
@@ -41,6 +44,8 @@ public class ConfigurationToMap {
             else
                 lConf.put(ft, false);
         }
+
+        _log.warning("LCONF: " + lConf);
 
         // populate attributes here
         // map of configuration values

@@ -365,18 +365,26 @@
 {{#if LONG_AFFILIATION}}
 \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
 line 2: name of organization, acronyms acceptable\\
-line 3: City, Country\\
-line 4: Email: name@xyz.com}
+line 3: City, Country
+{{#if EMAIL}}
+line 4: Email: name@xyz.com
+{{/if}}
+}
 {{/if}}
 \and
 \IEEEauthorblockN{JMJ, Mickael Jackson}
 {{#if LONG_AFFILIATION}}
 \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
 line 2: name of organization, acronyms acceptable\\
-line 3: City, Country\\
-line 4: Email: name@xyz.com}
+line 3: City, Country
+{{#if EMAIL}}
+line 4: Email: name@xyz.com
 {{/if}}
 }
+{{/if}}
+}
+
+
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -498,9 +506,7 @@ Wherever Times is specified, Times Roman or Times New Roman may be used. If neit
 \includegraphics[width={{{size_tux}}}in]{tux.png}%
 \caption{Simulation results}
 \label{fig_sim}
-{{#if VSPACE_FIGURE_TUX}}
 \vspace*{-{{{vspace_tux}}}mm}
-{{/if}}
 \end{figure}
 
 %%%%{{vspace_tux}}

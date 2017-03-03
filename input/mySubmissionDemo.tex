@@ -492,15 +492,13 @@ Wherever Times is specified, Times Roman or Times New Roman may be used. If neit
 %
 \begin{figure}[!t]
 \centering
-\includegraphics[width=3.1in]{tux.png}%
+\includegraphics[width=3.15in]{tux.png}%
 \caption{Simulation results}
 \label{fig_sim}
-\vspace*{-5mm}
+\vspace*{-4mm}
 \end{figure}
 
-%{{#if VSPACE_FIGURE_TUX}}
-%\vspace*{-{{{vspace_tux}}}mm}
-%{{/if}}
+
 
 %%%%{{vspace_tux}}
 %
@@ -570,21 +568,10 @@ The conclusion goes here. this is more of the conclusion
 % use section* for acknowledgement
 
 
-\section*{Acknowledgment.} The authors would like to thank...
+\textbf{Acknowledgment.} The authors would like to thank...
 Projects and grants blablabla
 
-%{{#if ACK}}
-%{{#BOLD_ACK}}
-%\textbf{Acknowledgment.}
-%{{/BOLD_ACK}}
-%{{^BOLD_ACK}}
-%\section*{Acknowledgment}
-%{{/BOLD_ACK}}
-%The authors would like to thank...
-%{{#if MORE_ACK}}
-%More thanks here
-%{{/if}}
-%{{/if}}
+
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page

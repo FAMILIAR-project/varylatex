@@ -8,7 +8,7 @@ import fr.familiar.variable.SetVariable;
 import fr.familiar.variable.Variable;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xtext.example.mydsl.fML.SliceMode;
+import org.xtext.example.mydsl.fml.SliceMode;
 
 
 import java.util.Collection;
@@ -39,6 +39,8 @@ public class FMLCrashTest extends FMLTest {
         FeatureModelVariable fmv = (FeatureModelVariable) fmv1;
         assertEquals(4, fmv.configs().size());
 
+        // System.err.println("" + fmv);
+
     }
 
 
@@ -63,8 +65,8 @@ public class FMLCrashTest extends FMLTest {
     @Test
     public void testFM2() throws Exception {
         FeatureModelVariable fmv1 = FM("VARY_LATEX : [ACK] [LONG_AFFILIATION]; ACK : [MORE_ACK] [BOLD_ACK]; ");
-        FeatureModelVariable fmv2
-                = fmv1.slice(SliceMode.INCLUDING, fmv1.features().names());
+        Set<String> ftNames = fmv1.features().names();
+        FeatureModelVariable fmv2 = fmv1.slice(SliceMode.INCLUDING, ftNames);
 
         assertNotNull(fmv2);
     }

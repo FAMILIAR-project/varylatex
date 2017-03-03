@@ -13,6 +13,7 @@ import org.trimou.engine.locator.FileSystemTemplateLocator;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -153,6 +154,11 @@ public class VaryLatexTest extends FMLTest {
     @Test
     public void test2() throws Exception {
 
+        Logger.getLogger("ConfigurationToMap").setLevel(Level.WARNING);
+       // Logger.getGlobal().setLevel(Level.OFF);
+
+       // _log.setLevel(Level.OFF);
+
         // basic parameter: the LaTeX main file
         String latexFileName = "mySubmission";
 
@@ -163,10 +169,11 @@ public class VaryLatexTest extends FMLTest {
         Mustache mustache = engine.getMustache(latexFileName);
 
 
-
-        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION]; ACK : [MORE_ACK] [BOLD_ACK]; ");
+//        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; ");
+// FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] [EMAIL] ; ACK : [MORE_ACK] [BOLD_ACK]; EMAIL -> LONG_AFFILIATION ; ");
+        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; ");
         fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
-        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 6.0)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0)); // TODO: type the attribute
 
         _log.info(fmv.getFeature("FIGURE_TUX").lookup("vspace_tux").getValue());
         _log.info(fmv.getFeature("FIGURE_TUX").lookup("size_tux").getValue());
@@ -175,13 +182,20 @@ public class VaryLatexTest extends FMLTest {
         Set<Variable> cfs = fmv.configs();
         Collection<Set<String>> scfs = new HashSet<Set<String>>();
         for (Variable cf : cfs) {
-            scfs.add(((SetVariable) cf).names());
+            Set<String> confFts = ((SetVariable) cf).names();
+            scfs.add(confFts);
+            //_log.info("confFts:" + confFts);
         }
+        /*
+        if (true)
+            return;*/
+
+        assertEquals(scfs.size(), cfs.size());
 
 
         int idConf = 0;
         for (Set<String> cf : scfs) {
-            idConf++;
+           // idConf++;
 
             //assertEquals(5, conf.entrySet().size());
             // _log.info("conf: " + conf);
@@ -190,13 +204,25 @@ public class VaryLatexTest extends FMLTest {
 
            // if (idConf > 3)
              //   break ;
-            Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
-            JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(orderedConf);
+           // Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
 
-            renderConfiguration(jSonConf, mustache, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
+            int NB_REPEAT = 1;
+            Collection<Map<String, Object>> orderedConfs = new HashSet<Map<String, Object>>();
+            for (int i = 0; i < NB_REPEAT; i++)
+                orderedConfs.add(new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf)); // very naive since they could be duplicated "confs" (eg the case in which the attribute is only an integer value)
 
-            serializeConfigurationJSON(jSonConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".json");
-            serializeConfigurationCSV(orderedConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv");
+            for (Map<String, Object> orderedConf : orderedConfs) {
+                idConf++;
+                JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(orderedConf);
+
+                renderConfiguration(jSonConf, mustache, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
+
+                serializeConfigurationJSON(jSonConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".json");
+                serializeConfigurationCSV(orderedConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv");
+
+            }
+
+
         }
 
 
@@ -214,6 +240,7 @@ public class VaryLatexTest extends FMLTest {
 
         ProcessBuilder pb = new ProcessBuilder("./allCompile.sh");
         pb.directory(new File("/Users/macher1/Documents/SANDBOX/varylatex/output/"));
+
         Process pr = pb.start();
 
         //Read output
