@@ -45,7 +45,7 @@ public class ConfigurationToMap {
                 lConf.put(ft, false);
         }
 
-        _log.warning("LCONF: " + lConf);
+
 
         // populate attributes here
         // map of configuration values
@@ -98,11 +98,11 @@ public class ConfigurationToMap {
                 }
 
                 if (domain instanceof IntegerVariable) {
-
+                    lConf.put(att.getName(), new Integer(((IntegerVariable) domain).getV()));
                 }
 
                 if (domain instanceof DoubleVariable) {
-
+                    lConf.put(att.getName(), new Double(((DoubleVariable) domain).getDouble()));
                 }
 
 

@@ -1,0 +1,304 @@
+% This is "sig-alternate.tex" V2.0 May 2012
+% This file should be compiled with V2.5 of "sig-alternate.cls" May 2012
+%
+% This example file demonstrates the use of the 'sig-alternate.cls'
+% V2.5 LaTeX2e document class file. It is for those submitting
+% articles to ACM Conference Proceedings WHO DO NOT WISH TO
+% STRICTLY ADHERE TO THE SIGS (PUBS-BOARD-ENDORSED) STYLE.
+% The 'sig-alternate.cls' file will produce a similar-looking,
+% albeit, 'tighter' paper resulting in, invariably, fewer pages.
+%
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.5) produces:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) NO page numbers
+%
+% as against the acm_proc_article-sp.cls file which
+% DOES NOT produce 1) thru' 3) above.
+%
+% Using 'sig-alternate.cls' you have control, however, from within
+% the source .tex file, over both the CopyrightYear
+% (defaulted to 200X) and the ACM Copyright Data
+% (defaulted to X-XXXXX-XX-X/XX/XX).
+% e.g.
+% \CopyrightYear{2007} will cause 2007 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+% ---------------------------------------------------------------------------------------------------------------
+% This .tex source is an example which *does* use
+% the .bib file (from which the .bbl file % is produced).
+% REMEMBER HOWEVER: After having produced the .bbl file,
+% and prior to final submission, you *NEED* to 'insert'
+% your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+%
+% ================= IF YOU HAVE QUESTIONS =======================
+% Questions regarding the SIGS styles, SIGS policies and
+% procedures, Conferences etc. should be sent to
+% Adrienne Griscti (griscti@acm.org)
+%
+% Technical questions _only_ to
+% Gerald Murray (murray@hq.acm.org)
+% ===============================================================
+%
+% For tracking purposes - this is V2.0 - May 2012
+
+\documentclass{sig-alternate}
+
+\usepackage{todonotes,stmaryrd}
+\usepackage{cite}
+\usepackage{tabularx}
+\usepackage{xspace}
+\let\endproof\relax
+\let\proof\relax
+\usepackage{amssymb,amsmath,mathtools,amsthm}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{float}
+\usepackage{subfigure}
+
+\usepackage{enumitem}
+\usepackage{multirow}
+
+\newcommand\fakenewspaper[0]{fakenewspaperpl\xspace}
+
+\newcommand\rro[1]{\textbf{#1}.}% \subsection*{#1}}
+
+\usepackage{pifont}
+
+
+\graphicspath
+
+\newtheorem{theorem}{Theorem}
+
+%\renewcommand{\floatpagefraction}{0.8}% Magic command ! Avoid to have a page with only one figure
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% COMMENTS / ANNOTATIONS / TODOS
+\newif\ifdraft\drafttrue
+% \newif\ifdraft\draftfalse
+
+\ifdraft
+\newcommand\todos[1]{\todo[inline]{TODO (all): #1}}
+\newcommand\ma[1]{\todo[color=green!40,inline]{TODO (Mathieu): #1}}
+\newcommand{\machanged}[1]}
+\newcommand\gb[1]{\todo[color=yellow!40,inline]{TODO (Guillaume): #1}}
+\newcommand\rb[1]{\todo[color=blue!35,inline, caption={}]{TODO (Razieh): #1}}
+\newcommand{\rbc}[1]}
+\else
+\newcommand\todos[1]{}
+\newcommand\ma[1]{}
+\newcommand\machanged[1]{#1}
+\newcommand\gb[1]{}
+\newcommand\rb[1]{}
+\newcommand\rbc[1]{#1}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\cf}{\emph{cf.}}
+\newcommand{\etal}{\emph{et al.}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\newcommand{\myexample}[1]{	\emph{\small Example: #1}}
+\renewcommand{\myexample}[1]{\emph{Example.} #1}
+\newtheorem{mydef}{Definition}
+\newcommand{\feature}[1]{\emph{#1}}
+
+\newcommand{\uc}[1]{\bold{\emph{#1}}}
+
+
+\newcommand{\dcs}[0]{\emph{Description of the case study.}\xspace}
+\renewcommand{\dcs}[0]{}
+\newcommand{\wprv}[0]{\emph{Why variability should be protected?}\xspace}
+\renewcommand{\wprv}[0]{\textbf{Why protecting variability?}\xspace}
+\newcommand{\mechvar}[0]{\textbf{What kinds of mechanisms can be used for varying and protecting variability?}}
+
+\usepackage{setspace}
+%\setstretch{0.99}
+\setstretch{+0.99}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{listings}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+   language=JavaScript,
+  % backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\scriptsize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\scriptsize,
+   numbersep=7pt,
+   tabsize=1,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+
+\hyphenation{para-meterizable}
+
+\pagenumbering{arabic}
+\makeatletter
+\let\@copyrightspace\relax
+%\makeatother
+
+%\toappear{} % To hide the copyright
+
+\begin{document}
+%
+% --- Author Metadata here ---
+%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% --- End of Author Metadata ---
+
+\title{Product Lines Can Jeopardize Their Trade Secrets}
+% Varying Variability:\\ A Software Protection Perspective}
+%
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
+
+\numberofauthors{1} %  in this sample file, there are a *total*
+% of EIGHT authors. SIX appear on the 'first-page' (for formatting
+% reasons) and the remaining two appear in the \additionalauthors section.
+%
+\author{
+% You can go ahead and credit any number of authors here,
+% e.g. one 'row of three' or two rows (consisting of one row of three
+% and a second row of one, two or three).
+%
+% The command \alignauthor (no curly braces needed) should
+% precede each author name, affiliation/snail-mail address and
+% e-mail address. Additionally, tag each line of
+% affiliation/address with \affaddr, and tag the
+% e-mail address with \email.
+%
+% 1st. author
+\alignauthor
+% \vspace*{4mm}
+Mathieu Acher, Guillaume B\'{e}can, Benoit Combemale,\\ Benoit Baudry, and Jean-Marc J\'{e}z\'{e}quel\\
+       \affaddr{Inria - IRISA, University of Rennes 1, France}
+        \email{firstname.lastname@inria.fr}
+}
+% There's nothing stopping you putting the seventh, eighth, etc.
+% author on the opening page (as the 'third row') but we ask,
+% for aesthetic reasons that you place these 'additional authors'
+% in the \additional authors block, viz.
+%\additionalauthors{Additional authors: John Smith (The Th{\o}rv{\"a}ld Group,
+%email: {\texttt{jsmith@affiliation.org}}) and Julius P.~Kumquat
+%(The Kumquat Consortium, email: {\texttt{jpkumquat@consortium.net}}).}
+% \date{30 July 1999}
+% Just remember to make sure that the TOTAL number of authors
+% is the number that will appear on the first page PLUS the
+% number that will appear in the \additionalauthors section.
+
+\maketitle
+
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+
+% A category with the (minimum) three required fields
+%\category{H.4}{Information Systems Applications}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+
+%\terms{Theory}
+
+%\keywords{Attributed feature models, Product descriptions, Reverse engineering}
+
+\section{Introduction}
+\input{introduction.tex}
+
+\section{Product Lines Can Jeopardize\\ Trade Secrets} % Case Studies
+\label{sec:casestudy}
+\input{casestudies.tex}
+
+% \section{Case Study 2}
+% \label{sec:casestudy2}
+% \input{casestudy2.tex}
+
+% \section{Case Study 3}
+% \label{sec:casestudy3}
+% \input{casestudy3.tex}
+
+% \section{Case Study 4}
+% \label{sec:casestudy4}
+% \input{casestudy4.tex}
+
+\section{Protect Variability!}
+\label{sec:summary}
+\input{summary.tex}
+
+% \section{Related Work}
+% \label{sec:related}
+% \input{related.tex}
+
+\textbf{Concluding remarks.}
+\label{sec:conclusion}
+\input{conclusion.tex}
+
+\textbf{Acknowledgements.} We thank anonymous reviewers for their valuable feedbacks.
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\scriptsize
+%\vspace*{-2mm}
+\vspace*{-3.0323979052255896mm}
+\bibliographystyle{abbrv}
+\bibliography{DEModularity15}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%\balancecolumns
+
+% That's all folks!
+\end{document}

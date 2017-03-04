@@ -206,7 +206,7 @@ public class VaryLatexTest extends FMLTest {
              //   break ;
            // Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
 
-            int NB_REPEAT = 1;
+            int NB_REPEAT = 10;
             Collection<Map<String, Object>> orderedConfs = new HashSet<Map<String, Object>>();
             for (int i = 0; i < NB_REPEAT; i++)
                 orderedConfs.add(new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf)); // very naive since they could be duplicated "confs" (eg the case in which the attribute is only an integer value)
@@ -240,6 +240,113 @@ public class VaryLatexTest extends FMLTest {
 
         ProcessBuilder pb = new ProcessBuilder("./allCompile.sh");
         pb.directory(new File("/Users/macher1/Documents/SANDBOX/varylatex/output/"));
+
+        Process pr = pb.start();
+
+        //Read output
+        StringBuilder out = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String line = null, previous = null;
+        while ((line = br.readLine()) != null)
+            if (!line.equals(previous)) {
+                previous = line;
+                out.append(line).append('\n');
+                _log.info(line);
+            }
+
+        //Check result
+        if (pr.waitFor() == 0)
+            _log.info("Success!");
+        pr.destroy();
+
+    }
+
+
+    @Test
+    public void testFSE() throws Exception {
+
+        Logger.getLogger("ConfigurationToMap").setLevel(Level.WARNING);
+
+        String FSE_TARGET_FOLDER = "output-FSE";
+
+        // basic parameter: the LaTeX main file
+        String latexFileName = "VaryingVariability-FSE15";
+
+        MustacheEngine engine = MustacheEngineBuilder
+                .newBuilder()
+                .addTemplateLocator(new FileSystemTemplateLocator(1, "input/FSE-newidea/", "tex"))
+                .build();
+        Mustache mustache = engine.getMustache(latexFileName);
+
+        FeatureModelVariable fmv = FM ("VARY_LATEX : BIB [ACK] [LONG_AFFILIATION] ; ");
+        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "vspace_bib", new DoubleDomainVariable("", 0.0, 5.0)); // TODO: type the attribute
+        // fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.99, 1.0)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleVariable("", 0.99)); // TODO: type the attribute
+
+
+        Set<Variable> cfs = fmv.configs();
+        Collection<Set<String>> scfs = new HashSet<Set<String>>();
+        for (Variable cf : cfs) {
+            Set<String> confFts = ((SetVariable) cf).names();
+            scfs.add(confFts);
+            //_log.info("confFts:" + confFts);
+        }
+        /*
+        if (true)
+            return;*/
+
+        assertEquals(scfs.size(), cfs.size());
+
+
+        int idConf = 0;
+        for (Set<String> cf : scfs) {
+            // idConf++;
+
+            //assertEquals(5, conf.entrySet().size());
+            // _log.info("conf: " + conf);
+            // render configuration in the template
+
+
+            // if (idConf > 3)
+            //   break ;
+            // Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
+
+
+            // TODO: manage the case in which there is only one attributes and its value is fixed
+            int NB_REPEAT = 40;
+            Collection<Map<String, Object>> orderedConfs = new HashSet<Map<String, Object>>();
+            for (int i = 0; i < NB_REPEAT; i++)
+                orderedConfs.add(new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf)); // very naive since they could be duplicated "confs" (eg the case in which the attribute is only an integer value)
+
+            for (Map<String, Object> orderedConf : orderedConfs) {
+                idConf++;
+                JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(orderedConf);
+
+                renderConfiguration(jSonConf, mustache, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
+
+                serializeConfigurationJSON(jSonConf, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".json");
+                serializeConfigurationCSV(orderedConf, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv");
+
+            }
+
+
+        }
+
+
+        FileWriter fw = new FileWriter(new File(FSE_TARGET_FOLDER + "/" + "headerftscsv" + ".txt"));
+        Set<String> fts = fmv.features().names();
+        // also attributes!
+        Collection<FeatureAttribute> allAttrs = _collectAllAttributes(fmv);
+        allAttrs.stream().forEach(e -> fts.add(e.getName()));
+
+        fw.write(fts.stream().sorted().collect(Collectors.joining(",")));
+        fw.close();
+
+
+
+
+        ProcessBuilder pb = new ProcessBuilder("./allCompile.sh");
+        pb.directory(new File("" + FSE_TARGET_FOLDER));
 
         Process pr = pb.start();
 

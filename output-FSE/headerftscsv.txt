@@ -1,0 +1,1 @@
+ACK,BIB,LONG_AFFILIATION,VARY_LATEX,stretch,vspace_bib
