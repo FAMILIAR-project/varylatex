@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  4 MAR 2017 10:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  4 MAR 2017 18:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -963,9 +963,7 @@ me prod-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 )
-(./conclusion.tex) (./VaryingVariability-FSE15_19.bbl) [4] [5
-
-]
+(./conclusion.tex) (./VaryingVariability-FSE15_19.bbl) [4]
 (./VaryingVariability-FSE15_19.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -995,10 +993,10 @@ nts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/
 times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/zapfding/u
 zdr.pfb>
-Output written on VaryingVariability-FSE15_19.pdf (5 pages, 221786 bytes).
+Output written on VaryingVariability-FSE15_19.pdf (4 pages, 221540 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
+ 101 PDF objects out of 1000 (max. 8388607)
+ 71 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  28 words of extra memory for PDF output out of 10000 (max. 10000000)
 

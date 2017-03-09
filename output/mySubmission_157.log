@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,7 +210,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 496.
-(pdftex.def)             Requested size: 225.88124pt x 174.2804pt.
+(pdftex.def)             Requested size: 224.7851pt x 173.42967pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 535.
 LaTeX Font Info:    External font `cmex10' loaded for size

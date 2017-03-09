@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,9 +210,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 486.
-(pdftex.def)             Requested size: 281.73787pt x 217.37889pt.
+(pdftex.def)             Requested size: 354.44455pt x 273.475pt.
 
-Overfull \hbox (37.82661pt too wide) in paragraph at lines 486--487
+Overfull \hbox (110.5333pt too wide) in paragraph at lines 486--487
  [][] 
  []
 

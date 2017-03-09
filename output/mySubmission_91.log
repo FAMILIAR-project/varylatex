@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,9 +210,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 498.
-(pdftex.def)             Requested size: 277.24966pt x 213.91681pt.
+(pdftex.def)             Requested size: 360.16013pt x 277.88399pt.
 
-Overfull \hbox (33.33841pt too wide) in paragraph at lines 498--499
+Overfull \hbox (116.24887pt too wide) in paragraph at lines 498--499
  [][] 
  []
 
@@ -220,7 +220,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 537.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 537.
-[1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+Underfull \vbox (badness 1533) has occurred while \output is active []
+
+ [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./tux.png>]
@@ -254,7 +257,7 @@ base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pf
 b></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/l
 ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on mySubmission_91.pdf (2 pages, 304007 bytes).
+Output written on mySubmission_91.pdf (2 pages, 304044 bytes).
 PDF statistics:
  31 PDF objects out of 1000 (max. 8388607)
  20 compressed objects within 1 object stream

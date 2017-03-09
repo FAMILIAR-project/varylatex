@@ -3,8 +3,24 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.familiar.FMLTest;
+import fr.familiar.fm.converter.FeatureModelToExpression;
+import fr.familiar.operations.ExpressionUtility;
+import fr.familiar.operations.FormulaAnalyzer;
+import fr.familiar.operations.featureide.SATFMLFormula;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
+import gsd.synthesis.Expression;
+import gsd.synthesis.ExpressionType;
+import gsd.synthesis.ExpressionUtil;
+import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Solution;
+import org.chocosolver.solver.Solver;
+import org.chocosolver.solver.constraints.Constraint;
+import org.chocosolver.solver.constraints.nary.cnf.ILogical;
+import org.chocosolver.solver.constraints.nary.cnf.LogOp;
+import org.chocosolver.solver.search.strategy.Search;
+import org.chocosolver.solver.variables.BoolVar;
+import org.chocosolver.solver.variables.IntVar;
 import org.junit.Test;
 import org.trimou.Mustache;
 import org.trimou.engine.MustacheEngine;
@@ -17,6 +33,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static org.chocosolver.solver.constraints.nary.cnf.LogOp.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -151,6 +168,118 @@ public class VaryLatexTest extends FMLTest {
         return allAttrs;
     }
 
+
+    @Test
+    public void testChoco() throws Exception {
+        _modelAndSolve();
+
+    }
+
+    public void _modelAndSolve(){
+        Model model = new Model("LATEX");
+
+        BoolVar ACK = model.boolVar("ACK");
+        BoolVar LONG_AFFILIATION = model.boolVar("LONG_AFFILIATION");
+        IntVar stretch = model.intVar("stretch", 970, 1000);
+        IntVar vspace = model.intVar("vspace", 0, 5);
+
+
+        Solver solver = model.getSolver();
+
+        java.util.Random r = new java.util.Random();
+        long l = r.nextLong();
+
+       /*
+        solver.setSearch(Search.intVarSearch(
+                    // selects the variable of smallest domain size
+                    new FirstFail(model),
+                    // selects the smallest domain value (lower bound)
+                    //new IntDomainMin(),
+                    new IntDomainRandom(l),
+                    // apply equality (var = val)
+                    DecisionOperator.int_eq,
+                    // variables to branch on
+                    stretch, vspace
+        ),
+        Search.randomSearch(
+                    new IntVar[] { ACK, LONG_AFFILIATION }, l)
+        );*/
+
+       /*  solver.setSearch( Search.randomSearch(
+                    new IntVar[] { ACK, LONG_AFFILIATION, stretch, vspace }, l)
+        );*/
+
+        solver.setSearch( Search.randomSearch(
+                new IntVar[] { ACK }, l),
+                Search.randomSearch(
+                        new IntVar[] { LONG_AFFILIATION }, l),
+                Search.randomSearch(
+                        new IntVar[] { stretch }, l),
+                Search.randomSearch(
+                        new IntVar[] { vspace }, l));
+
+
+        int MAX_SOL = 10;
+        int nSol = 0;
+        while(solver.solve()) {
+            // do something, e.g. print out variable values
+            //        solver.showStatistics();
+            // solver.showSolutions();
+            System.out.println("sol=" + solver.findSolution());
+            solver.setRestartOnSolutions();
+            if (nSol++ > MAX_SOL)
+                break;
+        }
+
+
+    }
+
+
+
+
+    @Test
+    public void testFM2Choco() throws Exception {
+        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; ");
+        // !EMAIL;
+        // fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+        //  fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0)); // TODO: type the attribute
+
+        Model model = new FMLChocoModel().transform(fmv);
+
+
+
+
+       Solver solver = model.getSolver();
+      // solver.showStatistics();
+      // solver.showSolutions();
+//        solver.solve();
+        // solver.getA
+
+        int MAX_SOL = 100;
+        int nSol = 0;
+
+        while(solver.solve()) {
+            // do something, e.g. print out variable values
+            //solver.showStatistics();
+            //solver.showSolutions();
+            Solution sol = solver.findSolution();
+            //_log.info("sol" + nSol + "=" + sol);
+            // solver.setRestartOnSolutions();
+            if (nSol++ > MAX_SOL)
+                break;
+        }
+
+        assertEquals(fmv.counting(), (double) solver.getSolutionCount(), 0.0);
+
+
+
+
+    }
+
+
+
+
+
     @Test
     public void test2() throws Exception {
 
@@ -280,7 +409,7 @@ public class VaryLatexTest extends FMLTest {
 
         FeatureModelVariable fmv = FM ("VARY_LATEX : BIB [ACK] [LONG_AFFILIATION] ; ");
         fmv.setFeatureAttribute(fmv.getFeature("BIB"), "vspace_bib", new DoubleDomainVariable("", 0.0, 5.0)); // TODO: type the attribute
-        // fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.99, 1.0)); // TODO: type the attribute
+        //fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.98, 1.0)); // TODO: type the attribute
         fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleVariable("", 0.99)); // TODO: type the attribute
 
 

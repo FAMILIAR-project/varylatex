@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,9 +210,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 488.
-(pdftex.def)             Requested size: 346.51135pt x 267.34978pt.
+(pdftex.def)             Requested size: 249.73378pt x 192.68565pt.
 
-Overfull \hbox (102.6001pt too wide) in paragraph at lines 488--489
+Overfull \hbox (5.82253pt too wide) in paragraph at lines 488--489
  [][] 
  []
 
@@ -236,9 +236,7 @@ Before submitting the final camera ready copy, remember to:
 [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <./tux.png>] [2
-
-] (./mySubmission_123.aux) ) 
+ <./tux.png>] (./mySubmission_123.aux) ) 
 Here is how much of TeX's memory you used:
  2193 strings out of 493089
  35108 string characters out of 6134842
@@ -247,15 +245,15 @@ Here is how much of TeX's memory you used:
  41912 words of font info for 78 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  37i,8n,23p,511b,293s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips
-/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.p
-fb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/
-local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texl
-ive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on mySubmission_123.pdf (2 pages, 300823 bytes).
+{/usr/local/texlive/2015/texmf-dist/fon
+ts/enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/ti
+mes/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8
+a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on mySubmission_123.pdf (1 page, 300610 bytes).
 PDF statistics:
- 31 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 28 PDF objects out of 1000 (max. 8388607)
+ 18 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

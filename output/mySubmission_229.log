@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,18 +210,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 486.
-(pdftex.def)             Requested size: 338.26166pt x 260.98782pt.
-
-Overfull \hbox (94.3504pt too wide) in paragraph at lines 486--487
- [][] 
- []
-
+(pdftex.def)             Requested size: 242.64638pt x 187.21143pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 525.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 525.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 588.
+
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -240,7 +236,7 @@ Before submitting the final camera ready copy, remember to:
 Here is how much of TeX's memory you used:
  2193 strings out of 493089
  35108 string characters out of 6134842
- 99043 words of memory out of 5000000
+ 97043 words of memory out of 5000000
  5670 multiletter control sequences out of 15000+600000
  41912 words of font info for 78 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
@@ -250,7 +246,7 @@ ts/enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/ti
 mes/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8
 a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on mySubmission_229.pdf (1 page, 300297 bytes).
+Output written on mySubmission_229.pdf (1 page, 300309 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream

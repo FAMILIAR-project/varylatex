@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,9 +210,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 496.
-(pdftex.def)             Requested size: 351.34471pt x 271.08557pt.
+(pdftex.def)             Requested size: 289.53543pt x 223.39316pt.
 
-Overfull \hbox (107.43346pt too wide) in paragraph at lines 496--497
+Overfull \hbox (45.62418pt too wide) in paragraph at lines 496--497
  [][] 
  []
 
@@ -220,13 +220,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 535.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 535.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 598.
 [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./tux.png>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 598.
-
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -254,7 +253,7 @@ Here is how much of TeX's memory you used:
 fb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/
 local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texl
 ive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on mySubmission_273.pdf (2 pages, 303700 bytes).
+Output written on mySubmission_273.pdf (2 pages, 303688 bytes).
 PDF statistics:
  31 PDF objects out of 1000 (max. 8388607)
  20 compressed objects within 1 object stream
