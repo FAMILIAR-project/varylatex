@@ -175,6 +175,8 @@ public class VaryLatexTest extends FMLTest {
 
     }
 
+
+    // a basic example
     public void _modelAndSolve(){
         Model model = new Model("LATEX");
 
@@ -237,42 +239,47 @@ public class VaryLatexTest extends FMLTest {
 
 
 
+    // a basic example
+
     @Test
     public void testFM2Choco() throws Exception {
-        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; ");
+
+        FeatureModelVariable[] fmvs = new FeatureModelVariable[] {
+                FM("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; "),
+                FM("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; !EMAIL; "),
+                FM("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; MORE_ACK -> !BOLD_ACK; "),
+                FM("VARY_LATEX : [SUBTITLE] FIGURE_TUX (ACK|LONG_AFFILIATION); ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; MORE_ACK -> !BOLD_ACK; "),
+                FM("VARY_LATEX : [SUBTITLE] FIGURE_TUX ACK LONG_AFFILIATION; ACK : (MOREACK|BOLDACK); LONG_AFFILIATION : [EMAIL]  ; "),
+                FM("VARY_LATEX : (MOREACK|BOLDACK)+; "),
+                FM("VARY_LATEX : (MOREACK|BOLDACK)?; "),
+                FM("VARY_LATEX : (MORE_ACK|BOLD_ACK); ")
+
+        };
+
         // !EMAIL;
         // fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
         //  fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0)); // TODO: type the attribute
 
-        Model model = new FMLChocoModel().transform(fmv);
+        for (FeatureModelVariable fmv : fmvs) {
+            Model model = new FMLChocoModel().transform(fmv);
 
 
+            Solver solver = model.getSolver();
+            // solver.showStatistics();
+            // solver.showSolutions();
 
+            int MAX_SOL = 100;
+            int nSol = 0;
 
-       Solver solver = model.getSolver();
-      // solver.showStatistics();
-      // solver.showSolutions();
-//        solver.solve();
-        // solver.getA
+            while (solver.solve()) {
+                Solution sol = solver.findSolution();
+                // solver.setRestartOnSolutions();
+                if (nSol++ > MAX_SOL)
+                    break;
+            }
 
-        int MAX_SOL = 100;
-        int nSol = 0;
-
-        while(solver.solve()) {
-            // do something, e.g. print out variable values
-            //solver.showStatistics();
-            //solver.showSolutions();
-            Solution sol = solver.findSolution();
-            //_log.info("sol" + nSol + "=" + sol);
-            // solver.setRestartOnSolutions();
-            if (nSol++ > MAX_SOL)
-                break;
+            assertEquals(fmv.counting(), (double) solver.getSolutionCount(), 0.0);
         }
-
-        assertEquals(fmv.counting(), (double) solver.getSolutionCount(), 0.0);
-
-
-
 
     }
 
