@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  3 MAR 2017 19:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.22)  7 MAR 2017 21:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -210,9 +210,9 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 File: tux.png Graphic file (type png)
  <use tux.png>
 Package pdftex.def Info: tux.png used on input line 488.
-(pdftex.def)             Requested size: 326.93088pt x 252.24385pt.
+(pdftex.def)             Requested size: 278.584pt x 214.94508pt.
 
-Overfull \hbox (83.01962pt too wide) in paragraph at lines 488--489
+Overfull \hbox (34.67274pt too wide) in paragraph at lines 488--489
  [][] 
  []
 
@@ -250,7 +250,7 @@ ts/enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/ti
 mes/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8
 a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on mySubmission_130.pdf (1 page, 300611 bytes).
+Output written on mySubmission_130.pdf (1 page, 300607 bytes).
 PDF statistics:
  28 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream
