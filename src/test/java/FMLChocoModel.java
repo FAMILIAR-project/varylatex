@@ -20,6 +20,7 @@ import static org.chocosolver.solver.constraints.nary.cnf.LogOp.and;
 
 /**
  * Created by macher1 on 09/03/2017.
+ * TODO: constraints between attributes/attributes and features/attributes
  */
 public class FMLChocoModel {
 
@@ -75,21 +76,6 @@ public class FMLChocoModel {
         model.boolVar("SYNTETIC_ROOT_FEATURE", true);
 
         /*
-        BoolVar MORE_ACK = retrieveBoolVarByFtName(model, "MORE_ACK");
-        BoolVar BOLD_ACK = retrieveBoolVarByFtName(model, "BOLD_ACK");
-        BoolVar ACK = retrieveBoolVarByFtName(model, "ACK");
-        BoolVar FIGURE_TUX = retrieveBoolVarByFtName(model, "FIGURE_TUX");
-        BoolVar EMAIL = retrieveBoolVarByFtName(model, "EMAIL");
-        BoolVar LONG_AFFILIATION = retrieveBoolVarByFtName(model, "LONG_AFFILIATION");
-        BoolVar VARY_LATEX = retrieveBoolVarByFtName(model, "VARY_LATEX");
-        model.addClauses(implies(MORE_ACK, ACK));
-        model.addClauses(implies(BOLD_ACK, ACK));
-        model.addClauses(implies(EMAIL, LONG_AFFILIATION));
-        model.addClauses(ifOnlyIf(FIGURE_TUX, VARY_LATEX));
-        model.addClauses(ifOnlyIf(VARY_LATEX, model.boolVar(true)));
-        */
-
-        /*
          * SECOND, we add constraints
          *  including dependencies hierarchy, variability information, and cross-tree constraints
          */
@@ -97,7 +83,6 @@ public class FMLChocoModel {
         Collection<Expression<String>> csts = new FeatureModelToExpression(fmv).convert() ;
         for (Expression cst : csts) {
             ILogical log  = _mkLogOp(cst, model);
-            _log.info("log " + log);
             if (log == null) {
                 _log.warning("cst " + cst);
                 continue;
@@ -109,30 +94,23 @@ public class FMLChocoModel {
                 assert (log instanceof BoolVar);
                 BoolVar b = (BoolVar) log;
                 model.addClauses(ifOnlyIf(b, model.boolVar(true)));
-                // model.addClauses(new BoolVar[] {b}, new BoolVar[] {});
             }
-
-            // model.post(log);
-        }
-
-        BoolVar[] bvars = model.retrieveBoolVars();
-        _log.info("BOOL VARS" + bvars);
-        int v = 0;
-        for (BoolVar bv : bvars) {
-            _log.info("BOOL VAR " + (++v) + " " + bv);
         }
 
         return model;
 
     }
 
+    /*
+     * transform a constraint (FML) into a constraint in the CSP model
+     */
     private ILogical _mkLogOp(Expression e, Model model) {
         if (e.getType() == ExpressionType.FEATURE) {
-            // if (e.getFeature().toString().equals("SYNTETIC_ROOT_FEATURE")) // weird
+            // if (e.getFeature().toString().equals("SYNTETIC_ROOT_FEATURE")) // TODO weird
             //   return model.boolVar(true);
             BoolVar bv = retrieveBoolVarByFtName(model, e.getFeature().toString());
             if (bv == null) {
-                _log.warning("\nbv NULLLLLL\n");
+                _log.warning("\n Unknown boolean variable\n");
             }
             return bv;
         }
@@ -143,23 +121,14 @@ public class FMLChocoModel {
             return model.boolVar(false);
         }
         else if (e.getType() == ExpressionType.NOT) {
-            _log.warning("\nbv NOTTTTT\n");
-            //BoolVar bv = retrieveBoolVarByFtName(model, e.getFeature().toString());
             ILogical l = _mkLogOp(e.getLeft(), model);
-            // BoolVar bv = retrieveBoolVarByFtName(model, e.getFeature().toString());
             return nand(l);
-            //return nor(l);
-            // l.isNot();
-            // return l;
-            //return null;
         }
         else {
             ILogical l = _mkLogOp(e.getLeft(), model);
             ILogical r = _mkLogOp(e.getRight(), model);
 
-            if (l == null || r == null) {
-                _log.warning("\nL or R NULLLLLL\n");
-            }
+            assert (l != null && r != null);
 
             if (e.getType() == ExpressionType.IMPLIES) {
                 return implies(l, r);
@@ -179,6 +148,10 @@ public class FMLChocoModel {
         return null;
     }
 
+    /*
+     * the boolean variable corresponding to a feature
+     * we could use an internal map to store feature->variable mappig
+     */
     private BoolVar retrieveBoolVarByFtName(Model model, String s) {
         BoolVar[] bvs = model.retrieveBoolVars();
         for (int i = 0; i < bvs.length; i++) {
