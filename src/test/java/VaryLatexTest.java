@@ -9,6 +9,7 @@ import fr.familiar.operations.FormulaAnalyzer;
 import fr.familiar.operations.featureide.SATFMLFormula;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
+import fr.familiar.variable.Variable;
 import gsd.synthesis.Expression;
 import gsd.synthesis.ExpressionType;
 import gsd.synthesis.ExpressionUtil;
@@ -19,8 +20,9 @@ import org.chocosolver.solver.constraints.Constraint;
 import org.chocosolver.solver.constraints.nary.cnf.ILogical;
 import org.chocosolver.solver.constraints.nary.cnf.LogOp;
 import org.chocosolver.solver.search.strategy.Search;
-import org.chocosolver.solver.variables.BoolVar;
-import org.chocosolver.solver.variables.IntVar;
+import org.chocosolver.solver.variables.*;
+import org.chocosolver.solver.variables.impl.FixedBoolVarImpl;
+import org.chocosolver.solver.variables.view.BoolNotView;
 import org.junit.Test;
 import org.trimou.Mustache;
 import org.trimou.engine.MustacheEngine;
@@ -254,29 +256,44 @@ public class VaryLatexTest extends FMLTest {
                 FM("VARY_LATEX : (MOREACK|BOLDACK)?; "),
                 FM("VARY_LATEX : (MORE_ACK|BOLD_ACK); ")
 
+
         };
 
         // !EMAIL;
-        // fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
-        //  fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0)); // TODO: type the attribute
-
+        //
         for (FeatureModelVariable fmv : fmvs) {
+            //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+            //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0, 10.0)); // TODO: type the attribute
+
             Model model = new FMLChocoModel().transform(fmv);
+
+            Collection<FMLChocoConfiguration> cfgs = new FMLChocoSolver(model, fmv).configsALL();
+            // Collection<FMLChocoConfiguration> cfgs = new FMLChocoSolver(model, fmv).configs((int) fmv.counting());
+            for (FMLChocoConfiguration cfg : cfgs) {
+                if (cfg == null) // TODO weird
+                    break;
+                System.out.println("sol=" + cfg.getValues());
+            }
 
 
             Solver solver = model.getSolver();
             // solver.showStatistics();
             // solver.showSolutions();
 
-            int MAX_SOL = 100;
+            /*
+            int MAX_SOL = 1000;
             int nSol = 0;
 
             while (solver.solve()) {
                 Solution sol = solver.findSolution();
+                if (sol == null) // TODO weird
+                    break;
+               // System.out.println("sol= " + sol);
+               System.out.println("sol (map)=" + _mkMapOfSolution(sol, model));
                 // solver.setRestartOnSolutions();
                 if (nSol++ > MAX_SOL)
                     break;
-            }
+            }*/
 
             assertEquals(fmv.counting(), (double) solver.getSolutionCount(), 0.0);
         }
@@ -313,6 +330,9 @@ public class VaryLatexTest extends FMLTest {
 
         _log.info(fmv.getFeature("FIGURE_TUX").lookup("vspace_tux").getValue());
         _log.info(fmv.getFeature("FIGURE_TUX").lookup("size_tux").getValue());
+
+
+        Model model = new FMLChocoModel().transform(fmv);
 
 
         Set<Variable> cfs = fmv.configs();
@@ -396,6 +416,102 @@ public class VaryLatexTest extends FMLTest {
         pr.destroy();
 
     }
+
+
+    @Test
+    public void test2WithChoco() throws Exception {
+
+
+        /**
+         * TEMPLATE SETTING
+         */
+        // basic parameter: the LaTeX main file
+        String latexFileName = "mySubmission";
+
+        MustacheEngine engine = MustacheEngineBuilder
+                .newBuilder()
+                .addTemplateLocator(new FileSystemTemplateLocator(1, "input/", "tex"))
+                .build();
+        Mustache mustache = engine.getMustache(latexFileName);
+
+
+        /**
+         * FEATURE MODEL
+         */
+
+        FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; ");
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+        // fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new IntegerDomainVariable("", 3, 5));
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0)); // TODO: type the attribute
+
+
+        /***
+         * CONFIG GEN (with Choco model/solver)
+         */
+
+        Model model = new FMLChocoModel().transform(fmv);
+        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(model, fmv).configs(10);
+
+
+        /*
+         * Store each config into a CSV and resolve variability within templates based on a config
+         */
+
+        int idConf = 0;
+        for (FMLChocoConfiguration cf : scfs) {
+            idConf++;
+
+            JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(cf.getValues());
+
+            renderConfiguration(jSonConf, mustache, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
+
+            serializeConfigurationJSON(jSonConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".json");
+            serializeConfigurationCSV(cf.getValues(), TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv"); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
+        }
+
+
+        /*
+         * Serialize the whole CSV
+         */
+
+        FileWriter fw = new FileWriter(new File(TARGET_FOLDER + "/" + "headerftscsv" + ".txt"));
+        Set<String> fts = fmv.features().names();
+        // also attributes!
+        Collection<FeatureAttribute> allAttrs = _collectAllAttributes(fmv);
+        allAttrs.stream().forEach(e -> fts.add(e.getName()));
+
+        fw.write(fts.stream().sorted().collect(Collectors.joining(","))); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
+        fw.close();
+
+
+        /*
+         * Derive the final product and observe (nbPages, size)
+         */
+
+        ProcessBuilder pb = new ProcessBuilder("./allCompile.sh");
+        pb.directory(new File("/Users/macher1/Documents/SANDBOX/varylatex/output/"));
+
+        Process pr = pb.start();
+
+        //Read output
+        StringBuilder out = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String line = null, previous = null;
+        while ((line = br.readLine()) != null)
+            if (!line.equals(previous)) {
+                previous = line;
+                out.append(line).append('\n');
+                _log.info(line);
+            }
+
+        //Check result
+        if (pr.waitFor() == 0)
+            _log.info("Success!");
+        pr.destroy();
+
+    }
+
+
 
 
     @Test

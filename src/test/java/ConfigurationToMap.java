@@ -3,6 +3,7 @@ import fr.familiar.variable.FeatureAttribute;
 import fr.familiar.variable.FeatureModelVariable;
 import fr.familiar.variable.IntegerVariable;
 import fr.familiar.variable.Variable;
+import org.chocosolver.solver.Solution;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -112,4 +113,6 @@ public class ConfigurationToMap {
 
         return lConf;
     }
+
+
 }

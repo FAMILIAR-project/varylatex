@@ -17,17 +17,32 @@ public class DoubleDomainVariable extends VariableImpl {
     protected double _min ;
     protected double _max;
 
+
+    public final static double PRECISION_DEFAULT = 100;
+    protected double _precision;
+
     public DoubleDomainVariable(String name, double min, double max, NameSpace ns) {
+
+        this(name, min, max, PRECISION_DEFAULT, ns);
+
+
+    }
+
+    public DoubleDomainVariable(String name, double min, double max) {
+        this(name, min, max, NSFactory.mkEmpty());
+    }
+
+    public DoubleDomainVariable(String name, double min, double max, double precision) {
+        this(name, min, max, precision, NSFactory.mkEmpty());
+    }
+
+    public DoubleDomainVariable(String name, double min, double max, double precision, NameSpace ns) {
         this.name = name;
         this.ns = ns;
         this.vid = new VariableIdentifier(name, ns);
         _min = min;
         _max = max;
-
-    }
-
-    public DoubleDomainVariable(String id, double min, double max) {
-        this(id, min, max, NSFactory.mkEmpty());
+        _precision = precision;
     }
 
 
@@ -59,5 +74,9 @@ public class DoubleDomainVariable extends VariableImpl {
 
     public double getMax() {
         return _max;
+    }
+
+    public double getPrecision() {
+        return _precision;
     }
 }
