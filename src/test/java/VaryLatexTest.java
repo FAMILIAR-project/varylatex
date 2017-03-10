@@ -3,26 +3,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.familiar.FMLTest;
-import fr.familiar.fm.converter.FeatureModelToExpression;
-import fr.familiar.operations.ExpressionUtility;
-import fr.familiar.operations.FormulaAnalyzer;
-import fr.familiar.operations.featureide.SATFMLFormula;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
 import fr.familiar.variable.Variable;
-import gsd.synthesis.Expression;
-import gsd.synthesis.ExpressionType;
-import gsd.synthesis.ExpressionUtil;
 import org.chocosolver.solver.Model;
-import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
-import org.chocosolver.solver.constraints.Constraint;
-import org.chocosolver.solver.constraints.nary.cnf.ILogical;
-import org.chocosolver.solver.constraints.nary.cnf.LogOp;
 import org.chocosolver.solver.search.strategy.Search;
 import org.chocosolver.solver.variables.*;
-import org.chocosolver.solver.variables.impl.FixedBoolVarImpl;
-import org.chocosolver.solver.variables.view.BoolNotView;
 import org.junit.Test;
 import org.trimou.Mustache;
 import org.trimou.engine.MustacheEngine;
@@ -35,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static org.chocosolver.solver.constraints.nary.cnf.LogOp.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -47,11 +33,13 @@ public class VaryLatexTest extends FMLTest {
     private static Logger _log = Logger.getLogger("VaryLatexTest");
 
 
-    private static String TARGET_FOLDER = "output";
+
 
     @Test
     public void test1() throws IOException {
 
+
+        String TARGET_FOLDER = "output";
 
         // basic parameter: the LaTeX main file
         String latexFileName = "mySubmission";
@@ -265,9 +253,9 @@ public class VaryLatexTest extends FMLTest {
             //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
             //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0, 10.0)); // TODO: type the attribute
 
-            Model model = new FMLChocoModel().transform(fmv);
 
-            Collection<FMLChocoConfiguration> cfgs = new FMLChocoSolver(model, fmv).configsALL();
+            FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv);
+            Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
             // Collection<FMLChocoConfiguration> cfgs = new FMLChocoSolver(model, fmv).configs((int) fmv.counting());
             for (FMLChocoConfiguration cfg : cfgs) {
                 if (cfg == null) // TODO weird
@@ -275,8 +263,8 @@ public class VaryLatexTest extends FMLTest {
                 System.out.println("sol=" + cfg.getValues());
             }
 
-
-            Solver solver = model.getSolver();
+// TODO FIXME: I don't like this state based solution (side-effect)
+            Solver solver = fmlChocoSolver.getCurrentSolver();
             // solver.showStatistics();
             // solver.showSolutions();
 
@@ -295,6 +283,9 @@ public class VaryLatexTest extends FMLTest {
                     break;
             }*/
 
+
+            // side-effect
+            // works because getSolutionCount() returns the number of solving you have made (basically number of calls to "solve" / findSolution)
             assertEquals(fmv.counting(), (double) solver.getSolutionCount(), 0.0);
         }
 
@@ -306,6 +297,8 @@ public class VaryLatexTest extends FMLTest {
 
     @Test
     public void test2() throws Exception {
+
+        String TARGET_FOLDER = "output";
 
         Logger.getLogger("ConfigurationToMap").setLevel(Level.WARNING);
        // Logger.getGlobal().setLevel(Level.OFF);
@@ -422,6 +415,8 @@ public class VaryLatexTest extends FMLTest {
     public void test2WithChoco() throws Exception {
 
 
+        String TARGET_FOLDER = "output";
+
         /**
          * TEMPLATE SETTING
          */
@@ -440,17 +435,16 @@ public class VaryLatexTest extends FMLTest {
          */
 
         FeatureModelVariable fmv = FM ("VARY_LATEX : [SUBTITLE] FIGURE_TUX [ACK] [LONG_AFFILIATION] ; ACK : [MORE_ACK] [BOLD_ACK]; LONG_AFFILIATION : [EMAIL]  ; ");
-        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
-        // fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new IntegerDomainVariable("", 3, 5));
-        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10));
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0, 10.0));
 
 
         /***
          * CONFIG GEN (with Choco model/solver)
          */
 
-        Model model = new FMLChocoModel().transform(fmv);
-        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(model, fmv).configs(10);
+
+        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(300);
 
 
         /*
@@ -517,7 +511,9 @@ public class VaryLatexTest extends FMLTest {
     @Test
     public void testFSE() throws Exception {
 
-        Logger.getLogger("ConfigurationToMap").setLevel(Level.WARNING);
+        /**
+         * TEMPLATE SETTING
+         */
 
         String FSE_TARGET_FOLDER = "output-FSE";
 
@@ -530,59 +526,45 @@ public class VaryLatexTest extends FMLTest {
                 .build();
         Mustache mustache = engine.getMustache(latexFileName);
 
+
+
         FeatureModelVariable fmv = FM ("VARY_LATEX : BIB [ACK] [LONG_AFFILIATION] ; ");
-        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "vspace_bib", new DoubleDomainVariable("", 0.0, 5.0)); // TODO: type the attribute
-        //fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.98, 1.0)); // TODO: type the attribute
-        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleVariable("", 0.99)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "vspace_bib", new DoubleDomainVariable("", 0.0, 5.0, 10.0)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.98, 1.0, 1000.0)); // TODO: type the attribute
+        // fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleVariable("", 0.99)); // TODO: type the attribute
 
 
-        Set<Variable> cfs = fmv.configs();
-        Collection<Set<String>> scfs = new HashSet<Set<String>>();
-        for (Variable cf : cfs) {
-            Set<String> confFts = ((SetVariable) cf).names();
-            scfs.add(confFts);
-            //_log.info("confFts:" + confFts);
-        }
+
+
+        /***
+         * CONFIG GEN (with Choco model/solver)
+         */
+
+
+        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(300);
+
+
         /*
-        if (true)
-            return;*/
-
-        assertEquals(scfs.size(), cfs.size());
-
+         * Store each config into a CSV and resolve variability within templates based on a config
+         */
 
         int idConf = 0;
-        for (Set<String> cf : scfs) {
-            // idConf++;
+        for (FMLChocoConfiguration cf : scfs) {
+            idConf++;
 
-            //assertEquals(5, conf.entrySet().size());
-            // _log.info("conf: " + conf);
-            // render configuration in the template
+            JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(cf.getValues());
 
+            renderConfiguration(jSonConf, mustache, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
 
-            // if (idConf > 3)
-            //   break ;
-            // Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
-
-
-            // TODO: manage the case in which there is only one attributes and its value is fixed
-            int NB_REPEAT = 40;
-            Collection<Map<String, Object>> orderedConfs = new HashSet<Map<String, Object>>();
-            for (int i = 0; i < NB_REPEAT; i++)
-                orderedConfs.add(new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf)); // very naive since they could be duplicated "confs" (eg the case in which the attribute is only an integer value)
-
-            for (Map<String, Object> orderedConf : orderedConfs) {
-                idConf++;
-                JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(orderedConf);
-
-                renderConfiguration(jSonConf, mustache, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
-
-                serializeConfigurationJSON(jSonConf, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".json");
-                serializeConfigurationCSV(orderedConf, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv");
-
-            }
-
-
+            serializeConfigurationJSON(jSonConf, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".json");
+            serializeConfigurationCSV(cf.getValues(), FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv"); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
         }
+
+
+
+        /*
+         * Serialize the whole CSV
+         */
 
 
         FileWriter fw = new FileWriter(new File(FSE_TARGET_FOLDER + "/" + "headerftscsv" + ".txt"));

@@ -24,7 +24,7 @@ do
     $PDFLATEX $latexFileName | $FILTER && printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
     $PDFLATEX $latexFileName | $FILTER
  #   open -a Preview $latexFileName".pdf"
-    sleep 3
+    sleep 4
     nbPages=`mdls -name kMDItemNumberOfPages -raw $latexFileName.pdf`
     sizePDF=`du -k $latexFileName.pdf | cut -f1`
     idConfiguration="${latexFileName#*VaryingVariability-FSE15_}"

@@ -20,17 +20,21 @@ import java.util.*;
 public class FMLChocoSolver {
 
 
-    private Model _model ;
-    private FeatureModelVariable _fmv ;
 
-    public FMLChocoSolver(Model model, FeatureModelVariable fmv) {
-        _model = model;
+    private FeatureModelVariable _fmv ;
+    private Model _model;
+
+    public FMLChocoSolver(FeatureModelVariable fmv) {
+
         _fmv = fmv;
+
     }
 
 
 
     public Collection<FMLChocoConfiguration> configs(int max) {
+
+        _model = new FMLChocoModel().transform(_fmv);
 
         Solver solver = _model.getSolver();
 
@@ -104,6 +108,8 @@ public class FMLChocoSolver {
     }
 
     public Collection<FMLChocoConfiguration> configsALL() {
+
+        _model = new FMLChocoModel().transform(_fmv);
 
         Solver solver = _model.getSolver();
         Collection<FMLChocoConfiguration> cfgs = new HashSet<>();
@@ -198,5 +204,9 @@ public class FMLChocoSolver {
         }
         return attrs;
 
+    }
+
+    public Solver getCurrentSolver() {
+        return _model.getSolver();
     }
 }
