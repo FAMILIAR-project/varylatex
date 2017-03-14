@@ -1,4 +1,6 @@
 import org.chocosolver.solver.search.strategy.Search;
+import org.chocosolver.solver.search.strategy.selectors.values.IntDomainRandom;
+import org.chocosolver.solver.search.strategy.selectors.values.IntDomainRandomBound;
 import org.chocosolver.solver.search.strategy.selectors.values.IntValueSelector;
 import org.chocosolver.solver.search.strategy.selectors.values.RealValueSelector;
 import org.chocosolver.solver.search.strategy.selectors.variables.Random;
@@ -25,10 +27,13 @@ public class RealVarSearch {
      */
     @Deprecated
     public static RealStrategy randomSearch(RealVar[] vars, long seed) {
+
+
         RealValueSelector value = new RealDomainRandom(seed);
         // RealValueSelector bound = new RealDomainRandomBound(seed);
         RealValueSelector selector = var -> {
-             return value.selectValue(var);
+             return
+                     value.selectValue(var);
         };
         return Search.realVarSearch(new Random<>(seed), selector, vars);
     }

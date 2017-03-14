@@ -31,9 +31,20 @@ import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
+import org.chocosolver.solver.constraints.Constraint;
+import org.chocosolver.solver.constraints.real.RealConstraint;
+import org.chocosolver.solver.search.limits.SolutionCounter;
 import org.chocosolver.solver.search.strategy.Search;
+import org.chocosolver.solver.search.strategy.selectors.values.IntValueSelector;
+import org.chocosolver.solver.search.strategy.selectors.values.RealDomainMax;
+import org.chocosolver.solver.search.strategy.selectors.values.RealDomainMiddle;
+import org.chocosolver.solver.search.strategy.selectors.values.RealValueSelector;
+import org.chocosolver.solver.search.strategy.selectors.variables.*;
 import org.chocosolver.solver.variables.*;
+import org.chocosolver.solver.variables.impl.FixedRealVarImpl;
+import org.chocosolver.util.criteria.Criterion;
 import org.junit.Test;
 import org.trimou.Mustache;
 import org.trimou.engine.MustacheEngine;
@@ -42,6 +53,7 @@ import org.trimou.engine.locator.FileSystemTemplateLocator;
 
 import java.io.*;
 import java.util.*;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -198,6 +210,9 @@ public class VaryLatexTest extends FMLTest {
         BoolVar LONG_AFFILIATION = model.boolVar("LONG_AFFILIATION");
         IntVar stretch = model.intVar("stretch", 970, 1000);
         IntVar vspace = model.intVar("vspace", 0, 5);
+        RealVar fakeR = model.realVar("fakeR", 2.2, 5.2, 1d);
+
+        // model.post(new RealConstraint("fakeR", ">", new FixedRealVarImpl("28", 2.8, model)));
 
 
         Solver solver = model.getSolver();
@@ -225,27 +240,35 @@ public class VaryLatexTest extends FMLTest {
                     new IntVar[] { ACK, LONG_AFFILIATION, stretch, vspace }, l)
         );*/
 
-        solver.setSearch( Search.randomSearch(
-                new IntVar[] { ACK }, l),
-                Search.randomSearch(
-                        new IntVar[] { LONG_AFFILIATION }, l),
-                Search.randomSearch(
-                        new IntVar[] { stretch }, l),
-                Search.randomSearch(
-                        new IntVar[] { vspace }, l));
+        solver.setSearch(
+
+                // RealVarSearch.randomSearch(new RealVar[] { fakeR }, new Random().nextLong()),
+               Search.randomSearch(
+                               new IntVar[] { ACK, stretch, LONG_AFFILIATION, vspace }, new Random().nextLong()),
+                Search.realVarSearch(new org.chocosolver.solver.search.strategy.selectors.variables.Random<>(r.nextLong()), new RealDomainRandom(l), fakeR)
+
+                //Search.randomSearch(
+    //                        new IntVar[] { vspace }, new Random().nextLong())
+
+                );
 
 
-        int MAX_SOL = 10;
+        Criterion cr;
+        System.err.println("" + solver.findAllSolutions(new SolutionCounter(model, 1000)));
+
+       /* int MAX_SOL = 100;
         int nSol = 0;
         while(solver.solve()) {
             // do something, e.g. print out variable values
             //        solver.showStatistics();
             // solver.showSolutions();
-            System.out.println("sol=" + solver.findSolution());
+            Solution sol = new Solution(solver.getModel());
+            sol.record();
+            System.out.println("sol=" + sol);
             solver.setRestartOnSolutions();
             if (nSol++ > MAX_SOL)
                 break;
-        }
+        }*/
 
 
     }
@@ -325,10 +348,12 @@ public class VaryLatexTest extends FMLTest {
         fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
         fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0, 100.0)); // TODO: type the attribute
 
-
         Collection<AttributedConstraintVariable> cstsAtts = new HashSet<>();
         cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("vspace_tux", ArithmeticCompOperator.GE, 7)));
         cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("size_tux", ArithmeticCompOperator.GE, 4.9)));
+
+
+
 
         FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv, cstsAtts);
         Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();

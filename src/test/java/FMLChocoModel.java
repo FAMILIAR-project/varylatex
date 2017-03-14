@@ -140,10 +140,11 @@ public class FMLChocoModel {
         if (!cstsAtts.isEmpty()) {
             for (AttributedConstraintVariable cstAtt : cstsAtts) {
                 Constraint cstChoco = _mkCstAtt2Choco(cstAtt, model, fmv);
-
                 model.post(cstChoco);
             }
         }
+
+        model.arithm(null, "", null);
 
 
         /*BoolVar[] vars = model.retrieveBoolVars();
