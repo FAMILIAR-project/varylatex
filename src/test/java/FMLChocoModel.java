@@ -1,9 +1,12 @@
 import fr.familiar.fm.converter.FeatureModelToExpression;
+import fr.familiar.interpreter.VariableNotExistingException;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
 import gsd.synthesis.Expression;
 import gsd.synthesis.ExpressionType;
 import org.chocosolver.solver.Model;
+import org.chocosolver.solver.constraints.*;
+import org.chocosolver.solver.constraints.Operator;
 import org.chocosolver.solver.constraints.nary.cnf.ILogical;
 import org.chocosolver.solver.constraints.nary.cnf.LogOp;
 import org.chocosolver.solver.variables.BoolVar;
@@ -24,7 +27,8 @@ public class FMLChocoModel {
     private static Logger _log = Logger.getLogger("FMLChocoModel");
 
 
-    public Model transform(FeatureModelVariable fmv) {
+    // TODO FIXME (2nd param should be part of fmv
+    public Model transform(FeatureModelVariable fmv, Collection<AttributedConstraintVariable> cstsAtts) {
 
         Model model = new Model("" + fmv.root());
 
@@ -88,6 +92,7 @@ public class FMLChocoModel {
                     //model.realVar("" + attName, min, max, 0.01);
                 }
                 else if (ftAttrVal instanceof DoubleVariable) {
+                    // TODO: precision as well?
                     model.realVar(attName, ((DoubleVariable) ftAttrVal).getDouble());
 
                 }
@@ -128,11 +133,96 @@ public class FMLChocoModel {
             }
         }
 
+
+
+
+        // TODO WEIRD
+        if (!cstsAtts.isEmpty()) {
+            for (AttributedConstraintVariable cstAtt : cstsAtts) {
+                Constraint cstChoco = _mkCstAtt2Choco(cstAtt, model, fmv);
+
+                model.post(cstChoco);
+            }
+        }
+
+
         /*BoolVar[] vars = model.retrieveBoolVars();
         for (int i = 0; i < vars.length; i++)
             _log.warning("vars " + vars[i]);*/
 
         return model;
+
+    }
+
+    private Constraint _mkCstAtt2Choco(AttributedConstraintVariable cstAtt, Model model, FeatureModelVariable fmv) {
+
+        AttributedExpression attExpr = cstAtt.getAttributedConstraint();
+
+        String lVariable = attExpr.getLeftVariable();
+        IntVar lVar = retrieveIntVarByFtName(model, lVariable);
+        Operator op = _mkOperator(attExpr.get_ao());
+        Number n = attExpr.get_n();
+        if (n instanceof Integer)
+            return new Arithmetic(lVar, op, n.intValue());
+        else // double
+        {
+            // TODO: check whether lVar is a double: in this case we need to multiply by precsion
+
+            Variable att = _retrieveAttribbute(lVariable, fmv);
+            if (att == null) {
+                _log.warning("Attribute does not exist in the constraint " + cstAtt + " (lVar) " + lVar);
+                return null;
+            }
+            if (att instanceof DoubleDomainVariable) {
+
+                DoubleDomainVariable domainDouble = (DoubleDomainVariable) att;
+
+                double precision = domainDouble.getPrecision();
+
+                return new Arithmetic(lVar, op, (int) (n.doubleValue() * precision));
+            }
+
+
+        }
+
+        return null;
+    }
+
+    private Variable _retrieveAttribbute(String lVariable, FeatureModelVariable fmv) {
+
+        Set<String> ftNames = fmv.features().names();
+        Map<String, List<FeatureAttribute>> atts = fmv.getFeatureAttributes();
+
+        for (String ft : ftNames) {
+            List<FeatureAttribute> ftAtts = atts.get(ft);
+            if (ftAtts == null)
+                continue;
+            for (FeatureAttribute ftA : ftAtts) {
+                FeatureVariable ftv = ftA.getFt();
+                String attName = ftA.getName();
+                if (attName.equals(lVariable))
+                    return ftA.getValue();
+            }
+        }
+        return null;
+
+    }
+
+    private Operator _mkOperator(ArithmeticCompOperator ao) {
+        if (ao == ArithmeticCompOperator.EQ)
+            return Operator.EQ;
+        else if (ao == ArithmeticCompOperator.GE)
+            return Operator.GE;
+        else if (ao == ArithmeticCompOperator.LE)
+            return Operator.LE;
+        else if (ao == ArithmeticCompOperator.NEQ)
+            return Operator.NQ;
+        else if (ao == ArithmeticCompOperator.GT)
+            return Operator.GT;
+        else if (ao == ArithmeticCompOperator.LT)
+            return Operator.LT;
+        else
+            return null;
 
     }
 
@@ -199,5 +289,24 @@ public class FMLChocoModel {
                 return bv;
         }
         return null;
+    }
+
+    /*
+     * the number variable corresponding to a feature
+     * we could use an internal map to store feature->variable mappig
+     */
+    private IntVar retrieveIntVarByFtName(Model model, String s) {
+        IntVar[] bvs = model.retrieveIntVars(false);
+        for (int i = 0; i < bvs.length; i++) {
+            IntVar bv = bvs[i];
+            if (bv.getName().equals(s))
+                return bv;
+        }
+        return null;
+    }
+
+
+    public Model transform(FeatureModelVariable fmv) {
+        return transform(fmv, new HashSet<>());
     }
 }

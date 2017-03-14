@@ -13,6 +13,7 @@ import org.chocosolver.solver.variables.impl.FixedBoolVarImpl;
 import org.chocosolver.solver.variables.view.BoolNotView;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by macher1 on 09/03/2017.
@@ -20,7 +21,9 @@ import java.util.*;
 public class FMLChocoSolver {
 
 
+    private Logger _log = Logger.getLogger("FMLChocoSolver");
 
+    private Collection<AttributedConstraintVariable> _cstsAtts = new HashSet<>();
     private FeatureModelVariable _fmv ;
     private Model _model;
 
@@ -30,11 +33,17 @@ public class FMLChocoSolver {
 
     }
 
+    public FMLChocoSolver(FeatureModelVariable fmv, Collection<AttributedConstraintVariable> cstsAtts) {
+        // TODO weird FIX ME
+        // we should add a method addConstraint into fmv
+        _fmv = fmv;
+        _cstsAtts = cstsAtts;
+    }
 
 
     public Collection<FMLChocoConfiguration> configs(int max) {
 
-        _model = new FMLChocoModel().transform(_fmv);
+        _model = new FMLChocoModel().transform(_fmv, _cstsAtts);
 
         Solver solver = _model.getSolver();
 
@@ -94,7 +103,8 @@ public class FMLChocoSolver {
                 break;
 
 
-            Solution sol = solver.findSolution();
+            Solution sol = new Solution(solver.getModel()) ; // solver.findSolution();
+            sol.record();
             if (sol ==  null) // WEIRD TODO
                 break;
             FMLChocoConfiguration cfg = mkConfiguration(sol, _model);
@@ -109,10 +119,21 @@ public class FMLChocoSolver {
 
     public Collection<FMLChocoConfiguration> configsALL() {
 
-        _model = new FMLChocoModel().transform(_fmv);
+        _model = new FMLChocoModel().transform(_fmv,  _cstsAtts);
 
         Solver solver = _model.getSolver();
         Collection<FMLChocoConfiguration> cfgs = new HashSet<>();
+
+        List<Solution> sols = solver.findAllSolutions();
+        for (Solution sol : sols) {
+            FMLChocoConfiguration cfg = mkConfiguration(sol, _model);
+            // treat solution
+            cfgs.add(cfg);
+        }
+
+
+/*
+OLD version: twice iteration
         while (solver.solve()) {
             Solution sol = solver.findSolution();
 
@@ -121,12 +142,14 @@ public class FMLChocoSolver {
             FMLChocoConfiguration cfg = mkConfiguration(sol, _model);
             // treat solution
             cfgs.add(cfg);
-        }
+        }*/
 
         return cfgs;
     }
 
     private FMLChocoConfiguration mkConfiguration(Solution cf, Model model) {
+
+       // _log.warning("cf " + cf);
 
         FMLChocoConfiguration lConf = new FMLChocoConfiguration();
 

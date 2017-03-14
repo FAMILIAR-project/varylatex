@@ -6,6 +6,30 @@ import fr.familiar.FMLTest;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
 import fr.familiar.variable.Variable;
+import org.apache.spark.SparkConf;
+import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.ml.Pipeline;
+import org.apache.spark.ml.PipelineModel;
+import org.apache.spark.ml.PipelineStage;
+import org.apache.spark.ml.classification.DecisionTreeClassificationModel;
+import org.apache.spark.ml.classification.DecisionTreeClassifier;
+import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
+import org.apache.spark.ml.feature.*;
+import org.apache.spark.mllib.tree.DecisionTree;
+import org.apache.spark.mllib.tree.configuration.Algo;
+import org.apache.spark.mllib.tree.configuration.Strategy;
+import org.apache.spark.mllib.tree.impurity.Gini;
+import org.apache.spark.mllib.tree.model.DecisionTreeModel;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.Metadata;
+import org.apache.spark.sql.types.StructField;
+import org.apache.spark.sql.types.StructType;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solver;
 import org.chocosolver.solver.search.strategy.Search;
@@ -287,7 +311,42 @@ public class VaryLatexTest extends FMLTest {
             // side-effect
             // works because getSolutionCount() returns the number of solving you have made (basically number of calls to "solve" / findSolution)
             assertEquals(fmv.counting(), (double) solver.getSolutionCount(), 0.0);
+            assertEquals(fmv.counting(), cfgs.size(), 0.0);
         }
+
+    }
+
+    @Test
+    public void testFM2ChocoAttributes() throws Exception {
+
+
+
+        FeatureModelVariable fmv = FM("VARY_LATEX : [SUBTITLE] FIGURE_TUX ACK LONG_AFFILIATION; ACK : (MOREACK|BOLDACK); LONG_AFFILIATION : [EMAIL]  ; ");
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+        fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0, 100.0)); // TODO: type the attribute
+
+
+        Collection<AttributedConstraintVariable> cstsAtts = new HashSet<>();
+        cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("vspace_tux", ArithmeticCompOperator.GE, 7)));
+        cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("size_tux", ArithmeticCompOperator.GE, 4.9)));
+
+        FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv, cstsAtts);
+        Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
+        //Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configs(3);
+        int c = 0;
+        for (FMLChocoConfiguration cfg : cfgs) {
+            _log.info("cfg (" + c++ + ") = " + cfg.getValues());
+        }
+
+        /*
+        Solver solver = fmlChocoSolver.getCurrentSolver();
+        // side-effect
+        // works because getSolutionCount() returns the number of solving you have made (basically number of calls to "solve" / findSolution)
+        double solutionCount = (double) solver.getSolutionCount();
+        _log.warning("solutionCount " + solutionCount);
+        assertEquals(fmv.counting(), solutionCount, 0.0);
+        assertEquals(fmv.counting(), cfgs.size(), 0.0);*/
+
 
     }
 
@@ -533,9 +592,6 @@ public class VaryLatexTest extends FMLTest {
         fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.98, 1.0, 1000.0)); // TODO: type the attribute
         // fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleVariable("", 0.99)); // TODO: type the attribute
 
-
-
-
         /***
          * CONFIG GEN (with Choco model/solver)
          */
@@ -602,6 +658,153 @@ public class VaryLatexTest extends FMLTest {
 
     }
 
+    @Test
+    public void testMLib() throws Exception {
+
+        SparkSession spark = SparkSession
+                .builder()
+                .appName("Java Spark SQL basic example")
+                .config("spark.master", "local")
+                .getOrCreate();
+
+
+
+        // bof
+        StructType customSchema = new StructType(new StructField[] {
+                new StructField("ACK", DataTypes.BooleanType, true, Metadata.empty()),
+                new StructField("BOLD_ACK", DataTypes.BooleanType, true, Metadata.empty()),
+                new StructField("EMAIL", DataTypes.BooleanType, true, Metadata.empty()),
+                new StructField("size_tux", DataTypes.DoubleType, true, Metadata.empty()),
+                new StructField("vspace_tux", DataTypes.IntegerType, true, Metadata.empty())
+        });
+
+        // Load the data stored in LIBSVM format as a DataFrame.
+        Dataset<Row> data = spark
+                .read()
+                .option("header", "true")
+                .format("csv")
+          //       .schema(customSchema)
+           //     .option("inferSchema", "true")
+                .load("output/stats.csv");
+
+
+        data.show();
+
+
+
+
+
+
+
+        // Index labels, adding metadata to the label column.
+        // Fit on whole dataset to include all labels in index.
+        StringIndexerModel labelIndexer = new StringIndexer()
+                .setInputCol("EMAIL")
+                .setOutputCol("indexedEMAIL")
+                .fit(data);
+
+        // Index labels, adding metadata to the label column.
+        // Fit on whole dataset to include all labels in index.
+        StringIndexerModel labelIndexer1 = new StringIndexer()
+                .setInputCol("ACK")
+                .setOutputCol("indexedACK")
+                .fit(data);
+
+        StringIndexerModel labelIndexer2 = new StringIndexer()
+                .setInputCol("vspace_tux")
+                .setOutputCol("indexedVSPACE_TUX")
+                .fit(data);
+
+        StringIndexerModel labelIndexer3 = new StringIndexer()
+                .setInputCol("size_tux")
+                .setOutputCol("indexedSIZE_TUX")
+                .fit(data);
+
+
+        StringIndexerModel labelIndexerLabel = new StringIndexer()
+                .setInputCol("nbPages")
+                .setOutputCol("indexedLabel")
+                .fit(data);
+
+     //   labelIndexer.transform(data).show();
+
+        // data.show();
+
+        VectorAssembler assembler = new VectorAssembler()
+                .setInputCols(new String[]{"indexedEMAIL", "indexedACK", "indexedSIZE_TUX", "indexedVSPACE_TUX"})
+                .setOutputCol("indexedFeatures");
+
+        //Dataset<Row> output = assembler.transform(data);
+//        System.err.println("OUT: " + output);
+
+        // Automatically identify categorical features, and index them.
+        /*
+        VectorIndexerModel featureIndexer = new VectorIndexer()
+                .setInputCol("vspace_tux")
+                .setOutputCol("indexedFeatures")
+                .setMaxCategories(4) // features with > 4 distinct values are treated as continuous.
+                .fit(data);*/
+
+        // Split the data into training and test sets (30% held out for testing).
+        Dataset<Row>[] splits = data.randomSplit(new double[]{0.9, 0.1});
+        Dataset<Row> trainingData = splits[0];
+        Dataset<Row> testData = splits[1];
+
+        // Train a DecisionTree model.
+        DecisionTreeClassifier dt = new DecisionTreeClassifier()
+                .setLabelCol("indexedLabel")
+                .setFeaturesCol("indexedFeatures");
+
+        // Convert indexed labels back to original labels.
+
+        IndexToString labelConverter = new IndexToString()
+                .setInputCol("prediction")
+                .setOutputCol("predictedLabel")
+                .setLabels(labelIndexer2.labels());
+
+        Pipeline pipeline = new Pipeline()
+                .setStages(new PipelineStage[]{labelIndexer, labelIndexer1, labelIndexer2, labelIndexer3, labelIndexerLabel, assembler, dt, labelConverter});
+
+        // Chain indexers and tree in a Pipeline.
+        /*Pipeline pipeline = new Pipeline()
+                .setStages(new PipelineStage[]{labelIndexer, featureIndexer, dt, labelConverter});*/
+
+        // Train model. This also runs the indexers.
+        PipelineModel model = pipeline.fit(trainingData);
+
+        // Make predictions.
+        Dataset<Row> predictions = model.transform(testData);
+
+        predictions.show();
+
+        // Select example rows to display.
+       // predictions.select("predictedLabel", "label", "features").show(5);
+
+        // Select (prediction, true label) and compute test error.
+        MulticlassClassificationEvaluator evaluator = new MulticlassClassificationEvaluator()
+                .setLabelCol("indexedLabel")
+                .setPredictionCol("prediction")
+                .setMetricName("accuracy");
+        double accuracy = evaluator.evaluate(predictions);
+        System.out.println("Test Error = " + (1.0 - accuracy));
+
+        DecisionTreeClassificationModel treeModel =
+                (DecisionTreeClassificationModel) (model.stages()[6]);
+        System.out.println("Learned classification tree model:\n" + treeModel.toDebugString());
+
+        System.out.println("cols " +  treeModel.getFeaturesCol());
+        System.out.println("root " +  treeModel.rootNode());
+        // $example off$
+
+        spark.stop();
+
+//        Dataset<Row> data2 = data.filter(data.col("ACK").equalTo("true"));
+//        data2.show();
+
+
+
+    }
+
 
 
 
@@ -661,27 +864,13 @@ public class VaryLatexTest extends FMLTest {
 
 
 
-    /*
-    public class Configuration {
 
-        private boolean ack;
 
-        private String friends;
 
-        public Configuration(boolean ack, String friends) {
-            this.ack = ack;
-            this.friends = friends;
-        }
 
-        public boolean isAck() {
-            return ack;
-        }
 
-        public String getFriends() {
-            return friends;
-        }
 
-    }*/
+
 
 
 }
