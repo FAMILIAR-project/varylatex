@@ -210,7 +210,7 @@ public class VaryLatexTest extends FMLTest {
         BoolVar LONG_AFFILIATION = model.boolVar("LONG_AFFILIATION");
         IntVar stretch = model.intVar("stretch", 970, 1000);
         IntVar vspace = model.intVar("vspace", 0, 5);
-        RealVar fakeR = model.realVar("fakeR", 2.2, 5.2, 1d);
+        RealVar fakeR = model.realVar("fakeR", 2.2, 5.2, 0.01d);
 
         // model.post(new RealConstraint("fakeR", ">", new FixedRealVarImpl("28", 2.8, model)));
 
@@ -254,7 +254,13 @@ public class VaryLatexTest extends FMLTest {
 
 
         Criterion cr;
-        System.err.println("" + solver.findAllSolutions(new SolutionCounter(model, 1000)));
+        List<Solution> allSols = solver.findAllSolutions(new SolutionCounter(model, 1000));
+        for (Solution sol : allSols) {
+            double[] fakeB  = sol.getRealBounds(fakeR);
+            System.err.println("" + fakeB[0] + " " + fakeB[1]);
+
+        }
+        // System.err.println("" + allSols);
 
        /* int MAX_SOL = 100;
         int nSol = 0;
@@ -375,6 +381,233 @@ public class VaryLatexTest extends FMLTest {
 
     }
 
+    @Test
+    public void testX264() throws Exception {
+
+
+        String TARGET_FOLDER = "outputX264";
+
+        String trailerLocation = "/Users/macher1/Documents/SANDBOX/x264Expe/sintel_trailer_2k_480p24.y4m";
+
+// _ because "-" is not allowed in FALILIAR (I think coz of FeatureIDE limitation
+        FeatureModelVariable fmv = FM(
+                "H264 : no_asm [no_8x8dct] [no_cabac] [no_deblock] [no_fast_pskip] [no_mbtree]\n" +
+                        "            [no_mixed_refs] [no_weightb] ref rc_lookahead ; ref : (ref1|ref5|ref9); rc_lookahead :\n" +
+                        "            (rc_lookahead20 | rc_lookahead40 | rc_lookahead60); ");
+        assertEquals(1152, fmv.counting(), 0.0);
+        // TODO "set" variable (numerical) != domain
+
+       // mkHeaders
+
+
+
+        Set<Variable> cfs = fmv.configs();
+        Collection<Set<String>> scfs = new HashSet<Set<String>>();
+        for (Variable cf : cfs) {
+            Set<String> confFts = ((SetVariable) cf).names();
+            scfs.add(confFts);
+
+        }
+
+
+        assertEquals(scfs.size(), cfs.size());
+        assertEquals(1152, cfs.size());
+
+
+        Set<String> fts = fmv.features().names();
+        fts.remove("rc_lookahead20");
+        fts.remove("rc_lookahead40");
+        fts.remove("rc_lookahead60");
+
+        // what a HACK!
+        fts.remove("ref1");
+        fts.remove("ref5");
+        fts.remove("ref9");
+
+        // both sorted
+        String strCSV = "";
+        strCSV = "configurationID" + "," + fts.stream().sorted().collect(Collectors.joining(",")) + "\n";
+
+        String fullHeader = "configurationID" + "," + fts.stream().sorted().collect(Collectors.joining(",")) + ",size,usertime,systemtime,elapsedtime,memorytime" + "";
+
+        int idConf = 0;
+        // FileWriter fw =
+        for (Set<String> cf : scfs) {
+            idConf++;
+            Map<String, Object> conf =  _mkConfMap(fmv, cf); // easier to handle configuration object
+
+            // toCSV line
+            String str = conf.keySet().stream().sorted().map(ft -> conf.get(ft).toString()).collect(Collectors.joining(","));
+            String csvLine = "" + idConf + "," + str;
+            strCSV += csvLine + "\n";
+
+            // toParams line
+            String strParam = "";
+            Set<String> params = conf.keySet();
+            for (String param : params) {
+                Object val = conf.get(param);
+                if (val instanceof Boolean) {
+                    boolean b = ((Boolean) val).booleanValue();
+                    if (b) {
+                        strParam += _mkParam(param) + " ";
+                    }
+                }
+                else {
+                    int v = Integer.parseInt((String) val);
+                    strParam += _mkParam(param) + " " + v + " ";
+                }
+
+            }
+//   // "(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e\\nMEMORYTIME %K\" x264 --no-asm --ref 5 --no-fast-pskip --no-8x8dct --no-deblock --rc-lookahead 40  --no-cabac --no-weightb --no-mixed-refs  -o sintel$numb.flv sintel_trailer_2k_480p24.y4m) 2> $logfilename\n" +
+
+            String shR = "#!/bin/sh\n\n" +
+                    "numb='" + idConf + "'\n" +
+                    "logfilename=\"$numb.log\"\n" +
+                    "trailerlocation='" + trailerLocation + "'" +
+                    "\n" +
+                    "(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e\\nMEMORYTIME %K\" x264 "
+                            + strParam +
+                            " -o sintel$numb" + ".flv $trailerlocation) 2> $logfilename\n" +
+                    "# size of the video\n" +
+                    "size=`du -k sintel$numb.flv | cut -f1`\n" +
+                    "# clean\n" +
+                    "rm sintel$numb.flv\n" +
+                    "\n" +
+                    "# analyze log to extract relevant timing information\n" +
+                    "usertime=`grep \"USERTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
+                    "systemtime=`grep \"SYSTEMTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
+                    "elapsedtime=`grep \"ELAPSEDTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
+                    "memorytime=`grep \"MEMORYTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
+                    "\n" +
+                    "csvLine=" + "'" + csvLine + "'" + "\n" +
+                    "csvLine=\"$csvLine,$size,$usertime,$systemtime,$elapsedtime,$memorytime\""
+                    + "\n"
+                    + "echo $csvLine"
+                    ;
+            System.err.println(shR);
+            // (gtime -f "\t%U user,\t%S system,\t%e elapsed,\t%K"
+            //System.err.println("(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e,\\nmemory %K\" x264 " + strParam + " -o sintel" + idConf + ".flv sintel_trailer_2k_480p24.y4m) 2> " + idConf + ".log");
+            String size = "du -k sintel" + idConf + ".flv | cut -f1";
+            System.err.println("" + size);
+            System.err.println("" + csvLine);
+
+
+            FileWriter fw = new FileWriter(new File(TARGET_FOLDER + "/" + idConf + ".sh"));
+            fw.write(shR);
+            fw.close();
+
+           // fw.write(str + "\n");
+           // fw.close();
+        }
+
+
+
+        FileWriter fwAll = new FileWriter(new File(TARGET_FOLDER + "/" + "launchAll")); // not "sh" since we seek sh files ;)
+        fwAll.write("#!/bin/sh\n\n" +
+                "header=" + "'" + fullHeader + "'" + "\n" +
+                "x64configs=`ls *.sh`\n" +
+                "touch x264-results.csv\n" +
+                "cat /dev/null > x264-results.csv\n" +
+                "echo \"$header\" > x264-results.csv\n" +
+                "for x264config in $x64configs\n" +
+                "do\n" +
+                "   echo \"Processing: \" $x264config\n" +
+                "   csvLine=`sh $x264config`\n" +
+                "   echo \"$csvLine\" >> x264-results.csv\n" +
+                "   csv=\"$csv$csvLine\\n\"" + "\n" +
+                "done\n"
+                // "echo \"$header\\n$csv\" 2> x264-results.csv"
+        );
+        fwAll.close();
+
+        FileWriter fw = new FileWriter(new File(TARGET_FOLDER + "/" + "x264.csv"));
+        fw.write(strCSV);
+        fw.close();
+
+
+
+        //fmv.setFeatureAttribute(fmv.getFeature("H264"), "lookahead", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+        //fmv.setFeatureAttribute(fmv.getFeature("H264"), "ref", new DoubleDomainVariable("", 3.0, 5.0, 100.0)); // TODO: type the attribute
+
+
+        /*Collection<AttributedConstraintVariable> cstsAtts = new HashSet<>();
+        cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("vspace_tux", ArithmeticCompOperator.GE, 7)));
+        cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("size_tux", ArithmeticCompOperator.GE, 4.9)));
+
+
+
+
+        FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv, cstsAtts);
+        Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
+        //Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configs(3);
+        int c = 0;
+        for (FMLChocoConfiguration cfg : cfgs) {
+            _log.info("cfg (" + c++ + ") = " + cfg.getValues());
+        }*/
+
+        /*
+        Solver solver = fmlChocoSolver.getCurrentSolver();
+        // side-effect
+        // works because getSolutionCount() returns the number of solving you have made (basically number of calls to "solve" / findSolution)
+        double solutionCount = (double) solver.getSolutionCount();
+        _log.warning("solutionCount " + solutionCount);
+        assertEquals(fmv.counting(), solutionCount, 0.0);
+        assertEquals(fmv.counting(), cfgs.size(), 0.0);*/
+
+
+    }
+
+    private String _mkParam(String param) {
+        if (param.equals("H264"))
+            return "";
+        String encParam = param.replace("_", "-");
+        return "--" + encParam + "";
+    }
+
+    private Map<String, Object> _mkConfMap(FeatureModelVariable fmv, Set<String> cf) {
+
+        Map<String, Object> lConf = new HashMap<>();
+
+
+        Set<String> allFts = fmv.features().names();
+        for (String ft : allFts) {
+
+            if (ft.startsWith("rc_lookahead") && !ft.equals("rc_lookahead")) { // TODO: hack!
+                // eg rc_lookahead20
+                if (cf.contains(ft)) {
+                    String val = ft.substring("rc_lookahead".length());
+                    lConf.put("rc_lookahead", val);
+                }
+            }
+
+            else if (ft.startsWith("ref")) { // TODO: hack!
+                if (ft.equals("ref1") || ft.equals("ref5") || ft.equals("ref9")) {
+                    // eg rc_lookahead20
+                    if (cf.contains(ft)) {
+                        String val = ft.substring("ref".length());
+                        lConf.put("ref", val);
+                    }
+                }
+            }
+
+            else if (ft.equals("ref")) { // TODO: hack!
+               // nothing
+            }
+
+            else if (ft.equals("rc_lookahead")) { // TODO: hack!
+                // nothing
+            }
+
+            else {
+                if (cf.contains(ft))
+                    lConf.put(ft, true);
+                else
+                    lConf.put(ft, false);
+            }
+        }
+
+        return lConf;
+    }
 
 
 

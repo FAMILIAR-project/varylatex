@@ -1,0 +1,14 @@
+#!/bin/sh
+
+header='configurationID,H264,no_8x8dct,no_asm,no_cabac,no_deblock,no_fast_pskip,no_mbtree,no_mixed_refs,no_weightb,rc_lookahead,ref,size,usertime,systemtime,elapsedtime,memorytime'
+x64configs=`ls *.sh`
+touch x264-results.csv
+cat /dev/null > x264-results.csv
+echo "$header" > x264-results.csv
+for x264config in $x64configs
+do
+   echo "Processing: " $x264config
+   csvLine=`sh $x264config`
+   echo "$csvLine" >> x264-results.csv
+   csv="$csv$csvLine\n"
+done
