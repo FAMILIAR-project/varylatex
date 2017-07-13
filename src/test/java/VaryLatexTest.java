@@ -387,7 +387,14 @@ public class VaryLatexTest extends FMLTest {
 
         String TARGET_FOLDER = "outputX264";
 
-        String trailerLocation = "/Users/macher1/Documents/SANDBOX/x264Expe/sintel_trailer_2k_480p24.y4m";
+        //String trailerLocation = "/Users/macher1/Documents/SANDBOX/x264Expe/sintel_trailer_2k_480p24.y4m";
+        String trailerLocation = "../husky_cif.y4m"; //"../sign_irene_qcif.y4m"; //"../football_cif_15fps.y4m"; //"../flower_sif.y4m"; // "../claire_qcif.y4m" ; // "../akiyo_qcif.y4m" ; //"../sympsons.mp4" ; // "../elephantsdream_source.264" ; // "../sintel_trailer_2k_480p24.y4m";
+
+        String X264cmdLocation = "../x264/x264"; // "x264" ; // "/Users/macher1/Documents/SANDBOX/x264Expe/x264-r2851-ba24899"; //"x264"; // x264/x264
+
+        String oExtension = "flv";
+
+        final int REPEAT = 10;
 
 // _ because "-" is not allowed in FALILIAR (I think coz of FeatureIDE limitation
         FeatureModelVariable fmv = FM(
@@ -428,7 +435,7 @@ public class VaryLatexTest extends FMLTest {
         String strCSV = "";
         strCSV = "configurationID" + "," + fts.stream().sorted().collect(Collectors.joining(",")) + "\n";
 
-        String fullHeader = "configurationID" + "," + fts.stream().sorted().collect(Collectors.joining(",")) + ",size,usertime,systemtime,elapsedtime,memorytime" + "";
+        String fullHeader = "configurationID" + "," + fts.stream().sorted().collect(Collectors.joining(",")) + ",size,usertime,systemtime,elapsedtime" + "";
 
         int idConf = 0;
         // FileWriter fw =
@@ -460,35 +467,44 @@ public class VaryLatexTest extends FMLTest {
             }
 //   // "(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e\\nMEMORYTIME %K\" x264 --no-asm --ref 5 --no-fast-pskip --no-8x8dct --no-deblock --rc-lookahead 40  --no-cabac --no-weightb --no-mixed-refs  -o sintel$numb.flv sintel_trailer_2k_480p24.y4m) 2> $logfilename\n" +
 
-            String shR = "#!/bin/sh\n\n" +
+            String shR = "#!/bin/bash\n\n" +
                     "numb='" + idConf + "'\n" +
                     "logfilename=\"$numb.log\"\n" +
                     "trailerlocation='" + trailerLocation + "'" +
                     "\n" +
-                    "(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e\\nMEMORYTIME %K\" x264 "
+                    "TIMEFORMAT=\"USERTIME %U                                                                                            \n" +
+                    "SYSTEMTIME %S                                                                                                      \n" +
+                    "ELAPSEDTIME %R\"; { time " +
+                    // "(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e\\nMEMORYTIME %K\" " +
+                    //"x264 "
+                    //"../x264/x264 "
+                    X264cmdLocation + " "
                             + strParam +
-                            " -o sintel$numb" + ".flv $trailerlocation) 2> $logfilename\n" +
+                            " -o sintel$numb" + "." + oExtension + " $trailerlocation ; } 2> $logfilename\n" +
+                        //    " -o sintel$numb" + ".flv $trailerlocation) 2> $logfilename\n" +
                     "# size of the video\n" +
-                    "size=`du -k sintel$numb.flv | cut -f1`\n" +
-                    "# clean\n" +
-                    "rm sintel$numb.flv\n" +
-                    "\n" +
+                   // "size=`du sintel$numb." + oExtension + " | cut -f1`\n" +
+                    "size=`ls -lrt sintel$numb." + oExtension + " | awk '{print $5}'`\n" +
                     "# analyze log to extract relevant timing information\n" +
-                    "usertime=`grep \"USERTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
-                    "systemtime=`grep \"SYSTEMTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
-                    "elapsedtime=`grep \"ELAPSEDTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
-                    "memorytime=`grep \"MEMORYTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
+                    "usertime=`grep \"USERTIME\" $logfilename | sed 's/[^.,0-9]*//g ; s/,/./g'`\n" +
+                    "systemtime=`grep \"SYSTEMTIME\" $logfilename | sed 's/[^.,0-9]*//g ; s/,/./g'`\n" +
+                    "elapsedtime=`grep \"ELAPSEDTIME\" $logfilename | sed 's/[^.,0-9]*//g ; s/,/./g'`\n" +
+                    // "memorytime=`grep \"MEMORYTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
+                    "# clean\n" +
+                    "rm sintel$numb." + oExtension + "\n" +
+                    "\n" +
                     "\n" +
                     "csvLine=" + "'" + csvLine + "'" + "\n" +
-                    "csvLine=\"$csvLine,$size,$usertime,$systemtime,$elapsedtime,$memorytime\""
+                    //"csvLine=\"$csvLine,$size,$usertime,$systemtime,$elapsedtime,$memorytime\""
+                    "csvLine=\"$csvLine,$size,$usertime,$systemtime,$elapsedtime\""
                     + "\n"
                     + "echo $csvLine"
                     ;
             System.err.println(shR);
             // (gtime -f "\t%U user,\t%S system,\t%e elapsed,\t%K"
             //System.err.println("(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e,\\nmemory %K\" x264 " + strParam + " -o sintel" + idConf + ".flv sintel_trailer_2k_480p24.y4m) 2> " + idConf + ".log");
-            String size = "du -k sintel" + idConf + ".flv | cut -f1";
-            System.err.println("" + size);
+            //String size = "du -k sintel" + idConf + ".flv | cut -f1";
+            // System.err.println("" + size);
             System.err.println("" + csvLine);
 
 
@@ -503,7 +519,7 @@ public class VaryLatexTest extends FMLTest {
 
 
         FileWriter fwAll = new FileWriter(new File(TARGET_FOLDER + "/" + "launchAll")); // not "sh" since we seek sh files ;)
-        fwAll.write("#!/bin/sh\n\n" +
+        /*fwAll.write("#!/bin/bash\n\n" +
                 "header=" + "'" + fullHeader + "'" + "\n" +
                 "x64configs=`ls *.sh`\n" +
                 "touch x264-results.csv\n" +
@@ -512,10 +528,30 @@ public class VaryLatexTest extends FMLTest {
                 "for x264config in $x64configs\n" +
                 "do\n" +
                 "   echo \"Processing: \" $x264config\n" +
-                "   csvLine=`sh $x264config`\n" +
+                "   csvLine=`bash $x264config`\n" +
                 "   echo \"$csvLine\" >> x264-results.csv\n" +
                 "   csv=\"$csv$csvLine\\n\"" + "\n" +
                 "done\n"
+                // "echo \"$header\\n$csv\" 2> x264-results.csv"
+        );*/
+
+        fwAll.write("#!/bin/bash\n\n" +
+                        "header=" + "'" + fullHeader + "'" + "\n" +
+                        "x64configs=`ls *.sh`\n" +
+                        "for i in {1.." + REPEAT + "}\n" +
+                        "do\n" +
+                        "csvOutput=\"x264-results$i.csv\"\n" +
+                        "touch $csvOutput\n" +
+                        "cat /dev/null > $csvOutput\n" +
+                        "echo \"$header\" > $csvOutput\n" +
+                        "for x264config in $x64configs\n" +
+                        "do\n" +
+                        "echo \"Processing: \" $x264config\n" +
+                        "   csvLine=`bash $x264config`\n" +
+                        "   echo \"$csvLine\" >> $csvOutput\n" +
+                        "done\n" +
+                        "tar cvf \"oX264-results$i.tar.gz\" *.log\n" +
+                        "done\n"
                 // "echo \"$header\\n$csv\" 2> x264-results.csv"
         );
         fwAll.close();

@@ -1,14 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
-header='configurationID,H264,no_8x8dct,no_asm,no_cabac,no_deblock,no_fast_pskip,no_mbtree,no_mixed_refs,no_weightb,rc_lookahead,ref,size,usertime,systemtime,elapsedtime,memorytime'
+header='configurationID,H264,no_8x8dct,no_asm,no_cabac,no_deblock,no_fast_pskip,no_mbtree,no_mixed_refs,no_weightb,rc_lookahead,ref,size,usertime,systemtime,elapsedtime'
 x64configs=`ls *.sh`
-touch x264-results.csv
-cat /dev/null > x264-results.csv
-echo "$header" > x264-results.csv
+for i in {1..10}
+do
+csvOutput="x264-results$i.csv"
+touch $csvOutput
+cat /dev/null > $csvOutput
+echo "$header" > $csvOutput
 for x264config in $x64configs
 do
-   echo "Processing: " $x264config
-   csvLine=`sh $x264config`
-   echo "$csvLine" >> x264-results.csv
-   csv="$csv$csvLine\n"
+echo "Processing: " $x264config
+   csvLine=`bash $x264config`
+   echo "$csvLine" >> $csvOutput
+done
+tar cvf "oX264-results$i.tar.gz" *.log
 done
