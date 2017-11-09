@@ -1,0 +1,1331 @@
+% This is "sig-alternate.tex" V2.0 May 2012
+% This file should be compiled with V2.5 of "sig-alternate.cls" May 2012
+%
+% This example file demonstrates the use of the 'sig-alternate.cls'
+% V2.5 LaTeX2e document class file. It is for those submitting
+% articles to ACM Conference Proceedings WHO DO NOT WISH TO
+% STRICTLY ADHERE TO THE SIGS (PUBS-BOARD-ENDORSED) STYLE.
+% The 'sig-alternate.cls' file will produce a similar-looking,
+% albeit, 'tighter' paper resulting in, invariably, fewer pages.
+%
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.5) produces:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) NO page numbers
+%
+% as against the acm_proc_article-sp.cls file which
+% DOES NOT produce 1) thru' 3) above.
+%
+% Using 'sig-alternate.cls' you have control, however, from within
+% the source .tex file, over both the CopyrightYear
+% (defaulted to 200X) and the ACM Copyright Data
+% (defaulted to X-XXXXX-XX-X/XX/XX).
+% e.g.
+% \CopyrightYear{2007} will cause 2007 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+% ---------------------------------------------------------------------------------------------------------------
+% This .tex source is an example which *does* use
+% the .bib file (from which the .bbl file % is produced).
+% REMEMBER HOWEVER: After having produced the .bbl file,
+% and prior to final submission, you *NEED* to 'insert'
+% your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+%
+% ================= IF YOU HAVE QUESTIONS =======================
+% Questions regarding the SIGS styles, SIGS policies and
+% procedures, Conferences etc. should be sent to
+% Adrienne Griscti (griscti@acm.org)
+%
+% Technical questions _only_ to
+% Gerald Murray (murray@hq.acm.org)
+% ===============================================================
+%
+% For tracking purposes - this is V2.0 - May 2012
+
+\documentclass{sig-alternate}
+
+\usepackage{todonotes,stmaryrd}
+\usepackage{cite}
+\usepackage{tabularx}
+\usepackage{xspace}
+\let\endproof\relax
+\let\proof\relax
+\usepackage{amssymb,amsmath,mathtools,amsthm}
+\usepackage{url}
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{float}
+\usepackage{subfigure}
+
+\usepackage{enumitem}
+\usepackage{multirow}
+
+\newcommand\fakenewspaper[0]{fakenewspaperpl\xspace}
+
+\newcommand\rro[1]{\textbf{#1}.}% \subsection*{#1}}
+
+\usepackage{pifont}
+
+
+\graphicspath{{figs/}}
+
+\newtheorem{theorem}{Theorem}
+
+%\renewcommand{\floatpagefraction}{0.8}% Magic command ! Avoid to have a page with only one figure
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% COMMENTS / ANNOTATIONS / TODOS
+\newif\ifdraft\drafttrue
+% \newif\ifdraft\draftfalse
+
+\ifdraft
+\newcommand\todos[1]{\todo[inline]{TODO (all): #1}}
+\newcommand\ma[1]{\todo[color=green!40,inline]{TODO (Mathieu): #1}}
+\newcommand{\machanged}[1]{{\color{orange}{#1}}}
+\newcommand\gb[1]{\todo[color=yellow!40,inline]{TODO (Guillaume): #1}}
+\newcommand\rb[1]{\todo[color=blue!35,inline, caption={}]{TODO (Razieh): #1}}
+\newcommand{\rbc}[1]{{\color{red}{#1}}}
+\else
+\newcommand\todos[1]{}
+\newcommand\ma[1]{}
+\newcommand\machanged[1]{#1}
+\newcommand\gb[1]{}
+\newcommand\rb[1]{}
+\newcommand\rbc[1]{#1}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\cf}{\emph{cf.}}
+\newcommand{\etal}{\emph{et al.}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\newcommand{\myexample}[1]{	\emph{\small Example: #1}}
+\renewcommand{\myexample}[1]{\emph{Example.} #1}
+\newtheorem{mydef}{Definition}
+\newcommand{\feature}[1]{\emph{#1}}
+
+\newcommand{\uc}[1]{\bold{\emph{#1}}}
+
+
+\newcommand{\dcs}[0]{\emph{Description of the case study.}\xspace}
+\renewcommand{\dcs}[0]{}
+\newcommand{\wprv}[0]{\emph{Why variability should be protected?}\xspace}
+\renewcommand{\wprv}[0]{\textbf{Why protecting variability?}\xspace}
+\newcommand{\mechvar}[0]{\textbf{What kinds of mechanisms can be used for varying and protecting variability?}}
+
+%\usepackage{setspace}
+%\setstretch{0.99}
+%\setstretch{+{{{stretch}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{listings}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+   language=JavaScript,
+  % backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\scriptsize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\scriptsize,
+   numbersep=7pt,
+   tabsize=1,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+
+\hyphenation{para-meterizable}
+
+\pagenumbering{arabic}
+\makeatletter
+\let\@copyrightspace\relax
+%\makeatother
+
+%\toappear{} % To hide the copyright
+
+\begin{document}
+%
+% --- Author Metadata here ---
+%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% --- End of Author Metadata ---
+
+\title{Product Lines Can Jeopardize Their Trade Secrets}
+% Varying Variability:\\ A Software Protection Perspective}
+%
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
+
+\numberofauthors{1} %  in this sample file, there are a *total*
+% of EIGHT authors. SIX appear on the 'first-page' (for formatting
+% reasons) and the remaining two appear in the \additionalauthors section.
+%
+\author{
+% You can go ahead and credit any number of authors here,
+% e.g. one 'row of three' or two rows (consisting of one row of three
+% and a second row of one, two or three).
+%
+% The command \alignauthor (no curly braces needed) should
+% precede each author name, affiliation/snail-mail address and
+% e-mail address. Additionally, tag each line of
+% affiliation/address with \affaddr, and tag the
+% e-mail address with \email.
+%
+% 1st. author
+\alignauthor
+Mathieu Acher, Guillaume B\'{e}can, Benoit Combemale,\\ Benoit Baudry, and Jean-Marc J\'{e}z\'{e}quel\\
+        {{#if LONG_AFFILIATION}}
+        \affaddr{Inria - IRISA, University of Rennes 1, France}
+        {{#if EMAIL}}
+        \email{firstname.lastname@inria.fr}
+        {{/if}}
+        {{/if}}
+}
+% There's nothing stopping you putting the seventh, eighth, etc.
+% author on the opening page (as the 'third row') but we ask,
+% for aesthetic reasons that you place these 'additional authors'
+% in the \additional authors block, viz.
+%\additionalauthors{Additional authors: John Smith (The Th{\o}rv{\"a}ld Group,
+%email: {\texttt{jsmith@affiliation.org}}) and Julius P.~Kumquat
+%(The Kumquat Consortium, email: {\texttt{jpkumquat@consortium.net}}).}
+% \date{30 July 1999}
+% Just remember to make sure that the TOTAL number of authors
+% is the number that will appear on the first page PLUS the
+% number that will appear in the \additionalauthors section.
+
+\maketitle
+
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+
+% A category with the (minimum) three required fields
+%\category{H.4}{Information Systems Applications}{Miscellaneous}
+%A category including the fourth, optional field follows...
+%\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
+
+%\terms{Theory}
+
+%\keywords{Attributed feature models, Product descriptions, Reverse engineering}
+
+\section{Introduction}
+%\input{introduction.tex}
+
+Last login: Thu Oct 26 07:22:20 on ttys027
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ wc -l stats.csv 
+      68 stats.csv
+vmacher:output-FSE macher1$ wc -l stats.csv 
+     302 stats.csv
+vmacher:output-FSE macher1$ ls
+DEModularity15.bibVaryingVariability-FSE15_190.blgVaryingVariability-FSE15_281.pdf
+Untitled.ipynbVaryingVariability-FSE15_190.csvVaryingVariability-FSE15_281.synctex.gz
+VaryingVariability-FSE15_1.auxVaryingVariability-FSE15_190.jsonVaryingVariability-FSE15_281.tex
+VaryingVariability-FSE15_1.bblVaryingVariability-FSE15_190.logVaryingVariability-FSE15_282.aux
+VaryingVariability-FSE15_1.blgVaryingVariability-FSE15_190.pdfVaryingVariability-FSE15_282.bbl
+VaryingVariability-FSE15_1.csvVaryingVariability-FSE15_190.synctex.gzVaryingVariability-FSE15_282.blg
+VaryingVariability-FSE15_1.jsonVaryingVariability-FSE15_190.texVaryingVariability-FSE15_282.csv
+VaryingVariability-FSE15_1.logVaryingVariability-FSE15_191.auxVaryingVariability-FSE15_282.json
+VaryingVariability-FSE15_1.pdfVaryingVariability-FSE15_191.bblVaryingVariability-FSE15_282.log
+VaryingVariability-FSE15_1.synctex.gzVaryingVariability-FSE15_191.blgVaryingVariability-FSE15_282.pdf
+VaryingVariability-FSE15_1.texVaryingVariability-FSE15_191.csvVaryingVariability-FSE15_282.synctex.gz
+VaryingVariability-FSE15_10.auxVaryingVariability-FSE15_191.jsonVaryingVariability-FSE15_282.tex
+VaryingVariability-FSE15_10.bblVaryingVariability-FSE15_191.logVaryingVariability-FSE15_283.aux
+VaryingVariability-FSE15_10.blgVaryingVariability-FSE15_191.pdfVaryingVariability-FSE15_283.bbl
+VaryingVariability-FSE15_10.csvVaryingVariability-FSE15_191.synctex.gzVaryingVariability-FSE15_283.blg
+VaryingVariability-FSE15_10.jsonVaryingVariability-FSE15_191.texVaryingVariability-FSE15_283.csv
+VaryingVariability-FSE15_10.logVaryingVariability-FSE15_192.auxVaryingVariability-FSE15_283.json
+VaryingVariability-FSE15_10.pdfVaryingVariability-FSE15_192.bblVaryingVariability-FSE15_283.log
+VaryingVariability-FSE15_10.synctex.gzVaryingVariability-FSE15_192.blgVaryingVariability-FSE15_283.pdf
+VaryingVariability-FSE15_10.texVaryingVariability-FSE15_192.csvVaryingVariability-FSE15_283.synctex.gz
+VaryingVariability-FSE15_100.auxVaryingVariability-FSE15_192.jsonVaryingVariability-FSE15_283.tex
+VaryingVariability-FSE15_100.bblVaryingVariability-FSE15_192.logVaryingVariability-FSE15_284.aux
+VaryingVariability-FSE15_100.blgVaryingVariability-FSE15_192.pdfVaryingVariability-FSE15_284.bbl
+VaryingVariability-FSE15_100.csvVaryingVariability-FSE15_192.synctex.gzVaryingVariability-FSE15_284.blg
+VaryingVariability-FSE15_100.jsonVaryingVariability-FSE15_192.texVaryingVariability-FSE15_284.csv
+VaryingVariability-FSE15_100.logVaryingVariability-FSE15_193.auxVaryingVariability-FSE15_284.json
+VaryingVariability-FSE15_100.pdfVaryingVariability-FSE15_193.bblVaryingVariability-FSE15_284.log
+VaryingVariability-FSE15_100.synctex.gzVaryingVariability-FSE15_193.blgVaryingVariability-FSE15_284.pdf
+VaryingVariability-FSE15_100.texVaryingVariability-FSE15_193.csvVaryingVariability-FSE15_284.synctex.gz
+VaryingVariability-FSE15_101.auxVaryingVariability-FSE15_193.jsonVaryingVariability-FSE15_284.tex
+VaryingVariability-FSE15_101.bblVaryingVariability-FSE15_193.logVaryingVariability-FSE15_285.aux
+VaryingVariability-FSE15_101.blgVaryingVariability-FSE15_193.pdfVaryingVariability-FSE15_285.bbl
+VaryingVariability-FSE15_101.csvVaryingVariability-FSE15_193.synctex.gzVaryingVariability-FSE15_285.blg
+VaryingVariability-FSE15_101.jsonVaryingVariability-FSE15_193.texVaryingVariability-FSE15_285.csv
+VaryingVariability-FSE15_101.logVaryingVariability-FSE15_194.auxVaryingVariability-FSE15_285.json
+VaryingVariability-FSE15_101.pdfVaryingVariability-FSE15_194.bblVaryingVariability-FSE15_285.log
+VaryingVariability-FSE15_101.synctex.gzVaryingVariability-FSE15_194.blgVaryingVariability-FSE15_285.pdf
+VaryingVariability-FSE15_101.texVaryingVariability-FSE15_194.csvVaryingVariability-FSE15_285.synctex.gz
+VaryingVariability-FSE15_102.auxVaryingVariability-FSE15_194.jsonVaryingVariability-FSE15_285.tex
+VaryingVariability-FSE15_102.bblVaryingVariability-FSE15_194.logVaryingVariability-FSE15_286.aux
+VaryingVariability-FSE15_102.blgVaryingVariability-FSE15_194.pdfVaryingVariability-FSE15_286.bbl
+VaryingVariability-FSE15_102.csvVaryingVariability-FSE15_194.synctex.gzVaryingVariability-FSE15_286.blg
+VaryingVariability-FSE15_102.jsonVaryingVariability-FSE15_194.texVaryingVariability-FSE15_286.csv
+VaryingVariability-FSE15_102.logVaryingVariability-FSE15_195.auxVaryingVariability-FSE15_286.json
+VaryingVariability-FSE15_102.pdfVaryingVariability-FSE15_195.bblVaryingVariability-FSE15_286.log
+VaryingVariability-FSE15_102.synctex.gzVaryingVariability-FSE15_195.blgVaryingVariability-FSE15_286.pdf
+VaryingVariability-FSE15_102.texVaryingVariability-FSE15_195.csvVaryingVariability-FSE15_286.synctex.gz
+VaryingVariability-FSE15_103.auxVaryingVariability-FSE15_195.jsonVaryingVariability-FSE15_286.tex
+VaryingVariability-FSE15_103.bblVaryingVariability-FSE15_195.logVaryingVariability-FSE15_287.aux
+VaryingVariability-FSE15_103.blgVaryingVariability-FSE15_195.pdfVaryingVariability-FSE15_287.bbl
+VaryingVariability-FSE15_103.csvVaryingVariability-FSE15_195.synctex.gzVaryingVariability-FSE15_287.blg
+VaryingVariability-FSE15_103.jsonVaryingVariability-FSE15_195.texVaryingVariability-FSE15_287.csv
+VaryingVariability-FSE15_103.logVaryingVariability-FSE15_196.auxVaryingVariability-FSE15_287.json
+VaryingVariability-FSE15_103.pdfVaryingVariability-FSE15_196.bblVaryingVariability-FSE15_287.log
+VaryingVariability-FSE15_103.synctex.gzVaryingVariability-FSE15_196.blgVaryingVariability-FSE15_287.pdf
+VaryingVariability-FSE15_103.texVaryingVariability-FSE15_196.csvVaryingVariability-FSE15_287.synctex.gz
+VaryingVariability-FSE15_104.auxVaryingVariability-FSE15_196.jsonVaryingVariability-FSE15_287.tex
+VaryingVariability-FSE15_104.bblVaryingVariability-FSE15_196.logVaryingVariability-FSE15_288.aux
+VaryingVariability-FSE15_104.blgVaryingVariability-FSE15_196.pdfVaryingVariability-FSE15_288.bbl
+VaryingVariability-FSE15_104.csvVaryingVariability-FSE15_196.synctex.gzVaryingVariability-FSE15_288.blg
+VaryingVariability-FSE15_104.jsonVaryingVariability-FSE15_196.texVaryingVariability-FSE15_288.csv
+VaryingVariability-FSE15_104.logVaryingVariability-FSE15_197.auxVaryingVariability-FSE15_288.json
+VaryingVariability-FSE15_104.pdfVaryingVariability-FSE15_197.bblVaryingVariability-FSE15_288.log
+VaryingVariability-FSE15_104.synctex.gzVaryingVariability-FSE15_197.blgVaryingVariability-FSE15_288.pdf
+VaryingVariability-FSE15_104.texVaryingVariability-FSE15_197.csvVaryingVariability-FSE15_288.synctex.gz
+VaryingVariability-FSE15_105.auxVaryingVariability-FSE15_197.jsonVaryingVariability-FSE15_288.tex
+VaryingVariability-FSE15_105.bblVaryingVariability-FSE15_197.logVaryingVariability-FSE15_289.aux
+VaryingVariability-FSE15_105.blgVaryingVariability-FSE15_197.pdfVaryingVariability-FSE15_289.bbl
+VaryingVariability-FSE15_105.csvVaryingVariability-FSE15_197.synctex.gzVaryingVariability-FSE15_289.blg
+VaryingVariability-FSE15_105.jsonVaryingVariability-FSE15_197.texVaryingVariability-FSE15_289.csv
+VaryingVariability-FSE15_105.logVaryingVariability-FSE15_198.auxVaryingVariability-FSE15_289.json
+VaryingVariability-FSE15_105.pdfVaryingVariability-FSE15_198.bblVaryingVariability-FSE15_289.log
+VaryingVariability-FSE15_105.synctex.gzVaryingVariability-FSE15_198.blgVaryingVariability-FSE15_289.pdf
+VaryingVariability-FSE15_105.texVaryingVariability-FSE15_198.csvVaryingVariability-FSE15_289.synctex.gz
+VaryingVariability-FSE15_106.auxVaryingVariability-FSE15_198.jsonVaryingVariability-FSE15_289.tex
+VaryingVariability-FSE15_106.bblVaryingVariability-FSE15_198.logVaryingVariability-FSE15_29.aux
+VaryingVariability-FSE15_106.blgVaryingVariability-FSE15_198.pdfVaryingVariability-FSE15_29.bbl
+VaryingVariability-FSE15_106.csvVaryingVariability-FSE15_198.synctex.gzVaryingVariability-FSE15_29.blg
+VaryingVariability-FSE15_106.jsonVaryingVariability-FSE15_198.texVaryingVariability-FSE15_29.csv
+VaryingVariability-FSE15_106.logVaryingVariability-FSE15_199.auxVaryingVariability-FSE15_29.json
+VaryingVariability-FSE15_106.pdfVaryingVariability-FSE15_199.bblVaryingVariability-FSE15_29.log
+VaryingVariability-FSE15_106.synctex.gzVaryingVariability-FSE15_199.blgVaryingVariability-FSE15_29.pdf
+VaryingVariability-FSE15_106.texVaryingVariability-FSE15_199.csvVaryingVariability-FSE15_29.synctex.gz
+VaryingVariability-FSE15_107.auxVaryingVariability-FSE15_199.jsonVaryingVariability-FSE15_29.tex
+VaryingVariability-FSE15_107.bblVaryingVariability-FSE15_199.logVaryingVariability-FSE15_290.aux
+VaryingVariability-FSE15_107.blgVaryingVariability-FSE15_199.pdfVaryingVariability-FSE15_290.bbl
+VaryingVariability-FSE15_107.csvVaryingVariability-FSE15_199.synctex.gzVaryingVariability-FSE15_290.blg
+VaryingVariability-FSE15_107.jsonVaryingVariability-FSE15_199.texVaryingVariability-FSE15_290.csv
+VaryingVariability-FSE15_107.logVaryingVariability-FSE15_2.auxVaryingVariability-FSE15_290.json
+VaryingVariability-FSE15_107.pdfVaryingVariability-FSE15_2.bblVaryingVariability-FSE15_290.log
+VaryingVariability-FSE15_107.synctex.gzVaryingVariability-FSE15_2.blgVaryingVariability-FSE15_290.pdf
+VaryingVariability-FSE15_107.texVaryingVariability-FSE15_2.csvVaryingVariability-FSE15_290.synctex.gz
+VaryingVariability-FSE15_108.auxVaryingVariability-FSE15_2.jsonVaryingVariability-FSE15_290.tex
+VaryingVariability-FSE15_108.bblVaryingVariability-FSE15_2.logVaryingVariability-FSE15_291.aux
+VaryingVariability-FSE15_108.blgVaryingVariability-FSE15_2.pdfVaryingVariability-FSE15_291.bbl
+VaryingVariability-FSE15_108.csvVaryingVariability-FSE15_2.synctex.gzVaryingVariability-FSE15_291.blg
+VaryingVariability-FSE15_108.jsonVaryingVariability-FSE15_2.texVaryingVariability-FSE15_291.csv
+VaryingVariability-FSE15_108.logVaryingVariability-FSE15_20.auxVaryingVariability-FSE15_291.json
+VaryingVariability-FSE15_108.pdfVaryingVariability-FSE15_20.bblVaryingVariability-FSE15_291.log
+VaryingVariability-FSE15_108.synctex.gzVaryingVariability-FSE15_20.blgVaryingVariability-FSE15_291.pdf
+VaryingVariability-FSE15_108.texVaryingVariability-FSE15_20.csvVaryingVariability-FSE15_291.synctex.gz
+VaryingVariability-FSE15_109.auxVaryingVariability-FSE15_20.jsonVaryingVariability-FSE15_291.tex
+VaryingVariability-FSE15_109.bblVaryingVariability-FSE15_20.logVaryingVariability-FSE15_292.aux
+VaryingVariability-FSE15_109.blgVaryingVariability-FSE15_20.pdfVaryingVariability-FSE15_292.bbl
+VaryingVariability-FSE15_109.csvVaryingVariability-FSE15_20.synctex.gzVaryingVariability-FSE15_292.blg
+VaryingVariability-FSE15_109.jsonVaryingVariability-FSE15_20.texVaryingVariability-FSE15_292.csv
+VaryingVariability-FSE15_109.logVaryingVariability-FSE15_200.auxVaryingVariability-FSE15_292.json
+VaryingVariability-FSE15_109.pdfVaryingVariability-FSE15_200.bblVaryingVariability-FSE15_292.log
+VaryingVariability-FSE15_109.synctex.gzVaryingVariability-FSE15_200.blgVaryingVariability-FSE15_292.pdf
+VaryingVariability-FSE15_109.texVaryingVariability-FSE15_200.csvVaryingVariability-FSE15_292.synctex.gz
+VaryingVariability-FSE15_11.auxVaryingVariability-FSE15_200.jsonVaryingVariability-FSE15_292.tex
+VaryingVariability-FSE15_11.bblVaryingVariability-FSE15_200.logVaryingVariability-FSE15_293.aux
+VaryingVariability-FSE15_11.blgVaryingVariability-FSE15_200.pdfVaryingVariability-FSE15_293.bbl
+VaryingVariability-FSE15_11.csvVaryingVariability-FSE15_200.synctex.gzVaryingVariability-FSE15_293.blg
+VaryingVariability-FSE15_11.jsonVaryingVariability-FSE15_200.texVaryingVariability-FSE15_293.csv
+VaryingVariability-FSE15_11.logVaryingVariability-FSE15_201.auxVaryingVariability-FSE15_293.json
+VaryingVariability-FSE15_11.pdfVaryingVariability-FSE15_201.bblVaryingVariability-FSE15_293.log
+VaryingVariability-FSE15_11.synctex.gzVaryingVariability-FSE15_201.blgVaryingVariability-FSE15_293.pdf
+VaryingVariability-FSE15_11.texVaryingVariability-FSE15_201.csvVaryingVariability-FSE15_293.synctex.gz
+VaryingVariability-FSE15_110.auxVaryingVariability-FSE15_201.jsonVaryingVariability-FSE15_293.tex
+VaryingVariability-FSE15_110.bblVaryingVariability-FSE15_201.logVaryingVariability-FSE15_294.aux
+VaryingVariability-FSE15_110.blgVaryingVariability-FSE15_201.pdfVaryingVariability-FSE15_294.bbl
+VaryingVariability-FSE15_110.csvVaryingVariability-FSE15_201.synctex.gzVaryingVariability-FSE15_294.blg
+VaryingVariability-FSE15_110.jsonVaryingVariability-FSE15_201.texVaryingVariability-FSE15_294.csv
+VaryingVariability-FSE15_110.logVaryingVariability-FSE15_202.auxVaryingVariability-FSE15_294.json
+VaryingVariability-FSE15_110.pdfVaryingVariability-FSE15_202.bblVaryingVariability-FSE15_294.log
+VaryingVariability-FSE15_110.synctex.gzVaryingVariability-FSE15_202.blgVaryingVariability-FSE15_294.pdf
+VaryingVariability-FSE15_110.texVaryingVariability-FSE15_202.csvVaryingVariability-FSE15_294.synctex.gz
+VaryingVariability-FSE15_111.auxVaryingVariability-FSE15_202.jsonVaryingVariability-FSE15_294.tex
+VaryingVariability-FSE15_111.bblVaryingVariability-FSE15_202.logVaryingVariability-FSE15_295.aux
+VaryingVariability-FSE15_111.blgVaryingVariability-FSE15_202.pdfVaryingVariability-FSE15_295.bbl
+VaryingVariability-FSE15_111.csvVaryingVariability-FSE15_202.synctex.gzVaryingVariability-FSE15_295.blg
+VaryingVariability-FSE15_111.jsonVaryingVariability-FSE15_202.texVaryingVariability-FSE15_295.csv
+VaryingVariability-FSE15_111.logVaryingVariability-FSE15_203.auxVaryingVariability-FSE15_295.json
+VaryingVariability-FSE15_111.pdfVaryingVariability-FSE15_203.bblVaryingVariability-FSE15_295.log
+VaryingVariability-FSE15_111.synctex.gzVaryingVariability-FSE15_203.blgVaryingVariability-FSE15_295.pdf
+VaryingVariability-FSE15_111.texVaryingVariability-FSE15_203.csvVaryingVariability-FSE15_295.synctex.gz
+VaryingVariability-FSE15_112.auxVaryingVariability-FSE15_203.jsonVaryingVariability-FSE15_295.tex
+VaryingVariability-FSE15_112.bblVaryingVariability-FSE15_203.logVaryingVariability-FSE15_296.aux
+VaryingVariability-FSE15_112.blgVaryingVariability-FSE15_203.pdfVaryingVariability-FSE15_296.bbl
+VaryingVariability-FSE15_112.csvVaryingVariability-FSE15_203.synctex.gzVaryingVariability-FSE15_296.blg
+VaryingVariability-FSE15_112.jsonVaryingVariability-FSE15_203.texVaryingVariability-FSE15_296.csv
+VaryingVariability-FSE15_112.logVaryingVariability-FSE15_204.auxVaryingVariability-FSE15_296.json
+VaryingVariability-FSE15_112.pdfVaryingVariability-FSE15_204.bblVaryingVariability-FSE15_296.log
+VaryingVariability-FSE15_112.synctex.gzVaryingVariability-FSE15_204.blgVaryingVariability-FSE15_296.pdf
+VaryingVariability-FSE15_112.texVaryingVariability-FSE15_204.csvVaryingVariability-FSE15_296.synctex.gz
+VaryingVariability-FSE15_113.auxVaryingVariability-FSE15_204.jsonVaryingVariability-FSE15_296.tex
+VaryingVariability-FSE15_113.bblVaryingVariability-FSE15_204.logVaryingVariability-FSE15_297.aux
+VaryingVariability-FSE15_113.blgVaryingVariability-FSE15_204.pdfVaryingVariability-FSE15_297.bbl
+VaryingVariability-FSE15_113.csvVaryingVariability-FSE15_204.synctex.gzVaryingVariability-FSE15_297.blg
+VaryingVariability-FSE15_113.jsonVaryingVariability-FSE15_204.texVaryingVariability-FSE15_297.csv
+VaryingVariability-FSE15_113.logVaryingVariability-FSE15_205.auxVaryingVariability-FSE15_297.json
+VaryingVariability-FSE15_113.pdfVaryingVariability-FSE15_205.bblVaryingVariability-FSE15_297.log
+VaryingVariability-FSE15_113.synctex.gzVaryingVariability-FSE15_205.blgVaryingVariability-FSE15_297.pdf
+VaryingVariability-FSE15_113.texVaryingVariability-FSE15_205.csvVaryingVariability-FSE15_297.synctex.gz
+VaryingVariability-FSE15_114.auxVaryingVariability-FSE15_205.jsonVaryingVariability-FSE15_297.tex
+VaryingVariability-FSE15_114.bblVaryingVariability-FSE15_205.logVaryingVariability-FSE15_298.aux
+VaryingVariability-FSE15_114.blgVaryingVariability-FSE15_205.pdfVaryingVariability-FSE15_298.bbl
+VaryingVariability-FSE15_114.csvVaryingVariability-FSE15_205.synctex.gzVaryingVariability-FSE15_298.blg
+VaryingVariability-FSE15_114.jsonVaryingVariability-FSE15_205.texVaryingVariability-FSE15_298.csv
+VaryingVariability-FSE15_114.logVaryingVariability-FSE15_206.auxVaryingVariability-FSE15_298.json
+VaryingVariability-FSE15_114.pdfVaryingVariability-FSE15_206.bblVaryingVariability-FSE15_298.log
+VaryingVariability-FSE15_114.synctex.gzVaryingVariability-FSE15_206.blgVaryingVariability-FSE15_298.pdf
+VaryingVariability-FSE15_114.texVaryingVariability-FSE15_206.csvVaryingVariability-FSE15_298.synctex.gz
+VaryingVariability-FSE15_115.auxVaryingVariability-FSE15_206.jsonVaryingVariability-FSE15_298.tex
+VaryingVariability-FSE15_115.bblVaryingVariability-FSE15_206.logVaryingVariability-FSE15_299.aux
+VaryingVariability-FSE15_115.blgVaryingVariability-FSE15_206.pdfVaryingVariability-FSE15_299.bbl
+VaryingVariability-FSE15_115.csvVaryingVariability-FSE15_206.synctex.gzVaryingVariability-FSE15_299.blg
+VaryingVariability-FSE15_115.jsonVaryingVariability-FSE15_206.texVaryingVariability-FSE15_299.csv
+VaryingVariability-FSE15_115.logVaryingVariability-FSE15_207.auxVaryingVariability-FSE15_299.json
+VaryingVariability-FSE15_115.pdfVaryingVariability-FSE15_207.bblVaryingVariability-FSE15_299.log
+VaryingVariability-FSE15_115.synctex.gzVaryingVariability-FSE15_207.blgVaryingVariability-FSE15_299.pdf
+VaryingVariability-FSE15_115.texVaryingVariability-FSE15_207.csvVaryingVariability-FSE15_299.synctex.gz
+VaryingVariability-FSE15_116.auxVaryingVariability-FSE15_207.jsonVaryingVariability-FSE15_299.tex
+VaryingVariability-FSE15_116.bblVaryingVariability-FSE15_207.logVaryingVariability-FSE15_3.aux
+VaryingVariability-FSE15_116.blgVaryingVariability-FSE15_207.pdfVaryingVariability-FSE15_3.bbl
+VaryingVariability-FSE15_116.csvVaryingVariability-FSE15_207.synctex.gzVaryingVariability-FSE15_3.blg
+VaryingVariability-FSE15_116.jsonVaryingVariability-FSE15_207.texVaryingVariability-FSE15_3.csv
+VaryingVariability-FSE15_116.logVaryingVariability-FSE15_208.auxVaryingVariability-FSE15_3.json
+VaryingVariability-FSE15_116.pdfVaryingVariability-FSE15_208.bblVaryingVariability-FSE15_3.log
+VaryingVariability-FSE15_116.synctex.gzVaryingVariability-FSE15_208.blgVaryingVariability-FSE15_3.pdf
+VaryingVariability-FSE15_116.texVaryingVariability-FSE15_208.csvVaryingVariability-FSE15_3.synctex.gz
+VaryingVariability-FSE15_117.auxVaryingVariability-FSE15_208.jsonVaryingVariability-FSE15_3.tex
+VaryingVariability-FSE15_117.bblVaryingVariability-FSE15_208.logVaryingVariability-FSE15_30.aux
+VaryingVariability-FSE15_117.blgVaryingVariability-FSE15_208.pdfVaryingVariability-FSE15_30.bbl
+VaryingVariability-FSE15_117.csvVaryingVariability-FSE15_208.synctex.gzVaryingVariability-FSE15_30.blg
+VaryingVariability-FSE15_117.jsonVaryingVariability-FSE15_208.texVaryingVariability-FSE15_30.csv
+VaryingVariability-FSE15_117.logVaryingVariability-FSE15_209.auxVaryingVariability-FSE15_30.json
+VaryingVariability-FSE15_117.pdfVaryingVariability-FSE15_209.bblVaryingVariability-FSE15_30.log
+VaryingVariability-FSE15_117.synctex.gzVaryingVariability-FSE15_209.blgVaryingVariability-FSE15_30.pdf
+VaryingVariability-FSE15_117.texVaryingVariability-FSE15_209.csvVaryingVariability-FSE15_30.synctex.gz
+VaryingVariability-FSE15_118.auxVaryingVariability-FSE15_209.jsonVaryingVariability-FSE15_30.tex
+VaryingVariability-FSE15_118.bblVaryingVariability-FSE15_209.logVaryingVariability-FSE15_300.aux
+VaryingVariability-FSE15_118.blgVaryingVariability-FSE15_209.pdfVaryingVariability-FSE15_300.bbl
+VaryingVariability-FSE15_118.csvVaryingVariability-FSE15_209.synctex.gzVaryingVariability-FSE15_300.blg
+VaryingVariability-FSE15_118.jsonVaryingVariability-FSE15_209.texVaryingVariability-FSE15_300.csv
+VaryingVariability-FSE15_118.logVaryingVariability-FSE15_21.auxVaryingVariability-FSE15_300.json
+VaryingVariability-FSE15_118.pdfVaryingVariability-FSE15_21.bblVaryingVariability-FSE15_300.log
+VaryingVariability-FSE15_118.synctex.gzVaryingVariability-FSE15_21.blgVaryingVariability-FSE15_300.pdf
+VaryingVariability-FSE15_118.texVaryingVariability-FSE15_21.csvVaryingVariability-FSE15_300.synctex.gz
+VaryingVariability-FSE15_119.auxVaryingVariability-FSE15_21.jsonVaryingVariability-FSE15_300.tex
+VaryingVariability-FSE15_119.bblVaryingVariability-FSE15_21.logVaryingVariability-FSE15_301.aux
+VaryingVariability-FSE15_119.blgVaryingVariability-FSE15_21.pdfVaryingVariability-FSE15_301.bbl
+VaryingVariability-FSE15_119.csvVaryingVariability-FSE15_21.synctex.gzVaryingVariability-FSE15_301.blg
+VaryingVariability-FSE15_119.jsonVaryingVariability-FSE15_21.texVaryingVariability-FSE15_301.csv
+VaryingVariability-FSE15_119.logVaryingVariability-FSE15_210.auxVaryingVariability-FSE15_301.json
+VaryingVariability-FSE15_119.pdfVaryingVariability-FSE15_210.bblVaryingVariability-FSE15_301.log
+VaryingVariability-FSE15_119.synctex.gzVaryingVariability-FSE15_210.blgVaryingVariability-FSE15_301.pdf
+VaryingVariability-FSE15_119.texVaryingVariability-FSE15_210.csvVaryingVariability-FSE15_301.synctex.gz
+VaryingVariability-FSE15_12.auxVaryingVariability-FSE15_210.jsonVaryingVariability-FSE15_301.tex
+VaryingVariability-FSE15_12.bblVaryingVariability-FSE15_210.logVaryingVariability-FSE15_31.aux
+VaryingVariability-FSE15_12.blgVaryingVariability-FSE15_210.pdfVaryingVariability-FSE15_31.bbl
+VaryingVariability-FSE15_12.csvVaryingVariability-FSE15_210.synctex.gzVaryingVariability-FSE15_31.blg
+VaryingVariability-FSE15_12.jsonVaryingVariability-FSE15_210.texVaryingVariability-FSE15_31.csv
+VaryingVariability-FSE15_12.logVaryingVariability-FSE15_211.auxVaryingVariability-FSE15_31.json
+VaryingVariability-FSE15_12.pdfVaryingVariability-FSE15_211.bblVaryingVariability-FSE15_31.log
+VaryingVariability-FSE15_12.synctex.gzVaryingVariability-FSE15_211.blgVaryingVariability-FSE15_31.pdf
+VaryingVariability-FSE15_12.texVaryingVariability-FSE15_211.csvVaryingVariability-FSE15_31.synctex.gz
+VaryingVariability-FSE15_120.auxVaryingVariability-FSE15_211.jsonVaryingVariability-FSE15_31.tex
+VaryingVariability-FSE15_120.bblVaryingVariability-FSE15_211.logVaryingVariability-FSE15_32.aux
+VaryingVariability-FSE15_120.blgVaryingVariability-FSE15_211.pdfVaryingVariability-FSE15_32.bbl
+VaryingVariability-FSE15_120.csvVaryingVariability-FSE15_211.synctex.gzVaryingVariability-FSE15_32.blg
+VaryingVariability-FSE15_120.jsonVaryingVariability-FSE15_211.texVaryingVariability-FSE15_32.csv
+VaryingVariability-FSE15_120.logVaryingVariability-FSE15_212.auxVaryingVariability-FSE15_32.json
+VaryingVariability-FSE15_120.pdfVaryingVariability-FSE15_212.bblVaryingVariability-FSE15_32.log
+VaryingVariability-FSE15_120.synctex.gzVaryingVariability-FSE15_212.blgVaryingVariability-FSE15_32.pdf
+VaryingVariability-FSE15_120.texVaryingVariability-FSE15_212.csvVaryingVariability-FSE15_32.synctex.gz
+VaryingVariability-FSE15_121.auxVaryingVariability-FSE15_212.jsonVaryingVariability-FSE15_32.tex
+VaryingVariability-FSE15_121.bblVaryingVariability-FSE15_212.logVaryingVariability-FSE15_33.aux
+VaryingVariability-FSE15_121.blgVaryingVariability-FSE15_212.pdfVaryingVariability-FSE15_33.bbl
+VaryingVariability-FSE15_121.csvVaryingVariability-FSE15_212.synctex.gzVaryingVariability-FSE15_33.blg
+VaryingVariability-FSE15_121.jsonVaryingVariability-FSE15_212.texVaryingVariability-FSE15_33.csv
+VaryingVariability-FSE15_121.logVaryingVariability-FSE15_213.auxVaryingVariability-FSE15_33.json
+VaryingVariability-FSE15_121.pdfVaryingVariability-FSE15_213.bblVaryingVariability-FSE15_33.log
+VaryingVariability-FSE15_121.synctex.gzVaryingVariability-FSE15_213.blgVaryingVariability-FSE15_33.pdf
+VaryingVariability-FSE15_121.texVaryingVariability-FSE15_213.csvVaryingVariability-FSE15_33.synctex.gz
+VaryingVariability-FSE15_122.auxVaryingVariability-FSE15_213.jsonVaryingVariability-FSE15_33.tex
+VaryingVariability-FSE15_122.bblVaryingVariability-FSE15_213.logVaryingVariability-FSE15_34.aux
+VaryingVariability-FSE15_122.blgVaryingVariability-FSE15_213.pdfVaryingVariability-FSE15_34.bbl
+VaryingVariability-FSE15_122.csvVaryingVariability-FSE15_213.synctex.gzVaryingVariability-FSE15_34.blg
+VaryingVariability-FSE15_122.jsonVaryingVariability-FSE15_213.texVaryingVariability-FSE15_34.csv
+VaryingVariability-FSE15_122.logVaryingVariability-FSE15_214.auxVaryingVariability-FSE15_34.json
+VaryingVariability-FSE15_122.pdfVaryingVariability-FSE15_214.bblVaryingVariability-FSE15_34.log
+VaryingVariability-FSE15_122.synctex.gzVaryingVariability-FSE15_214.blgVaryingVariability-FSE15_34.pdf
+VaryingVariability-FSE15_122.texVaryingVariability-FSE15_214.csvVaryingVariability-FSE15_34.synctex.gz
+VaryingVariability-FSE15_123.auxVaryingVariability-FSE15_214.jsonVaryingVariability-FSE15_34.tex
+VaryingVariability-FSE15_123.bblVaryingVariability-FSE15_214.logVaryingVariability-FSE15_35.aux
+VaryingVariability-FSE15_123.blgVaryingVariability-FSE15_214.pdfVaryingVariability-FSE15_35.bbl
+VaryingVariability-FSE15_123.csvVaryingVariability-FSE15_214.synctex.gzVaryingVariability-FSE15_35.blg
+VaryingVariability-FSE15_123.jsonVaryingVariability-FSE15_214.texVaryingVariability-FSE15_35.csv
+VaryingVariability-FSE15_123.logVaryingVariability-FSE15_215.auxVaryingVariability-FSE15_35.json
+VaryingVariability-FSE15_123.pdfVaryingVariability-FSE15_215.bblVaryingVariability-FSE15_35.log
+VaryingVariability-FSE15_123.synctex.gzVaryingVariability-FSE15_215.blgVaryingVariability-FSE15_35.pdf
+VaryingVariability-FSE15_123.texVaryingVariability-FSE15_215.csvVaryingVariability-FSE15_35.synctex.gz
+VaryingVariability-FSE15_124.auxVaryingVariability-FSE15_215.jsonVaryingVariability-FSE15_35.tex
+VaryingVariability-FSE15_124.bblVaryingVariability-FSE15_215.logVaryingVariability-FSE15_36.aux
+VaryingVariability-FSE15_124.blgVaryingVariability-FSE15_215.pdfVaryingVariability-FSE15_36.bbl
+VaryingVariability-FSE15_124.csvVaryingVariability-FSE15_215.synctex.gzVaryingVariability-FSE15_36.blg
+VaryingVariability-FSE15_124.jsonVaryingVariability-FSE15_215.texVaryingVariability-FSE15_36.csv
+VaryingVariability-FSE15_124.logVaryingVariability-FSE15_216.auxVaryingVariability-FSE15_36.json
+VaryingVariability-FSE15_124.pdfVaryingVariability-FSE15_216.bblVaryingVariability-FSE15_36.log
+VaryingVariability-FSE15_124.synctex.gzVaryingVariability-FSE15_216.blgVaryingVariability-FSE15_36.pdf
+VaryingVariability-FSE15_124.texVaryingVariability-FSE15_216.csvVaryingVariability-FSE15_36.synctex.gz
+VaryingVariability-FSE15_125.auxVaryingVariability-FSE15_216.jsonVaryingVariability-FSE15_36.tex
+VaryingVariability-FSE15_125.bblVaryingVariability-FSE15_216.logVaryingVariability-FSE15_37.aux
+VaryingVariability-FSE15_125.blgVaryingVariability-FSE15_216.pdfVaryingVariability-FSE15_37.bbl
+VaryingVariability-FSE15_125.csvVaryingVariability-FSE15_216.synctex.gzVaryingVariability-FSE15_37.blg
+VaryingVariability-FSE15_125.jsonVaryingVariability-FSE15_216.texVaryingVariability-FSE15_37.csv
+VaryingVariability-FSE15_125.logVaryingVariability-FSE15_217.auxVaryingVariability-FSE15_37.json
+VaryingVariability-FSE15_125.pdfVaryingVariability-FSE15_217.bblVaryingVariability-FSE15_37.log
+VaryingVariability-FSE15_125.synctex.gzVaryingVariability-FSE15_217.blgVaryingVariability-FSE15_37.pdf
+VaryingVariability-FSE15_125.texVaryingVariability-FSE15_217.csvVaryingVariability-FSE15_37.synctex.gz
+VaryingVariability-FSE15_126.auxVaryingVariability-FSE15_217.jsonVaryingVariability-FSE15_37.tex
+VaryingVariability-FSE15_126.bblVaryingVariability-FSE15_217.logVaryingVariability-FSE15_38.aux
+VaryingVariability-FSE15_126.blgVaryingVariability-FSE15_217.pdfVaryingVariability-FSE15_38.bbl
+VaryingVariability-FSE15_126.csvVaryingVariability-FSE15_217.synctex.gzVaryingVariability-FSE15_38.blg
+VaryingVariability-FSE15_126.jsonVaryingVariability-FSE15_217.texVaryingVariability-FSE15_38.csv
+VaryingVariability-FSE15_126.logVaryingVariability-FSE15_218.auxVaryingVariability-FSE15_38.json
+VaryingVariability-FSE15_126.pdfVaryingVariability-FSE15_218.bblVaryingVariability-FSE15_38.log
+VaryingVariability-FSE15_126.synctex.gzVaryingVariability-FSE15_218.blgVaryingVariability-FSE15_38.pdf
+VaryingVariability-FSE15_126.texVaryingVariability-FSE15_218.csvVaryingVariability-FSE15_38.synctex.gz
+VaryingVariability-FSE15_127.auxVaryingVariability-FSE15_218.jsonVaryingVariability-FSE15_38.tex
+VaryingVariability-FSE15_127.bblVaryingVariability-FSE15_218.logVaryingVariability-FSE15_39.aux
+VaryingVariability-FSE15_127.blgVaryingVariability-FSE15_218.pdfVaryingVariability-FSE15_39.bbl
+VaryingVariability-FSE15_127.csvVaryingVariability-FSE15_218.synctex.gzVaryingVariability-FSE15_39.blg
+VaryingVariability-FSE15_127.jsonVaryingVariability-FSE15_218.texVaryingVariability-FSE15_39.csv
+VaryingVariability-FSE15_127.logVaryingVariability-FSE15_219.auxVaryingVariability-FSE15_39.json
+VaryingVariability-FSE15_127.pdfVaryingVariability-FSE15_219.bblVaryingVariability-FSE15_39.log
+VaryingVariability-FSE15_127.synctex.gzVaryingVariability-FSE15_219.blgVaryingVariability-FSE15_39.pdf
+VaryingVariability-FSE15_127.texVaryingVariability-FSE15_219.csvVaryingVariability-FSE15_39.synctex.gz
+VaryingVariability-FSE15_128.auxVaryingVariability-FSE15_219.jsonVaryingVariability-FSE15_39.tex
+VaryingVariability-FSE15_128.bblVaryingVariability-FSE15_219.logVaryingVariability-FSE15_4.aux
+VaryingVariability-FSE15_128.blgVaryingVariability-FSE15_219.pdfVaryingVariability-FSE15_4.bbl
+VaryingVariability-FSE15_128.csvVaryingVariability-FSE15_219.synctex.gzVaryingVariability-FSE15_4.blg
+VaryingVariability-FSE15_128.jsonVaryingVariability-FSE15_219.texVaryingVariability-FSE15_4.csv
+VaryingVariability-FSE15_128.logVaryingVariability-FSE15_22.auxVaryingVariability-FSE15_4.json
+VaryingVariability-FSE15_128.pdfVaryingVariability-FSE15_22.bblVaryingVariability-FSE15_4.log
+VaryingVariability-FSE15_128.synctex.gzVaryingVariability-FSE15_22.blgVaryingVariability-FSE15_4.pdf
+VaryingVariability-FSE15_128.texVaryingVariability-FSE15_22.csvVaryingVariability-FSE15_4.synctex.gz
+VaryingVariability-FSE15_129.auxVaryingVariability-FSE15_22.jsonVaryingVariability-FSE15_4.tex
+VaryingVariability-FSE15_129.bblVaryingVariability-FSE15_22.logVaryingVariability-FSE15_40.aux
+VaryingVariability-FSE15_129.blgVaryingVariability-FSE15_22.pdfVaryingVariability-FSE15_40.bbl
+VaryingVariability-FSE15_129.csvVaryingVariability-FSE15_22.synctex.gzVaryingVariability-FSE15_40.blg
+VaryingVariability-FSE15_129.jsonVaryingVariability-FSE15_22.texVaryingVariability-FSE15_40.csv
+VaryingVariability-FSE15_129.logVaryingVariability-FSE15_220.auxVaryingVariability-FSE15_40.json
+VaryingVariability-FSE15_129.pdfVaryingVariability-FSE15_220.bblVaryingVariability-FSE15_40.log
+VaryingVariability-FSE15_129.synctex.gzVaryingVariability-FSE15_220.blgVaryingVariability-FSE15_40.pdf
+VaryingVariability-FSE15_129.texVaryingVariability-FSE15_220.csvVaryingVariability-FSE15_40.synctex.gz
+VaryingVariability-FSE15_13.auxVaryingVariability-FSE15_220.jsonVaryingVariability-FSE15_40.tex
+VaryingVariability-FSE15_13.bblVaryingVariability-FSE15_220.logVaryingVariability-FSE15_41.aux
+VaryingVariability-FSE15_13.blgVaryingVariability-FSE15_220.pdfVaryingVariability-FSE15_41.bbl
+VaryingVariability-FSE15_13.csvVaryingVariability-FSE15_220.synctex.gzVaryingVariability-FSE15_41.blg
+VaryingVariability-FSE15_13.jsonVaryingVariability-FSE15_220.texVaryingVariability-FSE15_41.csv
+VaryingVariability-FSE15_13.logVaryingVariability-FSE15_221.auxVaryingVariability-FSE15_41.json
+VaryingVariability-FSE15_13.pdfVaryingVariability-FSE15_221.bblVaryingVariability-FSE15_41.log
+VaryingVariability-FSE15_13.synctex.gzVaryingVariability-FSE15_221.blgVaryingVariability-FSE15_41.pdf
+VaryingVariability-FSE15_13.texVaryingVariability-FSE15_221.csvVaryingVariability-FSE15_41.synctex.gz
+VaryingVariability-FSE15_130.auxVaryingVariability-FSE15_221.jsonVaryingVariability-FSE15_41.tex
+VaryingVariability-FSE15_130.bblVaryingVariability-FSE15_221.logVaryingVariability-FSE15_42.aux
+VaryingVariability-FSE15_130.blgVaryingVariability-FSE15_221.pdfVaryingVariability-FSE15_42.bbl
+VaryingVariability-FSE15_130.csvVaryingVariability-FSE15_221.synctex.gzVaryingVariability-FSE15_42.blg
+VaryingVariability-FSE15_130.jsonVaryingVariability-FSE15_221.texVaryingVariability-FSE15_42.csv
+VaryingVariability-FSE15_130.logVaryingVariability-FSE15_222.auxVaryingVariability-FSE15_42.json
+VaryingVariability-FSE15_130.pdfVaryingVariability-FSE15_222.bblVaryingVariability-FSE15_42.log
+VaryingVariability-FSE15_130.synctex.gzVaryingVariability-FSE15_222.blgVaryingVariability-FSE15_42.pdf
+VaryingVariability-FSE15_130.texVaryingVariability-FSE15_222.csvVaryingVariability-FSE15_42.synctex.gz
+VaryingVariability-FSE15_131.auxVaryingVariability-FSE15_222.jsonVaryingVariability-FSE15_42.tex
+VaryingVariability-FSE15_131.bblVaryingVariability-FSE15_222.logVaryingVariability-FSE15_43.aux
+VaryingVariability-FSE15_131.blgVaryingVariability-FSE15_222.pdfVaryingVariability-FSE15_43.bbl
+VaryingVariability-FSE15_131.csvVaryingVariability-FSE15_222.synctex.gzVaryingVariability-FSE15_43.blg
+VaryingVariability-FSE15_131.jsonVaryingVariability-FSE15_222.texVaryingVariability-FSE15_43.csv
+VaryingVariability-FSE15_131.logVaryingVariability-FSE15_223.auxVaryingVariability-FSE15_43.json
+VaryingVariability-FSE15_131.pdfVaryingVariability-FSE15_223.bblVaryingVariability-FSE15_43.log
+VaryingVariability-FSE15_131.synctex.gzVaryingVariability-FSE15_223.blgVaryingVariability-FSE15_43.pdf
+VaryingVariability-FSE15_131.texVaryingVariability-FSE15_223.csvVaryingVariability-FSE15_43.synctex.gz
+VaryingVariability-FSE15_132.auxVaryingVariability-FSE15_223.jsonVaryingVariability-FSE15_43.tex
+VaryingVariability-FSE15_132.bblVaryingVariability-FSE15_223.logVaryingVariability-FSE15_44.aux
+VaryingVariability-FSE15_132.blgVaryingVariability-FSE15_223.pdfVaryingVariability-FSE15_44.bbl
+VaryingVariability-FSE15_132.csvVaryingVariability-FSE15_223.synctex.gzVaryingVariability-FSE15_44.blg
+VaryingVariability-FSE15_132.jsonVaryingVariability-FSE15_223.texVaryingVariability-FSE15_44.csv
+VaryingVariability-FSE15_132.logVaryingVariability-FSE15_224.auxVaryingVariability-FSE15_44.json
+VaryingVariability-FSE15_132.pdfVaryingVariability-FSE15_224.bblVaryingVariability-FSE15_44.log
+VaryingVariability-FSE15_132.synctex.gzVaryingVariability-FSE15_224.blgVaryingVariability-FSE15_44.pdf
+VaryingVariability-FSE15_132.texVaryingVariability-FSE15_224.csvVaryingVariability-FSE15_44.synctex.gz
+VaryingVariability-FSE15_133.auxVaryingVariability-FSE15_224.jsonVaryingVariability-FSE15_44.tex
+VaryingVariability-FSE15_133.bblVaryingVariability-FSE15_224.logVaryingVariability-FSE15_45.aux
+VaryingVariability-FSE15_133.blgVaryingVariability-FSE15_224.pdfVaryingVariability-FSE15_45.bbl
+VaryingVariability-FSE15_133.csvVaryingVariability-FSE15_224.synctex.gzVaryingVariability-FSE15_45.blg
+VaryingVariability-FSE15_133.jsonVaryingVariability-FSE15_224.texVaryingVariability-FSE15_45.csv
+VaryingVariability-FSE15_133.logVaryingVariability-FSE15_225.auxVaryingVariability-FSE15_45.json
+VaryingVariability-FSE15_133.pdfVaryingVariability-FSE15_225.bblVaryingVariability-FSE15_45.log
+VaryingVariability-FSE15_133.synctex.gzVaryingVariability-FSE15_225.blgVaryingVariability-FSE15_45.pdf
+VaryingVariability-FSE15_133.texVaryingVariability-FSE15_225.csvVaryingVariability-FSE15_45.synctex.gz
+VaryingVariability-FSE15_134.auxVaryingVariability-FSE15_225.jsonVaryingVariability-FSE15_45.tex
+VaryingVariability-FSE15_134.bblVaryingVariability-FSE15_225.logVaryingVariability-FSE15_46.aux
+VaryingVariability-FSE15_134.blgVaryingVariability-FSE15_225.pdfVaryingVariability-FSE15_46.bbl
+VaryingVariability-FSE15_134.csvVaryingVariability-FSE15_225.synctex.gzVaryingVariability-FSE15_46.blg
+VaryingVariability-FSE15_134.jsonVaryingVariability-FSE15_225.texVaryingVariability-FSE15_46.csv
+VaryingVariability-FSE15_134.logVaryingVariability-FSE15_226.auxVaryingVariability-FSE15_46.json
+VaryingVariability-FSE15_134.pdfVaryingVariability-FSE15_226.bblVaryingVariability-FSE15_46.log
+VaryingVariability-FSE15_134.synctex.gzVaryingVariability-FSE15_226.blgVaryingVariability-FSE15_46.pdf
+VaryingVariability-FSE15_134.texVaryingVariability-FSE15_226.csvVaryingVariability-FSE15_46.synctex.gz
+VaryingVariability-FSE15_135.auxVaryingVariability-FSE15_226.jsonVaryingVariability-FSE15_46.tex
+VaryingVariability-FSE15_135.bblVaryingVariability-FSE15_226.logVaryingVariability-FSE15_47.aux
+VaryingVariability-FSE15_135.blgVaryingVariability-FSE15_226.pdfVaryingVariability-FSE15_47.bbl
+VaryingVariability-FSE15_135.csvVaryingVariability-FSE15_226.synctex.gzVaryingVariability-FSE15_47.blg
+VaryingVariability-FSE15_135.jsonVaryingVariability-FSE15_226.texVaryingVariability-FSE15_47.csv
+VaryingVariability-FSE15_135.logVaryingVariability-FSE15_227.auxVaryingVariability-FSE15_47.json
+VaryingVariability-FSE15_135.pdfVaryingVariability-FSE15_227.bblVaryingVariability-FSE15_47.log
+VaryingVariability-FSE15_135.synctex.gzVaryingVariability-FSE15_227.blgVaryingVariability-FSE15_47.pdf
+VaryingVariability-FSE15_135.texVaryingVariability-FSE15_227.csvVaryingVariability-FSE15_47.synctex.gz
+VaryingVariability-FSE15_136.auxVaryingVariability-FSE15_227.jsonVaryingVariability-FSE15_47.tex
+VaryingVariability-FSE15_136.bblVaryingVariability-FSE15_227.logVaryingVariability-FSE15_48.aux
+VaryingVariability-FSE15_136.blgVaryingVariability-FSE15_227.pdfVaryingVariability-FSE15_48.bbl
+VaryingVariability-FSE15_136.csvVaryingVariability-FSE15_227.synctex.gzVaryingVariability-FSE15_48.blg
+VaryingVariability-FSE15_136.jsonVaryingVariability-FSE15_227.texVaryingVariability-FSE15_48.csv
+VaryingVariability-FSE15_136.logVaryingVariability-FSE15_228.auxVaryingVariability-FSE15_48.json
+VaryingVariability-FSE15_136.pdfVaryingVariability-FSE15_228.bblVaryingVariability-FSE15_48.log
+VaryingVariability-FSE15_136.synctex.gzVaryingVariability-FSE15_228.blgVaryingVariability-FSE15_48.pdf
+VaryingVariability-FSE15_136.texVaryingVariability-FSE15_228.csvVaryingVariability-FSE15_48.synctex.gz
+VaryingVariability-FSE15_137.auxVaryingVariability-FSE15_228.jsonVaryingVariability-FSE15_48.tex
+VaryingVariability-FSE15_137.bblVaryingVariability-FSE15_228.logVaryingVariability-FSE15_49.aux
+VaryingVariability-FSE15_137.blgVaryingVariability-FSE15_228.pdfVaryingVariability-FSE15_49.bbl
+VaryingVariability-FSE15_137.csvVaryingVariability-FSE15_228.synctex.gzVaryingVariability-FSE15_49.blg
+VaryingVariability-FSE15_137.jsonVaryingVariability-FSE15_228.texVaryingVariability-FSE15_49.csv
+VaryingVariability-FSE15_137.logVaryingVariability-FSE15_229.auxVaryingVariability-FSE15_49.json
+VaryingVariability-FSE15_137.pdfVaryingVariability-FSE15_229.bblVaryingVariability-FSE15_49.log
+VaryingVariability-FSE15_137.synctex.gzVaryingVariability-FSE15_229.blgVaryingVariability-FSE15_49.pdf
+VaryingVariability-FSE15_137.texVaryingVariability-FSE15_229.csvVaryingVariability-FSE15_49.synctex.gz
+VaryingVariability-FSE15_138.auxVaryingVariability-FSE15_229.jsonVaryingVariability-FSE15_49.tex
+VaryingVariability-FSE15_138.bblVaryingVariability-FSE15_229.logVaryingVariability-FSE15_5.aux
+VaryingVariability-FSE15_138.blgVaryingVariability-FSE15_229.pdfVaryingVariability-FSE15_5.bbl
+VaryingVariability-FSE15_138.csvVaryingVariability-FSE15_229.synctex.gzVaryingVariability-FSE15_5.blg
+VaryingVariability-FSE15_138.jsonVaryingVariability-FSE15_229.texVaryingVariability-FSE15_5.csv
+VaryingVariability-FSE15_138.logVaryingVariability-FSE15_23.auxVaryingVariability-FSE15_5.json
+VaryingVariability-FSE15_138.pdfVaryingVariability-FSE15_23.bblVaryingVariability-FSE15_5.log
+VaryingVariability-FSE15_138.synctex.gzVaryingVariability-FSE15_23.blgVaryingVariability-FSE15_5.pdf
+VaryingVariability-FSE15_138.texVaryingVariability-FSE15_23.csvVaryingVariability-FSE15_5.synctex.gz
+VaryingVariability-FSE15_139.auxVaryingVariability-FSE15_23.jsonVaryingVariability-FSE15_5.tex
+VaryingVariability-FSE15_139.bblVaryingVariability-FSE15_23.logVaryingVariability-FSE15_50.aux
+VaryingVariability-FSE15_139.blgVaryingVariability-FSE15_23.pdfVaryingVariability-FSE15_50.bbl
+VaryingVariability-FSE15_139.csvVaryingVariability-FSE15_23.synctex.gzVaryingVariability-FSE15_50.blg
+VaryingVariability-FSE15_139.jsonVaryingVariability-FSE15_23.texVaryingVariability-FSE15_50.csv
+VaryingVariability-FSE15_139.logVaryingVariability-FSE15_230.auxVaryingVariability-FSE15_50.json
+VaryingVariability-FSE15_139.pdfVaryingVariability-FSE15_230.bblVaryingVariability-FSE15_50.log
+VaryingVariability-FSE15_139.synctex.gzVaryingVariability-FSE15_230.blgVaryingVariability-FSE15_50.pdf
+VaryingVariability-FSE15_139.texVaryingVariability-FSE15_230.csvVaryingVariability-FSE15_50.synctex.gz
+VaryingVariability-FSE15_14.auxVaryingVariability-FSE15_230.jsonVaryingVariability-FSE15_50.tex
+VaryingVariability-FSE15_14.bblVaryingVariability-FSE15_230.logVaryingVariability-FSE15_51.aux
+VaryingVariability-FSE15_14.blgVaryingVariability-FSE15_230.pdfVaryingVariability-FSE15_51.bbl
+VaryingVariability-FSE15_14.csvVaryingVariability-FSE15_230.synctex.gzVaryingVariability-FSE15_51.blg
+VaryingVariability-FSE15_14.jsonVaryingVariability-FSE15_230.texVaryingVariability-FSE15_51.csv
+VaryingVariability-FSE15_14.logVaryingVariability-FSE15_231.auxVaryingVariability-FSE15_51.json
+VaryingVariability-FSE15_14.pdfVaryingVariability-FSE15_231.bblVaryingVariability-FSE15_51.log
+VaryingVariability-FSE15_14.synctex.gzVaryingVariability-FSE15_231.blgVaryingVariability-FSE15_51.pdf
+VaryingVariability-FSE15_14.texVaryingVariability-FSE15_231.csvVaryingVariability-FSE15_51.synctex.gz
+VaryingVariability-FSE15_140.auxVaryingVariability-FSE15_231.jsonVaryingVariability-FSE15_51.tex
+VaryingVariability-FSE15_140.bblVaryingVariability-FSE15_231.logVaryingVariability-FSE15_52.aux
+VaryingVariability-FSE15_140.blgVaryingVariability-FSE15_231.pdfVaryingVariability-FSE15_52.bbl
+VaryingVariability-FSE15_140.csvVaryingVariability-FSE15_231.synctex.gzVaryingVariability-FSE15_52.blg
+VaryingVariability-FSE15_140.jsonVaryingVariability-FSE15_231.texVaryingVariability-FSE15_52.csv
+VaryingVariability-FSE15_140.logVaryingVariability-FSE15_232.auxVaryingVariability-FSE15_52.json
+VaryingVariability-FSE15_140.pdfVaryingVariability-FSE15_232.bblVaryingVariability-FSE15_52.log
+VaryingVariability-FSE15_140.synctex.gzVaryingVariability-FSE15_232.blgVaryingVariability-FSE15_52.pdf
+VaryingVariability-FSE15_140.texVaryingVariability-FSE15_232.csvVaryingVariability-FSE15_52.synctex.gz
+VaryingVariability-FSE15_141.auxVaryingVariability-FSE15_232.jsonVaryingVariability-FSE15_52.tex
+VaryingVariability-FSE15_141.bblVaryingVariability-FSE15_232.logVaryingVariability-FSE15_53.aux
+VaryingVariability-FSE15_141.blgVaryingVariability-FSE15_232.pdfVaryingVariability-FSE15_53.bbl
+VaryingVariability-FSE15_141.csvVaryingVariability-FSE15_232.synctex.gzVaryingVariability-FSE15_53.blg
+VaryingVariability-FSE15_141.jsonVaryingVariability-FSE15_232.texVaryingVariability-FSE15_53.csv
+VaryingVariability-FSE15_141.logVaryingVariability-FSE15_233.auxVaryingVariability-FSE15_53.json
+VaryingVariability-FSE15_141.pdfVaryingVariability-FSE15_233.bblVaryingVariability-FSE15_53.log
+VaryingVariability-FSE15_141.synctex.gzVaryingVariability-FSE15_233.blgVaryingVariability-FSE15_53.pdf
+VaryingVariability-FSE15_141.texVaryingVariability-FSE15_233.csvVaryingVariability-FSE15_53.synctex.gz
+VaryingVariability-FSE15_142.auxVaryingVariability-FSE15_233.jsonVaryingVariability-FSE15_53.tex
+VaryingVariability-FSE15_142.bblVaryingVariability-FSE15_233.logVaryingVariability-FSE15_54.aux
+VaryingVariability-FSE15_142.blgVaryingVariability-FSE15_233.pdfVaryingVariability-FSE15_54.bbl
+VaryingVariability-FSE15_142.csvVaryingVariability-FSE15_233.synctex.gzVaryingVariability-FSE15_54.blg
+VaryingVariability-FSE15_142.jsonVaryingVariability-FSE15_233.texVaryingVariability-FSE15_54.csv
+VaryingVariability-FSE15_142.logVaryingVariability-FSE15_234.auxVaryingVariability-FSE15_54.json
+VaryingVariability-FSE15_142.pdfVaryingVariability-FSE15_234.bblVaryingVariability-FSE15_54.log
+VaryingVariability-FSE15_142.synctex.gzVaryingVariability-FSE15_234.blgVaryingVariability-FSE15_54.pdf
+VaryingVariability-FSE15_142.texVaryingVariability-FSE15_234.csvVaryingVariability-FSE15_54.synctex.gz
+VaryingVariability-FSE15_143.auxVaryingVariability-FSE15_234.jsonVaryingVariability-FSE15_54.tex
+VaryingVariability-FSE15_143.bblVaryingVariability-FSE15_234.logVaryingVariability-FSE15_55.aux
+VaryingVariability-FSE15_143.blgVaryingVariability-FSE15_234.pdfVaryingVariability-FSE15_55.bbl
+VaryingVariability-FSE15_143.csvVaryingVariability-FSE15_234.synctex.gzVaryingVariability-FSE15_55.blg
+VaryingVariability-FSE15_143.jsonVaryingVariability-FSE15_234.texVaryingVariability-FSE15_55.csv
+VaryingVariability-FSE15_143.logVaryingVariability-FSE15_235.auxVaryingVariability-FSE15_55.json
+VaryingVariability-FSE15_143.pdfVaryingVariability-FSE15_235.bblVaryingVariability-FSE15_55.log
+VaryingVariability-FSE15_143.synctex.gzVaryingVariability-FSE15_235.blgVaryingVariability-FSE15_55.pdf
+VaryingVariability-FSE15_143.texVaryingVariability-FSE15_235.csvVaryingVariability-FSE15_55.synctex.gz
+VaryingVariability-FSE15_144.auxVaryingVariability-FSE15_235.jsonVaryingVariability-FSE15_55.tex
+VaryingVariability-FSE15_144.bblVaryingVariability-FSE15_235.logVaryingVariability-FSE15_56.aux
+VaryingVariability-FSE15_144.blgVaryingVariability-FSE15_235.pdfVaryingVariability-FSE15_56.bbl
+VaryingVariability-FSE15_144.csvVaryingVariability-FSE15_235.synctex.gzVaryingVariability-FSE15_56.blg
+VaryingVariability-FSE15_144.jsonVaryingVariability-FSE15_235.texVaryingVariability-FSE15_56.csv
+VaryingVariability-FSE15_144.logVaryingVariability-FSE15_236.auxVaryingVariability-FSE15_56.json
+VaryingVariability-FSE15_144.pdfVaryingVariability-FSE15_236.bblVaryingVariability-FSE15_56.log
+VaryingVariability-FSE15_144.synctex.gzVaryingVariability-FSE15_236.blgVaryingVariability-FSE15_56.pdf
+VaryingVariability-FSE15_144.texVaryingVariability-FSE15_236.csvVaryingVariability-FSE15_56.synctex.gz
+VaryingVariability-FSE15_145.auxVaryingVariability-FSE15_236.jsonVaryingVariability-FSE15_56.tex
+VaryingVariability-FSE15_145.bblVaryingVariability-FSE15_236.logVaryingVariability-FSE15_57.aux
+VaryingVariability-FSE15_145.blgVaryingVariability-FSE15_236.pdfVaryingVariability-FSE15_57.bbl
+VaryingVariability-FSE15_145.csvVaryingVariability-FSE15_236.synctex.gzVaryingVariability-FSE15_57.blg
+VaryingVariability-FSE15_145.jsonVaryingVariability-FSE15_236.texVaryingVariability-FSE15_57.csv
+VaryingVariability-FSE15_145.logVaryingVariability-FSE15_237.auxVaryingVariability-FSE15_57.json
+VaryingVariability-FSE15_145.pdfVaryingVariability-FSE15_237.bblVaryingVariability-FSE15_57.log
+VaryingVariability-FSE15_145.synctex.gzVaryingVariability-FSE15_237.blgVaryingVariability-FSE15_57.pdf
+VaryingVariability-FSE15_145.texVaryingVariability-FSE15_237.csvVaryingVariability-FSE15_57.synctex.gz
+VaryingVariability-FSE15_146.auxVaryingVariability-FSE15_237.jsonVaryingVariability-FSE15_57.tex
+VaryingVariability-FSE15_146.bblVaryingVariability-FSE15_237.logVaryingVariability-FSE15_58.aux
+VaryingVariability-FSE15_146.blgVaryingVariability-FSE15_237.pdfVaryingVariability-FSE15_58.bbl
+VaryingVariability-FSE15_146.csvVaryingVariability-FSE15_237.synctex.gzVaryingVariability-FSE15_58.blg
+VaryingVariability-FSE15_146.jsonVaryingVariability-FSE15_237.texVaryingVariability-FSE15_58.csv
+VaryingVariability-FSE15_146.logVaryingVariability-FSE15_238.auxVaryingVariability-FSE15_58.json
+VaryingVariability-FSE15_146.pdfVaryingVariability-FSE15_238.bblVaryingVariability-FSE15_58.log
+VaryingVariability-FSE15_146.synctex.gzVaryingVariability-FSE15_238.blgVaryingVariability-FSE15_58.pdf
+VaryingVariability-FSE15_146.texVaryingVariability-FSE15_238.csvVaryingVariability-FSE15_58.synctex.gz
+VaryingVariability-FSE15_147.auxVaryingVariability-FSE15_238.jsonVaryingVariability-FSE15_58.tex
+VaryingVariability-FSE15_147.bblVaryingVariability-FSE15_238.logVaryingVariability-FSE15_59.aux
+VaryingVariability-FSE15_147.blgVaryingVariability-FSE15_238.pdfVaryingVariability-FSE15_59.bbl
+VaryingVariability-FSE15_147.csvVaryingVariability-FSE15_238.synctex.gzVaryingVariability-FSE15_59.blg
+VaryingVariability-FSE15_147.jsonVaryingVariability-FSE15_238.texVaryingVariability-FSE15_59.csv
+VaryingVariability-FSE15_147.logVaryingVariability-FSE15_239.auxVaryingVariability-FSE15_59.json
+VaryingVariability-FSE15_147.pdfVaryingVariability-FSE15_239.bblVaryingVariability-FSE15_59.log
+VaryingVariability-FSE15_147.synctex.gzVaryingVariability-FSE15_239.blgVaryingVariability-FSE15_59.pdf
+VaryingVariability-FSE15_147.texVaryingVariability-FSE15_239.csvVaryingVariability-FSE15_59.synctex.gz
+VaryingVariability-FSE15_148.auxVaryingVariability-FSE15_239.jsonVaryingVariability-FSE15_59.tex
+VaryingVariability-FSE15_148.bblVaryingVariability-FSE15_239.logVaryingVariability-FSE15_6.aux
+VaryingVariability-FSE15_148.blgVaryingVariability-FSE15_239.pdfVaryingVariability-FSE15_6.bbl
+VaryingVariability-FSE15_148.csvVaryingVariability-FSE15_239.synctex.gzVaryingVariability-FSE15_6.blg
+VaryingVariability-FSE15_148.jsonVaryingVariability-FSE15_239.texVaryingVariability-FSE15_6.csv
+VaryingVariability-FSE15_148.logVaryingVariability-FSE15_24.auxVaryingVariability-FSE15_6.json
+VaryingVariability-FSE15_148.pdfVaryingVariability-FSE15_24.bblVaryingVariability-FSE15_6.log
+VaryingVariability-FSE15_148.synctex.gzVaryingVariability-FSE15_24.blgVaryingVariability-FSE15_6.pdf
+VaryingVariability-FSE15_148.texVaryingVariability-FSE15_24.csvVaryingVariability-FSE15_6.synctex.gz
+VaryingVariability-FSE15_149.auxVaryingVariability-FSE15_24.jsonVaryingVariability-FSE15_6.tex
+VaryingVariability-FSE15_149.bblVaryingVariability-FSE15_24.logVaryingVariability-FSE15_60.aux
+VaryingVariability-FSE15_149.blgVaryingVariability-FSE15_24.pdfVaryingVariability-FSE15_60.bbl
+VaryingVariability-FSE15_149.csvVaryingVariability-FSE15_24.synctex.gzVaryingVariability-FSE15_60.blg
+VaryingVariability-FSE15_149.jsonVaryingVariability-FSE15_24.texVaryingVariability-FSE15_60.csv
+VaryingVariability-FSE15_149.logVaryingVariability-FSE15_240.auxVaryingVariability-FSE15_60.json
+VaryingVariability-FSE15_149.pdfVaryingVariability-FSE15_240.bblVaryingVariability-FSE15_60.log
+VaryingVariability-FSE15_149.synctex.gzVaryingVariability-FSE15_240.blgVaryingVariability-FSE15_60.pdf
+VaryingVariability-FSE15_149.texVaryingVariability-FSE15_240.csvVaryingVariability-FSE15_60.synctex.gz
+VaryingVariability-FSE15_15.auxVaryingVariability-FSE15_240.jsonVaryingVariability-FSE15_60.tex
+VaryingVariability-FSE15_15.bblVaryingVariability-FSE15_240.logVaryingVariability-FSE15_61.aux
+VaryingVariability-FSE15_15.blgVaryingVariability-FSE15_240.pdfVaryingVariability-FSE15_61.bbl
+VaryingVariability-FSE15_15.csvVaryingVariability-FSE15_240.synctex.gzVaryingVariability-FSE15_61.blg
+VaryingVariability-FSE15_15.jsonVaryingVariability-FSE15_240.texVaryingVariability-FSE15_61.csv
+VaryingVariability-FSE15_15.logVaryingVariability-FSE15_241.auxVaryingVariability-FSE15_61.json
+VaryingVariability-FSE15_15.pdfVaryingVariability-FSE15_241.bblVaryingVariability-FSE15_61.log
+VaryingVariability-FSE15_15.synctex.gzVaryingVariability-FSE15_241.blgVaryingVariability-FSE15_61.pdf
+VaryingVariability-FSE15_15.texVaryingVariability-FSE15_241.csvVaryingVariability-FSE15_61.synctex.gz
+VaryingVariability-FSE15_150.auxVaryingVariability-FSE15_241.jsonVaryingVariability-FSE15_61.tex
+VaryingVariability-FSE15_150.bblVaryingVariability-FSE15_241.logVaryingVariability-FSE15_62.aux
+VaryingVariability-FSE15_150.blgVaryingVariability-FSE15_241.pdfVaryingVariability-FSE15_62.bbl
+VaryingVariability-FSE15_150.csvVaryingVariability-FSE15_241.synctex.gzVaryingVariability-FSE15_62.blg
+VaryingVariability-FSE15_150.jsonVaryingVariability-FSE15_241.texVaryingVariability-FSE15_62.csv
+VaryingVariability-FSE15_150.logVaryingVariability-FSE15_242.auxVaryingVariability-FSE15_62.json
+VaryingVariability-FSE15_150.pdfVaryingVariability-FSE15_242.bblVaryingVariability-FSE15_62.log
+VaryingVariability-FSE15_150.synctex.gzVaryingVariability-FSE15_242.blgVaryingVariability-FSE15_62.pdf
+VaryingVariability-FSE15_150.texVaryingVariability-FSE15_242.csvVaryingVariability-FSE15_62.synctex.gz
+VaryingVariability-FSE15_151.auxVaryingVariability-FSE15_242.jsonVaryingVariability-FSE15_62.tex
+VaryingVariability-FSE15_151.bblVaryingVariability-FSE15_242.logVaryingVariability-FSE15_63.aux
+VaryingVariability-FSE15_151.blgVaryingVariability-FSE15_242.pdfVaryingVariability-FSE15_63.bbl
+VaryingVariability-FSE15_151.csvVaryingVariability-FSE15_242.synctex.gzVaryingVariability-FSE15_63.blg
+VaryingVariability-FSE15_151.jsonVaryingVariability-FSE15_242.texVaryingVariability-FSE15_63.csv
+VaryingVariability-FSE15_151.logVaryingVariability-FSE15_243.auxVaryingVariability-FSE15_63.json
+VaryingVariability-FSE15_151.pdfVaryingVariability-FSE15_243.bblVaryingVariability-FSE15_63.log
+VaryingVariability-FSE15_151.synctex.gzVaryingVariability-FSE15_243.blgVaryingVariability-FSE15_63.pdf
+VaryingVariability-FSE15_151.texVaryingVariability-FSE15_243.csvVaryingVariability-FSE15_63.synctex.gz
+VaryingVariability-FSE15_152.auxVaryingVariability-FSE15_243.jsonVaryingVariability-FSE15_63.tex
+VaryingVariability-FSE15_152.bblVaryingVariability-FSE15_243.logVaryingVariability-FSE15_64.aux
+VaryingVariability-FSE15_152.blgVaryingVariability-FSE15_243.pdfVaryingVariability-FSE15_64.bbl
+VaryingVariability-FSE15_152.csvVaryingVariability-FSE15_243.synctex.gzVaryingVariability-FSE15_64.blg
+VaryingVariability-FSE15_152.jsonVaryingVariability-FSE15_243.texVaryingVariability-FSE15_64.csv
+VaryingVariability-FSE15_152.logVaryingVariability-FSE15_244.auxVaryingVariability-FSE15_64.json
+VaryingVariability-FSE15_152.pdfVaryingVariability-FSE15_244.bblVaryingVariability-FSE15_64.log
+VaryingVariability-FSE15_152.synctex.gzVaryingVariability-FSE15_244.blgVaryingVariability-FSE15_64.pdf
+VaryingVariability-FSE15_152.texVaryingVariability-FSE15_244.csvVaryingVariability-FSE15_64.synctex.gz
+VaryingVariability-FSE15_153.auxVaryingVariability-FSE15_244.jsonVaryingVariability-FSE15_64.tex
+VaryingVariability-FSE15_153.bblVaryingVariability-FSE15_244.logVaryingVariability-FSE15_65.aux
+VaryingVariability-FSE15_153.blgVaryingVariability-FSE15_244.pdfVaryingVariability-FSE15_65.bbl
+VaryingVariability-FSE15_153.csvVaryingVariability-FSE15_244.synctex.gzVaryingVariability-FSE15_65.blg
+VaryingVariability-FSE15_153.jsonVaryingVariability-FSE15_244.texVaryingVariability-FSE15_65.csv
+VaryingVariability-FSE15_153.logVaryingVariability-FSE15_245.auxVaryingVariability-FSE15_65.json
+VaryingVariability-FSE15_153.pdfVaryingVariability-FSE15_245.bblVaryingVariability-FSE15_65.log
+VaryingVariability-FSE15_153.synctex.gzVaryingVariability-FSE15_245.blgVaryingVariability-FSE15_65.pdf
+VaryingVariability-FSE15_153.texVaryingVariability-FSE15_245.csvVaryingVariability-FSE15_65.synctex.gz
+VaryingVariability-FSE15_154.auxVaryingVariability-FSE15_245.jsonVaryingVariability-FSE15_65.tex
+VaryingVariability-FSE15_154.bblVaryingVariability-FSE15_245.logVaryingVariability-FSE15_66.aux
+VaryingVariability-FSE15_154.blgVaryingVariability-FSE15_245.pdfVaryingVariability-FSE15_66.bbl
+VaryingVariability-FSE15_154.csvVaryingVariability-FSE15_245.synctex.gzVaryingVariability-FSE15_66.blg
+VaryingVariability-FSE15_154.jsonVaryingVariability-FSE15_245.texVaryingVariability-FSE15_66.csv
+VaryingVariability-FSE15_154.logVaryingVariability-FSE15_246.auxVaryingVariability-FSE15_66.json
+VaryingVariability-FSE15_154.pdfVaryingVariability-FSE15_246.bblVaryingVariability-FSE15_66.log
+VaryingVariability-FSE15_154.synctex.gzVaryingVariability-FSE15_246.blgVaryingVariability-FSE15_66.pdf
+VaryingVariability-FSE15_154.texVaryingVariability-FSE15_246.csvVaryingVariability-FSE15_66.synctex.gz
+VaryingVariability-FSE15_155.auxVaryingVariability-FSE15_246.jsonVaryingVariability-FSE15_66.tex
+VaryingVariability-FSE15_155.bblVaryingVariability-FSE15_246.logVaryingVariability-FSE15_67.aux
+VaryingVariability-FSE15_155.blgVaryingVariability-FSE15_246.pdfVaryingVariability-FSE15_67.bbl
+VaryingVariability-FSE15_155.csvVaryingVariability-FSE15_246.synctex.gzVaryingVariability-FSE15_67.blg
+VaryingVariability-FSE15_155.jsonVaryingVariability-FSE15_246.texVaryingVariability-FSE15_67.csv
+VaryingVariability-FSE15_155.logVaryingVariability-FSE15_247.auxVaryingVariability-FSE15_67.json
+VaryingVariability-FSE15_155.pdfVaryingVariability-FSE15_247.bblVaryingVariability-FSE15_67.log
+VaryingVariability-FSE15_155.synctex.gzVaryingVariability-FSE15_247.blgVaryingVariability-FSE15_67.pdf
+VaryingVariability-FSE15_155.texVaryingVariability-FSE15_247.csvVaryingVariability-FSE15_67.synctex.gz
+VaryingVariability-FSE15_156.auxVaryingVariability-FSE15_247.jsonVaryingVariability-FSE15_67.tex
+VaryingVariability-FSE15_156.bblVaryingVariability-FSE15_247.logVaryingVariability-FSE15_68.aux
+VaryingVariability-FSE15_156.blgVaryingVariability-FSE15_247.pdfVaryingVariability-FSE15_68.bbl
+VaryingVariability-FSE15_156.csvVaryingVariability-FSE15_247.synctex.gzVaryingVariability-FSE15_68.blg
+VaryingVariability-FSE15_156.jsonVaryingVariability-FSE15_247.texVaryingVariability-FSE15_68.csv
+VaryingVariability-FSE15_156.logVaryingVariability-FSE15_248.auxVaryingVariability-FSE15_68.json
+VaryingVariability-FSE15_156.pdfVaryingVariability-FSE15_248.bblVaryingVariability-FSE15_68.log
+VaryingVariability-FSE15_156.synctex.gzVaryingVariability-FSE15_248.blgVaryingVariability-FSE15_68.pdf
+VaryingVariability-FSE15_156.texVaryingVariability-FSE15_248.csvVaryingVariability-FSE15_68.synctex.gz
+VaryingVariability-FSE15_157.auxVaryingVariability-FSE15_248.jsonVaryingVariability-FSE15_68.tex
+VaryingVariability-FSE15_157.bblVaryingVariability-FSE15_248.logVaryingVariability-FSE15_69.aux
+VaryingVariability-FSE15_157.blgVaryingVariability-FSE15_248.pdfVaryingVariability-FSE15_69.bbl
+VaryingVariability-FSE15_157.csvVaryingVariability-FSE15_248.synctex.gzVaryingVariability-FSE15_69.blg
+VaryingVariability-FSE15_157.jsonVaryingVariability-FSE15_248.texVaryingVariability-FSE15_69.csv
+VaryingVariability-FSE15_157.logVaryingVariability-FSE15_249.auxVaryingVariability-FSE15_69.json
+VaryingVariability-FSE15_157.pdfVaryingVariability-FSE15_249.bblVaryingVariability-FSE15_69.log
+VaryingVariability-FSE15_157.synctex.gzVaryingVariability-FSE15_249.blgVaryingVariability-FSE15_69.pdf
+VaryingVariability-FSE15_157.texVaryingVariability-FSE15_249.csvVaryingVariability-FSE15_69.synctex.gz
+VaryingVariability-FSE15_158.auxVaryingVariability-FSE15_249.jsonVaryingVariability-FSE15_69.tex
+VaryingVariability-FSE15_158.bblVaryingVariability-FSE15_249.logVaryingVariability-FSE15_7.aux
+VaryingVariability-FSE15_158.blgVaryingVariability-FSE15_249.pdfVaryingVariability-FSE15_7.bbl
+VaryingVariability-FSE15_158.csvVaryingVariability-FSE15_249.synctex.gzVaryingVariability-FSE15_7.blg
+VaryingVariability-FSE15_158.jsonVaryingVariability-FSE15_249.texVaryingVariability-FSE15_7.csv
+VaryingVariability-FSE15_158.logVaryingVariability-FSE15_25.auxVaryingVariability-FSE15_7.json
+VaryingVariability-FSE15_158.pdfVaryingVariability-FSE15_25.bblVaryingVariability-FSE15_7.log
+VaryingVariability-FSE15_158.synctex.gzVaryingVariability-FSE15_25.blgVaryingVariability-FSE15_7.pdf
+VaryingVariability-FSE15_158.texVaryingVariability-FSE15_25.csvVaryingVariability-FSE15_7.synctex.gz
+VaryingVariability-FSE15_159.auxVaryingVariability-FSE15_25.jsonVaryingVariability-FSE15_7.tex
+VaryingVariability-FSE15_159.bblVaryingVariability-FSE15_25.logVaryingVariability-FSE15_70.aux
+VaryingVariability-FSE15_159.blgVaryingVariability-FSE15_25.pdfVaryingVariability-FSE15_70.bbl
+VaryingVariability-FSE15_159.csvVaryingVariability-FSE15_25.synctex.gzVaryingVariability-FSE15_70.blg
+VaryingVariability-FSE15_159.jsonVaryingVariability-FSE15_25.texVaryingVariability-FSE15_70.csv
+VaryingVariability-FSE15_159.logVaryingVariability-FSE15_250.auxVaryingVariability-FSE15_70.json
+VaryingVariability-FSE15_159.pdfVaryingVariability-FSE15_250.bblVaryingVariability-FSE15_70.log
+VaryingVariability-FSE15_159.synctex.gzVaryingVariability-FSE15_250.blgVaryingVariability-FSE15_70.pdf
+VaryingVariability-FSE15_159.texVaryingVariability-FSE15_250.csvVaryingVariability-FSE15_70.synctex.gz
+VaryingVariability-FSE15_16.auxVaryingVariability-FSE15_250.jsonVaryingVariability-FSE15_70.tex
+VaryingVariability-FSE15_16.bblVaryingVariability-FSE15_250.logVaryingVariability-FSE15_71.aux
+VaryingVariability-FSE15_16.blgVaryingVariability-FSE15_250.pdfVaryingVariability-FSE15_71.bbl
+VaryingVariability-FSE15_16.csvVaryingVariability-FSE15_250.synctex.gzVaryingVariability-FSE15_71.blg
+VaryingVariability-FSE15_16.jsonVaryingVariability-FSE15_250.texVaryingVariability-FSE15_71.csv
+VaryingVariability-FSE15_16.logVaryingVariability-FSE15_251.auxVaryingVariability-FSE15_71.json
+VaryingVariability-FSE15_16.pdfVaryingVariability-FSE15_251.bblVaryingVariability-FSE15_71.log
+VaryingVariability-FSE15_16.synctex.gzVaryingVariability-FSE15_251.blgVaryingVariability-FSE15_71.pdf
+VaryingVariability-FSE15_16.texVaryingVariability-FSE15_251.csvVaryingVariability-FSE15_71.synctex.gz
+VaryingVariability-FSE15_160.auxVaryingVariability-FSE15_251.jsonVaryingVariability-FSE15_71.tex
+VaryingVariability-FSE15_160.bblVaryingVariability-FSE15_251.logVaryingVariability-FSE15_72.aux
+VaryingVariability-FSE15_160.blgVaryingVariability-FSE15_251.pdfVaryingVariability-FSE15_72.bbl
+VaryingVariability-FSE15_160.csvVaryingVariability-FSE15_251.synctex.gzVaryingVariability-FSE15_72.blg
+VaryingVariability-FSE15_160.jsonVaryingVariability-FSE15_251.texVaryingVariability-FSE15_72.csv
+VaryingVariability-FSE15_160.logVaryingVariability-FSE15_252.auxVaryingVariability-FSE15_72.json
+VaryingVariability-FSE15_160.pdfVaryingVariability-FSE15_252.bblVaryingVariability-FSE15_72.log
+VaryingVariability-FSE15_160.synctex.gzVaryingVariability-FSE15_252.blgVaryingVariability-FSE15_72.pdf
+VaryingVariability-FSE15_160.texVaryingVariability-FSE15_252.csvVaryingVariability-FSE15_72.synctex.gz
+VaryingVariability-FSE15_161.auxVaryingVariability-FSE15_252.jsonVaryingVariability-FSE15_72.tex
+VaryingVariability-FSE15_161.bblVaryingVariability-FSE15_252.logVaryingVariability-FSE15_73.aux
+VaryingVariability-FSE15_161.blgVaryingVariability-FSE15_252.pdfVaryingVariability-FSE15_73.bbl
+VaryingVariability-FSE15_161.csvVaryingVariability-FSE15_252.synctex.gzVaryingVariability-FSE15_73.blg
+VaryingVariability-FSE15_161.jsonVaryingVariability-FSE15_252.texVaryingVariability-FSE15_73.csv
+VaryingVariability-FSE15_161.logVaryingVariability-FSE15_253.auxVaryingVariability-FSE15_73.json
+VaryingVariability-FSE15_161.pdfVaryingVariability-FSE15_253.bblVaryingVariability-FSE15_73.log
+VaryingVariability-FSE15_161.synctex.gzVaryingVariability-FSE15_253.blgVaryingVariability-FSE15_73.pdf
+VaryingVariability-FSE15_161.texVaryingVariability-FSE15_253.csvVaryingVariability-FSE15_73.synctex.gz
+VaryingVariability-FSE15_162.auxVaryingVariability-FSE15_253.jsonVaryingVariability-FSE15_73.tex
+VaryingVariability-FSE15_162.bblVaryingVariability-FSE15_253.logVaryingVariability-FSE15_74.aux
+VaryingVariability-FSE15_162.blgVaryingVariability-FSE15_253.pdfVaryingVariability-FSE15_74.bbl
+VaryingVariability-FSE15_162.csvVaryingVariability-FSE15_253.synctex.gzVaryingVariability-FSE15_74.blg
+VaryingVariability-FSE15_162.jsonVaryingVariability-FSE15_253.texVaryingVariability-FSE15_74.csv
+VaryingVariability-FSE15_162.logVaryingVariability-FSE15_254.auxVaryingVariability-FSE15_74.json
+VaryingVariability-FSE15_162.pdfVaryingVariability-FSE15_254.bblVaryingVariability-FSE15_74.log
+VaryingVariability-FSE15_162.synctex.gzVaryingVariability-FSE15_254.blgVaryingVariability-FSE15_74.pdf
+VaryingVariability-FSE15_162.texVaryingVariability-FSE15_254.csvVaryingVariability-FSE15_74.synctex.gz
+VaryingVariability-FSE15_163.auxVaryingVariability-FSE15_254.jsonVaryingVariability-FSE15_74.tex
+VaryingVariability-FSE15_163.bblVaryingVariability-FSE15_254.logVaryingVariability-FSE15_75.aux
+VaryingVariability-FSE15_163.blgVaryingVariability-FSE15_254.pdfVaryingVariability-FSE15_75.bbl
+VaryingVariability-FSE15_163.csvVaryingVariability-FSE15_254.synctex.gzVaryingVariability-FSE15_75.blg
+VaryingVariability-FSE15_163.jsonVaryingVariability-FSE15_254.texVaryingVariability-FSE15_75.csv
+VaryingVariability-FSE15_163.logVaryingVariability-FSE15_255.auxVaryingVariability-FSE15_75.json
+VaryingVariability-FSE15_163.pdfVaryingVariability-FSE15_255.bblVaryingVariability-FSE15_75.log
+VaryingVariability-FSE15_163.synctex.gzVaryingVariability-FSE15_255.blgVaryingVariability-FSE15_75.pdf
+VaryingVariability-FSE15_163.texVaryingVariability-FSE15_255.csvVaryingVariability-FSE15_75.synctex.gz
+VaryingVariability-FSE15_164.auxVaryingVariability-FSE15_255.jsonVaryingVariability-FSE15_75.tex
+VaryingVariability-FSE15_164.bblVaryingVariability-FSE15_255.logVaryingVariability-FSE15_76.aux
+VaryingVariability-FSE15_164.blgVaryingVariability-FSE15_255.pdfVaryingVariability-FSE15_76.bbl
+VaryingVariability-FSE15_164.csvVaryingVariability-FSE15_255.synctex.gzVaryingVariability-FSE15_76.blg
+VaryingVariability-FSE15_164.jsonVaryingVariability-FSE15_255.texVaryingVariability-FSE15_76.csv
+VaryingVariability-FSE15_164.logVaryingVariability-FSE15_256.auxVaryingVariability-FSE15_76.json
+VaryingVariability-FSE15_164.pdfVaryingVariability-FSE15_256.bblVaryingVariability-FSE15_76.log
+VaryingVariability-FSE15_164.synctex.gzVaryingVariability-FSE15_256.blgVaryingVariability-FSE15_76.pdf
+VaryingVariability-FSE15_164.texVaryingVariability-FSE15_256.csvVaryingVariability-FSE15_76.synctex.gz
+VaryingVariability-FSE15_165.auxVaryingVariability-FSE15_256.jsonVaryingVariability-FSE15_76.tex
+VaryingVariability-FSE15_165.bblVaryingVariability-FSE15_256.logVaryingVariability-FSE15_77.aux
+VaryingVariability-FSE15_165.blgVaryingVariability-FSE15_256.pdfVaryingVariability-FSE15_77.bbl
+VaryingVariability-FSE15_165.csvVaryingVariability-FSE15_256.synctex.gzVaryingVariability-FSE15_77.blg
+VaryingVariability-FSE15_165.jsonVaryingVariability-FSE15_256.texVaryingVariability-FSE15_77.csv
+VaryingVariability-FSE15_165.logVaryingVariability-FSE15_257.auxVaryingVariability-FSE15_77.json
+VaryingVariability-FSE15_165.pdfVaryingVariability-FSE15_257.bblVaryingVariability-FSE15_77.log
+VaryingVariability-FSE15_165.synctex.gzVaryingVariability-FSE15_257.blgVaryingVariability-FSE15_77.pdf
+VaryingVariability-FSE15_165.texVaryingVariability-FSE15_257.csvVaryingVariability-FSE15_77.synctex.gz
+VaryingVariability-FSE15_166.auxVaryingVariability-FSE15_257.jsonVaryingVariability-FSE15_77.tex
+VaryingVariability-FSE15_166.bblVaryingVariability-FSE15_257.logVaryingVariability-FSE15_78.aux
+VaryingVariability-FSE15_166.blgVaryingVariability-FSE15_257.pdfVaryingVariability-FSE15_78.bbl
+VaryingVariability-FSE15_166.csvVaryingVariability-FSE15_257.synctex.gzVaryingVariability-FSE15_78.blg
+VaryingVariability-FSE15_166.jsonVaryingVariability-FSE15_257.texVaryingVariability-FSE15_78.csv
+VaryingVariability-FSE15_166.logVaryingVariability-FSE15_258.auxVaryingVariability-FSE15_78.json
+VaryingVariability-FSE15_166.pdfVaryingVariability-FSE15_258.bblVaryingVariability-FSE15_78.log
+VaryingVariability-FSE15_166.synctex.gzVaryingVariability-FSE15_258.blgVaryingVariability-FSE15_78.pdf
+VaryingVariability-FSE15_166.texVaryingVariability-FSE15_258.csvVaryingVariability-FSE15_78.synctex.gz
+VaryingVariability-FSE15_167.auxVaryingVariability-FSE15_258.jsonVaryingVariability-FSE15_78.tex
+VaryingVariability-FSE15_167.bblVaryingVariability-FSE15_258.logVaryingVariability-FSE15_79.aux
+VaryingVariability-FSE15_167.blgVaryingVariability-FSE15_258.pdfVaryingVariability-FSE15_79.bbl
+VaryingVariability-FSE15_167.csvVaryingVariability-FSE15_258.synctex.gzVaryingVariability-FSE15_79.blg
+VaryingVariability-FSE15_167.jsonVaryingVariability-FSE15_258.texVaryingVariability-FSE15_79.csv
+VaryingVariability-FSE15_167.logVaryingVariability-FSE15_259.auxVaryingVariability-FSE15_79.json
+VaryingVariability-FSE15_167.pdfVaryingVariability-FSE15_259.bblVaryingVariability-FSE15_79.log
+VaryingVariability-FSE15_167.synctex.gzVaryingVariability-FSE15_259.blgVaryingVariability-FSE15_79.pdf
+VaryingVariability-FSE15_167.texVaryingVariability-FSE15_259.csvVaryingVariability-FSE15_79.synctex.gz
+VaryingVariability-FSE15_168.auxVaryingVariability-FSE15_259.jsonVaryingVariability-FSE15_79.tex
+VaryingVariability-FSE15_168.bblVaryingVariability-FSE15_259.logVaryingVariability-FSE15_8.aux
+VaryingVariability-FSE15_168.blgVaryingVariability-FSE15_259.pdfVaryingVariability-FSE15_8.bbl
+VaryingVariability-FSE15_168.csvVaryingVariability-FSE15_259.synctex.gzVaryingVariability-FSE15_8.blg
+VaryingVariability-FSE15_168.jsonVaryingVariability-FSE15_259.texVaryingVariability-FSE15_8.csv
+VaryingVariability-FSE15_168.logVaryingVariability-FSE15_26.auxVaryingVariability-FSE15_8.json
+VaryingVariability-FSE15_168.pdfVaryingVariability-FSE15_26.bblVaryingVariability-FSE15_8.log
+VaryingVariability-FSE15_168.synctex.gzVaryingVariability-FSE15_26.blgVaryingVariability-FSE15_8.pdf
+VaryingVariability-FSE15_168.texVaryingVariability-FSE15_26.csvVaryingVariability-FSE15_8.synctex.gz
+VaryingVariability-FSE15_169.auxVaryingVariability-FSE15_26.jsonVaryingVariability-FSE15_8.tex
+VaryingVariability-FSE15_169.bblVaryingVariability-FSE15_26.logVaryingVariability-FSE15_80.aux
+VaryingVariability-FSE15_169.blgVaryingVariability-FSE15_26.pdfVaryingVariability-FSE15_80.bbl
+VaryingVariability-FSE15_169.csvVaryingVariability-FSE15_26.synctex.gzVaryingVariability-FSE15_80.blg
+VaryingVariability-FSE15_169.jsonVaryingVariability-FSE15_26.texVaryingVariability-FSE15_80.csv
+VaryingVariability-FSE15_169.logVaryingVariability-FSE15_260.auxVaryingVariability-FSE15_80.json
+VaryingVariability-FSE15_169.pdfVaryingVariability-FSE15_260.bblVaryingVariability-FSE15_80.log
+VaryingVariability-FSE15_169.synctex.gzVaryingVariability-FSE15_260.blgVaryingVariability-FSE15_80.pdf
+VaryingVariability-FSE15_169.texVaryingVariability-FSE15_260.csvVaryingVariability-FSE15_80.synctex.gz
+VaryingVariability-FSE15_17.auxVaryingVariability-FSE15_260.jsonVaryingVariability-FSE15_80.tex
+VaryingVariability-FSE15_17.bblVaryingVariability-FSE15_260.logVaryingVariability-FSE15_81.aux
+VaryingVariability-FSE15_17.blgVaryingVariability-FSE15_260.pdfVaryingVariability-FSE15_81.bbl
+VaryingVariability-FSE15_17.csvVaryingVariability-FSE15_260.synctex.gzVaryingVariability-FSE15_81.blg
+VaryingVariability-FSE15_17.jsonVaryingVariability-FSE15_260.texVaryingVariability-FSE15_81.csv
+VaryingVariability-FSE15_17.logVaryingVariability-FSE15_261.auxVaryingVariability-FSE15_81.json
+VaryingVariability-FSE15_17.pdfVaryingVariability-FSE15_261.bblVaryingVariability-FSE15_81.log
+VaryingVariability-FSE15_17.synctex.gzVaryingVariability-FSE15_261.blgVaryingVariability-FSE15_81.pdf
+VaryingVariability-FSE15_17.texVaryingVariability-FSE15_261.csvVaryingVariability-FSE15_81.synctex.gz
+VaryingVariability-FSE15_170.auxVaryingVariability-FSE15_261.jsonVaryingVariability-FSE15_81.tex
+VaryingVariability-FSE15_170.bblVaryingVariability-FSE15_261.logVaryingVariability-FSE15_82.aux
+VaryingVariability-FSE15_170.blgVaryingVariability-FSE15_261.pdfVaryingVariability-FSE15_82.bbl
+VaryingVariability-FSE15_170.csvVaryingVariability-FSE15_261.synctex.gzVaryingVariability-FSE15_82.blg
+VaryingVariability-FSE15_170.jsonVaryingVariability-FSE15_261.texVaryingVariability-FSE15_82.csv
+VaryingVariability-FSE15_170.logVaryingVariability-FSE15_262.auxVaryingVariability-FSE15_82.json
+VaryingVariability-FSE15_170.pdfVaryingVariability-FSE15_262.bblVaryingVariability-FSE15_82.log
+VaryingVariability-FSE15_170.synctex.gzVaryingVariability-FSE15_262.blgVaryingVariability-FSE15_82.pdf
+VaryingVariability-FSE15_170.texVaryingVariability-FSE15_262.csvVaryingVariability-FSE15_82.synctex.gz
+VaryingVariability-FSE15_171.auxVaryingVariability-FSE15_262.jsonVaryingVariability-FSE15_82.tex
+VaryingVariability-FSE15_171.bblVaryingVariability-FSE15_262.logVaryingVariability-FSE15_83.aux
+VaryingVariability-FSE15_171.blgVaryingVariability-FSE15_262.pdfVaryingVariability-FSE15_83.bbl
+VaryingVariability-FSE15_171.csvVaryingVariability-FSE15_262.synctex.gzVaryingVariability-FSE15_83.blg
+VaryingVariability-FSE15_171.jsonVaryingVariability-FSE15_262.texVaryingVariability-FSE15_83.csv
+VaryingVariability-FSE15_171.logVaryingVariability-FSE15_263.auxVaryingVariability-FSE15_83.json
+VaryingVariability-FSE15_171.pdfVaryingVariability-FSE15_263.bblVaryingVariability-FSE15_83.log
+VaryingVariability-FSE15_171.synctex.gzVaryingVariability-FSE15_263.blgVaryingVariability-FSE15_83.pdf
+VaryingVariability-FSE15_171.texVaryingVariability-FSE15_263.csvVaryingVariability-FSE15_83.synctex.gz
+VaryingVariability-FSE15_172.auxVaryingVariability-FSE15_263.jsonVaryingVariability-FSE15_83.tex
+VaryingVariability-FSE15_172.bblVaryingVariability-FSE15_263.logVaryingVariability-FSE15_84.aux
+VaryingVariability-FSE15_172.blgVaryingVariability-FSE15_263.pdfVaryingVariability-FSE15_84.bbl
+VaryingVariability-FSE15_172.csvVaryingVariability-FSE15_263.synctex.gzVaryingVariability-FSE15_84.blg
+VaryingVariability-FSE15_172.jsonVaryingVariability-FSE15_263.texVaryingVariability-FSE15_84.csv
+VaryingVariability-FSE15_172.logVaryingVariability-FSE15_264.auxVaryingVariability-FSE15_84.json
+VaryingVariability-FSE15_172.pdfVaryingVariability-FSE15_264.bblVaryingVariability-FSE15_84.log
+VaryingVariability-FSE15_172.synctex.gzVaryingVariability-FSE15_264.blgVaryingVariability-FSE15_84.pdf
+VaryingVariability-FSE15_172.texVaryingVariability-FSE15_264.csvVaryingVariability-FSE15_84.synctex.gz
+VaryingVariability-FSE15_173.auxVaryingVariability-FSE15_264.jsonVaryingVariability-FSE15_84.tex
+VaryingVariability-FSE15_173.bblVaryingVariability-FSE15_264.logVaryingVariability-FSE15_85.aux
+VaryingVariability-FSE15_173.blgVaryingVariability-FSE15_264.pdfVaryingVariability-FSE15_85.bbl
+VaryingVariability-FSE15_173.csvVaryingVariability-FSE15_264.synctex.gzVaryingVariability-FSE15_85.blg
+VaryingVariability-FSE15_173.jsonVaryingVariability-FSE15_264.texVaryingVariability-FSE15_85.csv
+VaryingVariability-FSE15_173.logVaryingVariability-FSE15_265.auxVaryingVariability-FSE15_85.json
+VaryingVariability-FSE15_173.pdfVaryingVariability-FSE15_265.bblVaryingVariability-FSE15_85.log
+VaryingVariability-FSE15_173.synctex.gzVaryingVariability-FSE15_265.blgVaryingVariability-FSE15_85.pdf
+VaryingVariability-FSE15_173.texVaryingVariability-FSE15_265.csvVaryingVariability-FSE15_85.synctex.gz
+VaryingVariability-FSE15_174.auxVaryingVariability-FSE15_265.jsonVaryingVariability-FSE15_85.tex
+VaryingVariability-FSE15_174.bblVaryingVariability-FSE15_265.logVaryingVariability-FSE15_86.aux
+VaryingVariability-FSE15_174.blgVaryingVariability-FSE15_265.pdfVaryingVariability-FSE15_86.bbl
+VaryingVariability-FSE15_174.csvVaryingVariability-FSE15_265.synctex.gzVaryingVariability-FSE15_86.blg
+VaryingVariability-FSE15_174.jsonVaryingVariability-FSE15_265.texVaryingVariability-FSE15_86.csv
+VaryingVariability-FSE15_174.logVaryingVariability-FSE15_266.auxVaryingVariability-FSE15_86.json
+VaryingVariability-FSE15_174.pdfVaryingVariability-FSE15_266.bblVaryingVariability-FSE15_86.log
+VaryingVariability-FSE15_174.synctex.gzVaryingVariability-FSE15_266.blgVaryingVariability-FSE15_86.pdf
+VaryingVariability-FSE15_174.texVaryingVariability-FSE15_266.csvVaryingVariability-FSE15_86.synctex.gz
+VaryingVariability-FSE15_175.auxVaryingVariability-FSE15_266.jsonVaryingVariability-FSE15_86.tex
+VaryingVariability-FSE15_175.bblVaryingVariability-FSE15_266.logVaryingVariability-FSE15_87.aux
+VaryingVariability-FSE15_175.blgVaryingVariability-FSE15_266.pdfVaryingVariability-FSE15_87.bbl
+VaryingVariability-FSE15_175.csvVaryingVariability-FSE15_266.synctex.gzVaryingVariability-FSE15_87.blg
+VaryingVariability-FSE15_175.jsonVaryingVariability-FSE15_266.texVaryingVariability-FSE15_87.csv
+VaryingVariability-FSE15_175.logVaryingVariability-FSE15_267.auxVaryingVariability-FSE15_87.json
+VaryingVariability-FSE15_175.pdfVaryingVariability-FSE15_267.bblVaryingVariability-FSE15_87.log
+VaryingVariability-FSE15_175.synctex.gzVaryingVariability-FSE15_267.blgVaryingVariability-FSE15_87.pdf
+VaryingVariability-FSE15_175.texVaryingVariability-FSE15_267.csvVaryingVariability-FSE15_87.synctex.gz
+VaryingVariability-FSE15_176.auxVaryingVariability-FSE15_267.jsonVaryingVariability-FSE15_87.tex
+VaryingVariability-FSE15_176.bblVaryingVariability-FSE15_267.logVaryingVariability-FSE15_88.aux
+VaryingVariability-FSE15_176.blgVaryingVariability-FSE15_267.pdfVaryingVariability-FSE15_88.bbl
+VaryingVariability-FSE15_176.csvVaryingVariability-FSE15_267.synctex.gzVaryingVariability-FSE15_88.blg
+VaryingVariability-FSE15_176.jsonVaryingVariability-FSE15_267.texVaryingVariability-FSE15_88.csv
+VaryingVariability-FSE15_176.logVaryingVariability-FSE15_268.auxVaryingVariability-FSE15_88.json
+VaryingVariability-FSE15_176.pdfVaryingVariability-FSE15_268.bblVaryingVariability-FSE15_88.log
+VaryingVariability-FSE15_176.synctex.gzVaryingVariability-FSE15_268.blgVaryingVariability-FSE15_88.pdf
+VaryingVariability-FSE15_176.texVaryingVariability-FSE15_268.csvVaryingVariability-FSE15_88.synctex.gz
+VaryingVariability-FSE15_177.auxVaryingVariability-FSE15_268.jsonVaryingVariability-FSE15_88.tex
+VaryingVariability-FSE15_177.bblVaryingVariability-FSE15_268.logVaryingVariability-FSE15_89.aux
+VaryingVariability-FSE15_177.blgVaryingVariability-FSE15_268.pdfVaryingVariability-FSE15_89.bbl
+VaryingVariability-FSE15_177.csvVaryingVariability-FSE15_268.synctex.gzVaryingVariability-FSE15_89.blg
+VaryingVariability-FSE15_177.jsonVaryingVariability-FSE15_268.texVaryingVariability-FSE15_89.csv
+VaryingVariability-FSE15_177.logVaryingVariability-FSE15_269.auxVaryingVariability-FSE15_89.json
+VaryingVariability-FSE15_177.pdfVaryingVariability-FSE15_269.bblVaryingVariability-FSE15_89.log
+VaryingVariability-FSE15_177.synctex.gzVaryingVariability-FSE15_269.blgVaryingVariability-FSE15_89.pdf
+VaryingVariability-FSE15_177.texVaryingVariability-FSE15_269.csvVaryingVariability-FSE15_89.synctex.gz
+VaryingVariability-FSE15_178.auxVaryingVariability-FSE15_269.jsonVaryingVariability-FSE15_89.tex
+VaryingVariability-FSE15_178.bblVaryingVariability-FSE15_269.logVaryingVariability-FSE15_9.aux
+VaryingVariability-FSE15_178.blgVaryingVariability-FSE15_269.pdfVaryingVariability-FSE15_9.bbl
+VaryingVariability-FSE15_178.csvVaryingVariability-FSE15_269.synctex.gzVaryingVariability-FSE15_9.blg
+VaryingVariability-FSE15_178.jsonVaryingVariability-FSE15_269.texVaryingVariability-FSE15_9.csv
+VaryingVariability-FSE15_178.logVaryingVariability-FSE15_27.auxVaryingVariability-FSE15_9.json
+VaryingVariability-FSE15_178.pdfVaryingVariability-FSE15_27.bblVaryingVariability-FSE15_9.log
+VaryingVariability-FSE15_178.synctex.gzVaryingVariability-FSE15_27.blgVaryingVariability-FSE15_9.pdf
+VaryingVariability-FSE15_178.texVaryingVariability-FSE15_27.csvVaryingVariability-FSE15_9.synctex.gz
+VaryingVariability-FSE15_179.auxVaryingVariability-FSE15_27.jsonVaryingVariability-FSE15_9.tex
+VaryingVariability-FSE15_179.bblVaryingVariability-FSE15_27.logVaryingVariability-FSE15_90.aux
+VaryingVariability-FSE15_179.blgVaryingVariability-FSE15_27.pdfVaryingVariability-FSE15_90.bbl
+VaryingVariability-FSE15_179.csvVaryingVariability-FSE15_27.synctex.gzVaryingVariability-FSE15_90.blg
+VaryingVariability-FSE15_179.jsonVaryingVariability-FSE15_27.texVaryingVariability-FSE15_90.csv
+VaryingVariability-FSE15_179.logVaryingVariability-FSE15_270.auxVaryingVariability-FSE15_90.json
+VaryingVariability-FSE15_179.pdfVaryingVariability-FSE15_270.bblVaryingVariability-FSE15_90.log
+VaryingVariability-FSE15_179.synctex.gzVaryingVariability-FSE15_270.blgVaryingVariability-FSE15_90.pdf
+VaryingVariability-FSE15_179.texVaryingVariability-FSE15_270.csvVaryingVariability-FSE15_90.synctex.gz
+VaryingVariability-FSE15_18.auxVaryingVariability-FSE15_270.jsonVaryingVariability-FSE15_90.tex
+VaryingVariability-FSE15_18.bblVaryingVariability-FSE15_270.logVaryingVariability-FSE15_91.aux
+VaryingVariability-FSE15_18.blgVaryingVariability-FSE15_270.pdfVaryingVariability-FSE15_91.bbl
+VaryingVariability-FSE15_18.csvVaryingVariability-FSE15_270.synctex.gzVaryingVariability-FSE15_91.blg
+VaryingVariability-FSE15_18.jsonVaryingVariability-FSE15_270.texVaryingVariability-FSE15_91.csv
+VaryingVariability-FSE15_18.logVaryingVariability-FSE15_271.auxVaryingVariability-FSE15_91.json
+VaryingVariability-FSE15_18.pdfVaryingVariability-FSE15_271.bblVaryingVariability-FSE15_91.log
+VaryingVariability-FSE15_18.synctex.gzVaryingVariability-FSE15_271.blgVaryingVariability-FSE15_91.pdf
+VaryingVariability-FSE15_18.texVaryingVariability-FSE15_271.csvVaryingVariability-FSE15_91.synctex.gz
+VaryingVariability-FSE15_180.auxVaryingVariability-FSE15_271.jsonVaryingVariability-FSE15_91.tex
+VaryingVariability-FSE15_180.bblVaryingVariability-FSE15_271.logVaryingVariability-FSE15_92.aux
+VaryingVariability-FSE15_180.blgVaryingVariability-FSE15_271.pdfVaryingVariability-FSE15_92.bbl
+VaryingVariability-FSE15_180.csvVaryingVariability-FSE15_271.synctex.gzVaryingVariability-FSE15_92.blg
+VaryingVariability-FSE15_180.jsonVaryingVariability-FSE15_271.texVaryingVariability-FSE15_92.csv
+VaryingVariability-FSE15_180.logVaryingVariability-FSE15_272.auxVaryingVariability-FSE15_92.json
+VaryingVariability-FSE15_180.pdfVaryingVariability-FSE15_272.bblVaryingVariability-FSE15_92.log
+VaryingVariability-FSE15_180.synctex.gzVaryingVariability-FSE15_272.blgVaryingVariability-FSE15_92.pdf
+VaryingVariability-FSE15_180.texVaryingVariability-FSE15_272.csvVaryingVariability-FSE15_92.synctex.gz
+VaryingVariability-FSE15_181.auxVaryingVariability-FSE15_272.jsonVaryingVariability-FSE15_92.tex
+VaryingVariability-FSE15_181.bblVaryingVariability-FSE15_272.logVaryingVariability-FSE15_93.aux
+VaryingVariability-FSE15_181.blgVaryingVariability-FSE15_272.pdfVaryingVariability-FSE15_93.bbl
+VaryingVariability-FSE15_181.csvVaryingVariability-FSE15_272.synctex.gzVaryingVariability-FSE15_93.blg
+VaryingVariability-FSE15_181.jsonVaryingVariability-FSE15_272.texVaryingVariability-FSE15_93.csv
+VaryingVariability-FSE15_181.logVaryingVariability-FSE15_273.auxVaryingVariability-FSE15_93.json
+VaryingVariability-FSE15_181.pdfVaryingVariability-FSE15_273.bblVaryingVariability-FSE15_93.log
+VaryingVariability-FSE15_181.synctex.gzVaryingVariability-FSE15_273.blgVaryingVariability-FSE15_93.pdf
+VaryingVariability-FSE15_181.texVaryingVariability-FSE15_273.csvVaryingVariability-FSE15_93.synctex.gz
+VaryingVariability-FSE15_182.auxVaryingVariability-FSE15_273.jsonVaryingVariability-FSE15_93.tex
+VaryingVariability-FSE15_182.bblVaryingVariability-FSE15_273.logVaryingVariability-FSE15_94.aux
+VaryingVariability-FSE15_182.blgVaryingVariability-FSE15_273.pdfVaryingVariability-FSE15_94.bbl
+VaryingVariability-FSE15_182.csvVaryingVariability-FSE15_273.synctex.gzVaryingVariability-FSE15_94.blg
+VaryingVariability-FSE15_182.jsonVaryingVariability-FSE15_273.texVaryingVariability-FSE15_94.csv
+VaryingVariability-FSE15_182.logVaryingVariability-FSE15_274.auxVaryingVariability-FSE15_94.json
+VaryingVariability-FSE15_182.pdfVaryingVariability-FSE15_274.bblVaryingVariability-FSE15_94.log
+VaryingVariability-FSE15_182.synctex.gzVaryingVariability-FSE15_274.blgVaryingVariability-FSE15_94.pdf
+VaryingVariability-FSE15_182.texVaryingVariability-FSE15_274.csvVaryingVariability-FSE15_94.synctex.gz
+VaryingVariability-FSE15_183.auxVaryingVariability-FSE15_274.jsonVaryingVariability-FSE15_94.tex
+VaryingVariability-FSE15_183.bblVaryingVariability-FSE15_274.logVaryingVariability-FSE15_95.aux
+VaryingVariability-FSE15_183.blgVaryingVariability-FSE15_274.pdfVaryingVariability-FSE15_95.bbl
+VaryingVariability-FSE15_183.csvVaryingVariability-FSE15_274.synctex.gzVaryingVariability-FSE15_95.blg
+VaryingVariability-FSE15_183.jsonVaryingVariability-FSE15_274.texVaryingVariability-FSE15_95.csv
+VaryingVariability-FSE15_183.logVaryingVariability-FSE15_275.auxVaryingVariability-FSE15_95.json
+VaryingVariability-FSE15_183.pdfVaryingVariability-FSE15_275.bblVaryingVariability-FSE15_95.log
+VaryingVariability-FSE15_183.synctex.gzVaryingVariability-FSE15_275.blgVaryingVariability-FSE15_95.pdf
+VaryingVariability-FSE15_183.texVaryingVariability-FSE15_275.csvVaryingVariability-FSE15_95.synctex.gz
+VaryingVariability-FSE15_184.auxVaryingVariability-FSE15_275.jsonVaryingVariability-FSE15_95.tex
+VaryingVariability-FSE15_184.bblVaryingVariability-FSE15_275.logVaryingVariability-FSE15_96.aux
+VaryingVariability-FSE15_184.blgVaryingVariability-FSE15_275.pdfVaryingVariability-FSE15_96.bbl
+VaryingVariability-FSE15_184.csvVaryingVariability-FSE15_275.synctex.gzVaryingVariability-FSE15_96.blg
+VaryingVariability-FSE15_184.jsonVaryingVariability-FSE15_275.texVaryingVariability-FSE15_96.csv
+VaryingVariability-FSE15_184.logVaryingVariability-FSE15_276.auxVaryingVariability-FSE15_96.json
+VaryingVariability-FSE15_184.pdfVaryingVariability-FSE15_276.bblVaryingVariability-FSE15_96.log
+VaryingVariability-FSE15_184.synctex.gzVaryingVariability-FSE15_276.blgVaryingVariability-FSE15_96.pdf
+VaryingVariability-FSE15_184.texVaryingVariability-FSE15_276.csvVaryingVariability-FSE15_96.synctex.gz
+VaryingVariability-FSE15_185.auxVaryingVariability-FSE15_276.jsonVaryingVariability-FSE15_96.tex
+VaryingVariability-FSE15_185.bblVaryingVariability-FSE15_276.logVaryingVariability-FSE15_97.aux
+VaryingVariability-FSE15_185.blgVaryingVariability-FSE15_276.pdfVaryingVariability-FSE15_97.bbl
+VaryingVariability-FSE15_185.csvVaryingVariability-FSE15_276.synctex.gzVaryingVariability-FSE15_97.blg
+VaryingVariability-FSE15_185.jsonVaryingVariability-FSE15_276.texVaryingVariability-FSE15_97.csv
+VaryingVariability-FSE15_185.logVaryingVariability-FSE15_277.auxVaryingVariability-FSE15_97.json
+VaryingVariability-FSE15_185.pdfVaryingVariability-FSE15_277.bblVaryingVariability-FSE15_97.log
+VaryingVariability-FSE15_185.synctex.gzVaryingVariability-FSE15_277.blgVaryingVariability-FSE15_97.pdf
+VaryingVariability-FSE15_185.texVaryingVariability-FSE15_277.csvVaryingVariability-FSE15_97.synctex.gz
+VaryingVariability-FSE15_186.auxVaryingVariability-FSE15_277.jsonVaryingVariability-FSE15_97.tex
+VaryingVariability-FSE15_186.bblVaryingVariability-FSE15_277.logVaryingVariability-FSE15_98.aux
+VaryingVariability-FSE15_186.blgVaryingVariability-FSE15_277.pdfVaryingVariability-FSE15_98.bbl
+VaryingVariability-FSE15_186.csvVaryingVariability-FSE15_277.synctex.gzVaryingVariability-FSE15_98.blg
+VaryingVariability-FSE15_186.jsonVaryingVariability-FSE15_277.texVaryingVariability-FSE15_98.csv
+VaryingVariability-FSE15_186.logVaryingVariability-FSE15_278.auxVaryingVariability-FSE15_98.json
+VaryingVariability-FSE15_186.pdfVaryingVariability-FSE15_278.bblVaryingVariability-FSE15_98.log
+VaryingVariability-FSE15_186.synctex.gzVaryingVariability-FSE15_278.blgVaryingVariability-FSE15_98.pdf
+VaryingVariability-FSE15_186.texVaryingVariability-FSE15_278.csvVaryingVariability-FSE15_98.synctex.gz
+VaryingVariability-FSE15_187.auxVaryingVariability-FSE15_278.jsonVaryingVariability-FSE15_98.tex
+VaryingVariability-FSE15_187.bblVaryingVariability-FSE15_278.logVaryingVariability-FSE15_99.aux
+VaryingVariability-FSE15_187.blgVaryingVariability-FSE15_278.pdfVaryingVariability-FSE15_99.bbl
+VaryingVariability-FSE15_187.csvVaryingVariability-FSE15_278.synctex.gzVaryingVariability-FSE15_99.blg
+VaryingVariability-FSE15_187.jsonVaryingVariability-FSE15_278.texVaryingVariability-FSE15_99.csv
+VaryingVariability-FSE15_187.logVaryingVariability-FSE15_279.auxVaryingVariability-FSE15_99.json
+VaryingVariability-FSE15_187.pdfVaryingVariability-FSE15_279.bblVaryingVariability-FSE15_99.log
+VaryingVariability-FSE15_187.synctex.gzVaryingVariability-FSE15_279.blgVaryingVariability-FSE15_99.pdf
+VaryingVariability-FSE15_187.texVaryingVariability-FSE15_279.csvVaryingVariability-FSE15_99.synctex.gz
+VaryingVariability-FSE15_188.auxVaryingVariability-FSE15_279.jsonVaryingVariability-FSE15_99.tex
+VaryingVariability-FSE15_188.bblVaryingVariability-FSE15_279.logabstract.tex
+VaryingVariability-FSE15_188.blgVaryingVariability-FSE15_279.pdfallCompile.sh
+VaryingVariability-FSE15_188.csvVaryingVariability-FSE15_279.synctex.gzallCompile.sh~
+VaryingVariability-FSE15_188.jsonVaryingVariability-FSE15_279.texcasestudies.tex
+VaryingVariability-FSE15_188.logVaryingVariability-FSE15_28.auxcasestudy.tex
+VaryingVariability-FSE15_188.pdfVaryingVariability-FSE15_28.bblcasestudy1.tex
+VaryingVariability-FSE15_188.synctex.gzVaryingVariability-FSE15_28.blgcasestudy2.tex
+VaryingVariability-FSE15_188.texVaryingVariability-FSE15_28.csvcasestudy3.tex
+VaryingVariability-FSE15_189.auxVaryingVariability-FSE15_28.jsoncasestudy4.tex
+VaryingVariability-FSE15_189.bblVaryingVariability-FSE15_28.logcompile.sh
+VaryingVariability-FSE15_189.blgVaryingVariability-FSE15_28.pdfconclusion.tex
+VaryingVariability-FSE15_189.csvVaryingVariability-FSE15_28.synctex.gzconfigurator.tex
+VaryingVariability-FSE15_189.jsonVaryingVariability-FSE15_28.texdemodularizing.tex
+VaryingVariability-FSE15_189.logVaryingVariability-FSE15_280.auxfigures
+VaryingVariability-FSE15_189.pdfVaryingVariability-FSE15_280.bblheaderftscsv.txt
+VaryingVariability-FSE15_189.synctex.gzVaryingVariability-FSE15_280.blgintroduction.tex
+VaryingVariability-FSE15_189.texVaryingVariability-FSE15_280.csviris.dot
+VaryingVariability-FSE15_19.auxVaryingVariability-FSE15_280.jsoniris.pdf
+VaryingVariability-FSE15_19.bblVaryingVariability-FSE15_280.loglemonde.js
+VaryingVariability-FSE15_19.blgVaryingVariability-FSE15_280.pdflemonde2.js
+VaryingVariability-FSE15_19.csvVaryingVariability-FSE15_280.synctex.gznewspaper.tex
+VaryingVariability-FSE15_19.jsonVaryingVariability-FSE15_280.texrelated.tex
+VaryingVariability-FSE15_19.logVaryingVariability-FSE15_281.auxsig-alternate.cls
+VaryingVariability-FSE15_19.pdfVaryingVariability-FSE15_281.bblsome tests.ipynb
+VaryingVariability-FSE15_19.synctex.gzVaryingVariability-FSE15_281.blgstats.csv
+VaryingVariability-FSE15_19.texVaryingVariability-FSE15_281.csvstats.pdf
+VaryingVariability-FSE15_190.auxVaryingVariability-FSE15_281.jsonsummary.tex
+VaryingVariability-FSE15_190.bblVaryingVariability-FSE15_281.logwin7.tex
+vmacher:output-FSE macher1$ emacs -nw ../input/FSE-newidea/VaryingVariability-FSE15.tex 
+vmacher:output-FSE macher1$ rm VaryingVariability-FSE15_*
+vmacher:output-FSE macher1$ ls
+DEModularity15.bibcasestudies.texcasestudy4.texfigureslemonde.jssome tests.ipynb
+Untitled.ipynbcasestudy.texcompile.shheaderftscsv.txtlemonde2.jsstats.csv
+abstract.texcasestudy1.texconclusion.texintroduction.texnewspaper.texstats.pdf
+allCompile.shcasestudy2.texconfigurator.texiris.dotrelated.texsummary.tex
+allCompile.sh~casestudy3.texdemodularizing.texiris.pdfsig-alternate.clswin7.tex
+vmacher:output-FSE macher1$ wc -l stats.csv 
+       2 stats.csv
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ less stats.csv 
+vmacher:output-FSE macher1$ emacs -nw ../input/FSE-newidea/VaryingVariability-FSE15.tex 
+
+\author{
+% You can go ahead and credit any number of authors here,                                                                                                                                                                 
+% e.g. one 'row of three' or two rows (consisting of one row of three                                                                                                                                                     
+% and a second row of one, two or three).                                                                                                                                                                                 
+%                                                                                                                                                                                                                         
+% The command \alignauthor (no curly braces needed) should                                                                                                                                                                
+% precede each author name, affiliation/snail-mail address and                                                                                                                                                            
+% e-mail address. Additionally, tag each line of                                                                                                                                                                          
+% affiliation/address with \affaddr, and tag the                                                                                                                                                                          
+% e-mail address with \email.                                                                                                                                                                                             
+%                                                                                                                                                                                                                         
+% 1st. author                                                                                                                                                                                                             
+\alignauthor
+Mathieu Acher, Guillaume B\'{e}can, Benoit Combemale,\\ Benoit Baudry, and Jean-Marc J\'{e}z\'{e}quel\\
+        {{#if LONG_AFFILIATION}}
+        \affaddr{Inria - IRISA, University of Rennes 1, France}
+        {{#if EMAIL}}
+        \email{firstname.lastname@inria.fr}
+        {{/if}}
+        {{/if}}
+}
+% There's nothing stopping you putting the seventh, eighth, etc.                                                                                                                                                          
+% author on the opening page (as the 'third row') but we ask,                                                                                                                                                             
+% for aesthetic reasons that you place these 'additional authors'                                                                                                                                                         
+% in the \additional authors block, viz.                                                                                                                                                                                  
+%\additionalauthors{Additional authors: John Smith (The Th{\o}rv{\"a}ld Group,                                                                                                                                            
+%email: {\texttt{jsmith@affiliation.org}}) and Julius P.~Kumquat                                                                                                                                                          
+%(The Kumquat Consortium, email: {\texttt{jpkumquat@consortium.net}}).}                                                                                                                                                   
+% \date{30 July 1999}                                                                                                                                                                                                     
+% Just remember to make sure that the TOTAL number of authors                                                                                                                                                             
+% is the number that will appear on the first page PLUS the                                                                                                                                                               
+% number that will appear in the \additionalauthors section.                                                                                                                                                              
+
+\maketitle
+
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+-uu-:---F1  VaryingVariability-FSE15.tex   70% L227   (LaTeX)-------------------------------------------------------------------------------------------------------------------------------------------------------------
+%From a software engineering perspective, modularity is undeniably good and remains a standing goal of any project~\cite{Parnas72,tarr1999}.                                                                              
+%However, the modularity used as an architectural pattern to help the developer becomes bad if seen from a security point of view; a malicious attacker can too easily understand the overall architecture, locate and re\
+ason about critical concerns, and then reuse the modular parts. That is, modularity can dramatically ease and speed up the effort needed to reverse engineer a system.                                                    
+%%                                                                                                                                                                                                                        
+%                                                                                                                                                                                                                         
+%The process of recovering a program's design usually includes module breakdowns, the identification of abstractions, control- and data-flows~\cite{byrne1991,canfora2011}. If everything is decomposed from the start, s\
+ays with a clean object-oriented, component-based or aspect-oriented style, an outsider could immediately recover the implementation details of a system -- even a tool could automatically do the task~\cite{ceccato2014\
+}. The same observation applies for \emph{external data} that a program has to manipulate. That is, a clean modularization of data is beneficial for software developers in charge of implementing the access and process\
+ing of data, can be useful for scaling up or out, but eases the task of an attacker.                                                                                                                                      
+%% For example, an execution trace of the system would reflect this modularization with the rendering of the exchanges between objects and components, or the injections of cross-cutting aspects.                        
+% From a security point of view, it is not acceptable. A quick and comprehensive discovery of secrets can lead an ill-disposed person motivated by wrongful or mischievous purposes to cause serious damages.             
+%% For instance, an attacker can                                                                                                                                                                                          
+%                                                                                                                                                                                                                         
+%% \ma{Examples: OO, Bref, protocols}                                                                                                                                                                                     
+%                                                                                                                                                                                                                         
+%% As a result of a good modularity, the reverse engineering effort can be dramatically eased and speed up.                                                                                                               
+%                                                                                                                                                                                                                         
+%% Modularity is as good for the same reasons it is bad from a security perspective.                                                                                                                                      
+% It thus seems that the modular qualities may sometimes backfire.                                                                                                                                                        
+%Good when designing, testing, developing, maintaining, or re-engineering a system; bad when deploying or executing the application outside (e.g., in the Web).                                                           
+%The exhibit of modularity, though desired, accidentally opens doors for attackers.                                                                                                                                       
+%The tension between the two points of view poses an evident problem and dilemma for developers.                                                                                                                          
+%%                                                                                                                                                                                                                        
+% A first radical attitude is to stop building modular applications when security does matter.                                                                                                                            
+%Developers could consider changing their programming styles~\cite{lopes2014exercises} (e.g., through the use of monolithic code), design the application with anti-modular patterns, etc. It goes against any software e\
+ngineering principles that have been long advocated and that practitioners are hopefully used to apply.                                                                                                                   
+%Another strategy, less radical and more realistic, is to consider that modularity imposes some tradeoffs. We can envision to lose, from a development perspective, some modularity properties with the intent of increas\
+ing security.                                                                                                                                                                                                             
+%                                                                                                                                                                                                                         
+%In fact, an ideal situation would be to keep the development modular and then to demodularize on purpose, at the right time (e.g., at compile time, or even at runtime), the application.  This requires to statically i\
+dentify the modularization patterns helpful for an attacker, and to apply dedicated techniques to fade the modularity once it is no longer necessary. This paper argues that systematic methods and automated techniques \
+should seamlessly support practitioners in demodularizing external data their programs have to access.                                                                                                                    
+
+% \bc{design time: no decision in the spectrum and good practices... we change at compile time (definitely) or dynamically at run time...}                                                                                
+
+% security                                                                                                                                                                                                                
+
+The engineering of a product line makes it possible to offer numerous configuration options (or features) and deliver unique products (or variants) to customers. Substantial profit is expected in terms of customer sat\
+isfaction, mass customization, market presence, \etc
+-uu-:---F1  introduction.tex   Top L1     (TeX)---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\section{Product Lines Can Jeopardize\\ Trade Secrets} % Case Studies
+\label{sec:casestudy}
+\input{casestudies.tex}
+
+% \section{Case Study 2}
+% \label{sec:casestudy2}
+% \input{casestudy2.tex}
+
+% \section{Case Study 3}
+% \label{sec:casestudy3}
+% \input{casestudy3.tex}
+
+% \section{Case Study 4}
+% \label{sec:casestudy4}
+% \input{casestudy4.tex}
+
+\section{Protect Variability!}
+\label{sec:summary}
+\input{summary.tex}
+
+% \section{Related Work}
+% \label{sec:related}
+% \input{related.tex}
+
+\textbf{Concluding remarks.}
+\label{sec:conclusion}
+\input{conclusion.tex}
+
+{{#if ACK}}
+\textbf{Acknowledgements.} We thank anonymous reviewers for their valuable feedbacks.
+{{/if}}
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\scriptsize
+%\vspace*{-2mm}
+\vspace*{-{{{vspace_bib}}}mm}
+\bibliographystyle{abbrv}
+\bibliography{DEModularity15}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%\balancecolumns
+
+% That's all folks!
+\end{document}

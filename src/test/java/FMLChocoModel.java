@@ -144,7 +144,7 @@ public class FMLChocoModel {
             }
         }
 
-        model.arithm(null, "", null);
+//        model.arithm(null, "", null);
 
 
         /*BoolVar[] vars = model.retrieveBoolVars();

@@ -23,8 +23,8 @@ do
     bibtex $latexFileName && printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
     $PDFLATEX $latexFileName | $FILTER && printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
     $PDFLATEX $latexFileName | $FILTER
- #   open -a Preview $latexFileName".pdf"
-    sleep 4
+    open -a Preview $latexFileName".pdf"
+    sleep 10
     nbPages=`mdls -name kMDItemNumberOfPages -raw $latexFileName.pdf`
     sizePDF=`du -k $latexFileName.pdf | cut -f1`
     idConfiguration="${latexFileName#*VaryingVariability-FSE15_}"

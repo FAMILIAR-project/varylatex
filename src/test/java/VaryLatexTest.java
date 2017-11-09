@@ -388,19 +388,32 @@ public class VaryLatexTest extends FMLTest {
         String TARGET_FOLDER = "outputX264";
 
         //String trailerLocation = "/Users/macher1/Documents/SANDBOX/x264Expe/sintel_trailer_2k_480p24.y4m";
-        String trailerLocation = "../husky_cif.y4m"; //"../sign_irene_qcif.y4m"; //"../football_cif_15fps.y4m"; //"../flower_sif.y4m"; // "../claire_qcif.y4m" ; // "../akiyo_qcif.y4m" ; //"../sympsons.mp4" ; // "../elephantsdream_source.264" ; // "../sintel_trailer_2k_480p24.y4m";
 
-        String X264cmdLocation = "../x264/x264"; // "x264" ; // "/Users/macher1/Documents/SANDBOX/x264Expe/x264-r2851-ba24899"; //"x264"; // x264/x264
+        // Warning: the "../" was before
+        String trailerLocation =  "forest_jester-dv.mov"; //"gothism-dv.mov"; //"bridge_close_cif.y4m"; //"bridge_far_cif.y4m"; //"Netflix_Boat_4096x2160_60fps_8bit_420.y4m"; //"Mobile_ProRes.mov"; //"flower_sif.y4m"; //"students_cif.y4m"; //"riverbed_1080p25.y4m"; //"sunflower_1080p25.y4m"; //"ice_cif.y4m"; //"husky_cif.y4m"; //"tennis_sif.y4m"; // "waterfall_cif.y4m"; // "football_cif_15fps.y4m" ; //"flower_sif.y4m" ; // "claire_qcif.y4m"; // "football_cif.y4m"; //"akiyo_qcif.y4m"; //"FourPeople_1280x720_60.y4m"; //"blue_sky_1080p25.y4m"; //"720p50_parkrun_ter.y4m";//"tractor_1080p25.y4m"; //"soccer_4cif.y4m"; //"deadline_cif.y4m"; //"tos3k.y4m"; //"football_cif.y4m" ; // "Coastguard_H264.mp4"; // "spiderman.mp4" ;//"sintel_trailer_2k_480p24.y4m"; //"mobile_sif_mono.y4m"; //"crowd_run_1080p50.y4m";  //"mobile_sif_mono.y4m"; //"mobile_sif.y4m"; //"ducks_take_off_420_720p50.y4m"; // "News_H264.mp4"; //"crowd_run_1080p50.y4m" ; // "sintel_trailer_2k_480p24.y4m"; //"spiderman.mp4"; // "elephantsdream_source.264"; //"football_422_cif.y4m"; // "sintel_trailer_2k_480p24.y4m"; //"akiyo_qcif.y4m"; // //"flower_sif.y4m"; //"football_cif.y4m"; //"paris_cif.y4m"; //"students_cif.y4m"; //"eledream_640x360_128.y4m"; //"highway_cif.y4m"; //"garden_sif.y4m"; //"foreman_cif.y4m"; //"crowd_run_1080p50.y4m"; //"tennis_sif.y4m" ; //"husky_cif.y4m"; //"akiyo_qcif.y4m";  //"football_cif_15fps.y4m"; //"flower_sif.y4m"; // "waterfall_cif.y4m" ; // "mobile_cif.y4m"; //"football_cif_15fps.y4m"; // football_cif.y4m"; // "sintel_trailer_2k_480p24.y4m"; // "ice_cif.y4m"; //"football_cif.y4m"; // "sintel_trailer_2k_480p24.y4m" ; // "akiyo_qcif.y4m"; // "football_cif_15fps.y4m"; //"husky_cif.y4m"; //"../sign_irene_qcif.y4m"; //"../football_cif_15fps.y4m"; //"../flower_sif.y4m"; // "../claire_qcif.y4m" ; // "../akiyo_qcif.y4m" ; //"../sympsons.mp4" ; // "../elephantsdream_source.264" ; // "../sintel_trailer_2k_480p24.y4m";
 
-        String oExtension = "flv";
+        // TODO: cp x264 to /srv/local as well?
+        String X264cmdLocation = "../x264/x264"; //"../x264-custom/x264/x264";    // "x264" ; // "/Users/macher1/Documents/SANDBOX/x264Expe/x264-r2851-ba24899"; //"x264"; // x264/x264
 
-        final int REPEAT = 10;
+        String oExtension = "264";
+
+        final int REPEAT = 5;
+        boolean WITH_ASM = true; // default: no_asm
+
+        String benchName = "bench3";
 
 // _ because "-" is not allowed in FALILIAR (I think coz of FeatureIDE limitation
+
         FeatureModelVariable fmv = FM(
                 "H264 : no_asm [no_8x8dct] [no_cabac] [no_deblock] [no_fast_pskip] [no_mbtree]\n" +
                         "            [no_mixed_refs] [no_weightb] ref rc_lookahead ; ref : (ref1|ref5|ref9); rc_lookahead :\n" +
                         "            (rc_lookahead20 | rc_lookahead40 | rc_lookahead60); ");
+
+        /* WITH_ASM=true
+        FeatureModelVariable fmv = FM(
+                "H264 : [no_asm] [no_8x8dct] [no_cabac] [no_deblock] [no_fast_pskip] [no_mbtree]\n" +
+                        "            [no_mixed_refs] [no_weightb] ref rc_lookahead ; ref : (ref1|ref5|ref9); rc_lookahead :\n" +
+                        "            (rc_lookahead20 | rc_lookahead40 | rc_lookahead60); !no_asm; ");*/
         assertEquals(1152, fmv.counting(), 0.0);
         // TODO "set" variable (numerical) != domain
 
@@ -441,7 +454,7 @@ public class VaryLatexTest extends FMLTest {
         // FileWriter fw =
         for (Set<String> cf : scfs) {
             idConf++;
-            Map<String, Object> conf =  _mkConfMap(fmv, cf); // easier to handle configuration object
+            Map<String, Object> conf =  _mkConfMap(fmv, cf, WITH_ASM); // easier to handle configuration object
 
             // toCSV line
             String str = conf.keySet().stream().sorted().map(ft -> conf.get(ft).toString()).collect(Collectors.joining(","));
@@ -455,6 +468,7 @@ public class VaryLatexTest extends FMLTest {
                 Object val = conf.get(param);
                 if (val instanceof Boolean) {
                     boolean b = ((Boolean) val).booleanValue();
+
                     if (b) {
                         strParam += _mkParam(param) + " ";
                     }
@@ -465,13 +479,17 @@ public class VaryLatexTest extends FMLTest {
                 }
 
             }
+
+           // strParam += " --trellis 0";
 //   // "(gtime -f \"USERTIME %U\\nSYSTEMTIME %S\\nELAPSEDTIME %e\\nMEMORYTIME %K\" x264 --no-asm --ref 5 --no-fast-pskip --no-8x8dct --no-deblock --rc-lookahead 40  --no-cabac --no-weightb --no-mixed-refs  -o sintel$numb.flv sintel_trailer_2k_480p24.y4m) 2> $logfilename\n" +
 
             String shR = "#!/bin/bash\n\n" +
                     "numb='" + idConf + "'\n" +
-                    "logfilename=\"$numb.log\"\n" +
-                    "trailerlocation='" + trailerLocation + "'" +
+                    "logfilename=\"/srv/local/macher/" + benchName + "/output/$numb.log\"\n" +
+                    "trailerlocation='" + "/srv/local/macher/" + benchName + "/" + trailerLocation + "'" +
+                    //"trailerlocation='" + trailerLocation + "'" +
                     "\n" +
+                     "\n" +
                     "TIMEFORMAT=\"USERTIME %U                                                                                            \n" +
                     "SYSTEMTIME %S                                                                                                      \n" +
                     "ELAPSEDTIME %R\"; { time " +
@@ -480,18 +498,18 @@ public class VaryLatexTest extends FMLTest {
                     //"../x264/x264 "
                     X264cmdLocation + " "
                             + strParam +
-                            " -o sintel$numb" + "." + oExtension + " $trailerlocation ; } 2> $logfilename\n" +
+                            " -o /srv/local/macher/" + benchName + "/tempvids/sintel$numb" + "." + oExtension + " $trailerlocation ; } 2> $logfilename\n" +
                         //    " -o sintel$numb" + ".flv $trailerlocation) 2> $logfilename\n" +
                     "# size of the video\n" +
                    // "size=`du sintel$numb." + oExtension + " | cut -f1`\n" +
-                    "size=`ls -lrt sintel$numb." + oExtension + " | awk '{print $5}'`\n" +
+                    "size=`ls -lrt /srv/local/macher/" + benchName + "/tempvids/sintel$numb." + oExtension + " | awk '{print $5}'`\n" +
                     "# analyze log to extract relevant timing information\n" +
                     "usertime=`grep \"USERTIME\" $logfilename | sed 's/[^.,0-9]*//g ; s/,/./g'`\n" +
                     "systemtime=`grep \"SYSTEMTIME\" $logfilename | sed 's/[^.,0-9]*//g ; s/,/./g'`\n" +
                     "elapsedtime=`grep \"ELAPSEDTIME\" $logfilename | sed 's/[^.,0-9]*//g ; s/,/./g'`\n" +
                     // "memorytime=`grep \"MEMORYTIME\" $logfilename | sed 's/[^.0-9]*//g'`\n" +
                     "# clean\n" +
-                    "rm sintel$numb." + oExtension + "\n" +
+                    "rm /srv/local/macher/" + benchName + "/tempvids/sintel$numb." + oExtension + "\n" +
                     "\n" +
                     "\n" +
                     "csvLine=" + "'" + csvLine + "'" + "\n" +
@@ -536,6 +554,15 @@ public class VaryLatexTest extends FMLTest {
         );*/
 
         fwAll.write("#!/bin/bash\n\n" +
+                        // specific to IGRIDA: copy to /srv/local/macher/
+                        // new trailer location is then /srv/local/macher/trailerlocation
+                        "echo \"Copying video: \" " + trailerLocation + "\n" +
+                        "mkdir -p /srv/local/macher/\n" +
+                        "mkdir -p /srv/local/macher/" + benchName + "/\n" +
+                        "mkdir -p /srv/local/macher/" + benchName+ "/output/\n" + // log location
+                        "rm -f /srv/local/macher/" + benchName + "/output/*.log\n" + // in case
+                        "mkdir -p /srv/local/macher/" + benchName + "/tempvids/\n" + // temporary videos
+                        "cp ../" + trailerLocation + " /srv/local/macher/" + benchName + "/" + "\n" +
                         "header=" + "'" + fullHeader + "'" + "\n" +
                         "x64configs=`ls *.sh`\n" +
                         "for i in {1.." + REPEAT + "}\n" +
@@ -550,8 +577,11 @@ public class VaryLatexTest extends FMLTest {
                         "   csvLine=`bash $x264config`\n" +
                         "   echo \"$csvLine\" >> $csvOutput\n" +
                         "done\n" +
-                        "tar cvf \"oX264-results$i.tar.gz\" *.log\n" +
-                        "done\n"
+                        "tar cvf \"oX264-results$i.tar.gz\" /srv/local/macher/" + benchName + "/output/*.log\n" +
+                        "done\n" +
+                        "rm /srv/local/macher/" + benchName + "/" + trailerLocation + "\n" +
+                        "rm -rf /srv/local/macher/" + benchName + "/" + "\n" +
+                        "echo \"Deleting bench folder\"" + "\n"
                 // "echo \"$header\\n$csv\" 2> x264-results.csv"
         );
         fwAll.close();
@@ -600,7 +630,7 @@ public class VaryLatexTest extends FMLTest {
         return "--" + encParam + "";
     }
 
-    private Map<String, Object> _mkConfMap(FeatureModelVariable fmv, Set<String> cf) {
+    private Map<String, Object> _mkConfMap(FeatureModelVariable fmv, Set<String> cf, boolean wasm) {
 
         Map<String, Object> lConf = new HashMap<>();
 
@@ -632,6 +662,16 @@ public class VaryLatexTest extends FMLTest {
 
             else if (ft.equals("rc_lookahead")) { // TODO: hack!
                 // nothing
+            }
+
+
+            // HACK (sorry)
+            // configuration IDs have been generated with an hash map that
+            // itself relies on the order of configuration values
+            // I cannot set no_asm as optional and add a negated constraint (it basically changes the order
+            // and thus the configuration IDs
+            else if (wasm && ft.equals("no_asm")) {
+                lConf.put(ft, false); // we negate!
             }
 
             else {
@@ -867,32 +907,34 @@ public class VaryLatexTest extends FMLTest {
         /**
          * TEMPLATE SETTING
          */
+        String inputFolder = "input/FSE-newidea/"; // LaTeX source files
+        String latexFileName = "VaryingVariability-FSE15"; // LaTeX main file
+        String FSE_TARGET_FOLDER = "output-FSE"; // targeted folder of all PDFs and stats
 
-        String FSE_TARGET_FOLDER = "output-FSE";
-
-        // basic parameter: the LaTeX main file
-        String latexFileName = "VaryingVariability-FSE15";
-
-        MustacheEngine engine = MustacheEngineBuilder
-                .newBuilder()
-                .addTemplateLocator(new FileSystemTemplateLocator(1, "input/FSE-newidea/", "tex"))
-                .build();
-        Mustache mustache = engine.getMustache(latexFileName);
-
-
-
-        FeatureModelVariable fmv = FM ("VARY_LATEX : BIB [ACK] [LONG_AFFILIATION] ; ");
-        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "vspace_bib", new DoubleDomainVariable("", 0.0, 5.0, 10.0)); // TODO: type the attribute
-        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleDomainVariable("", 0.98, 1.0, 1000.0)); // TODO: type the attribute
-        // fmv.setFeatureAttribute(fmv.getFeature("BIB"), "stretch", new DoubleVariable("", 0.99)); // TODO: type the attribute
-
-        /***
-         * CONFIG GEN (with Choco model/solver)
+        /*
+         *  variability model (attributed feature model)
          */
 
+        FeatureModelVariable fmv = FM ("VARY_LATEX : BREF BIB [PL_FOOTNOTE] [ACK] JS_STYLE [LONG_AFFILIATION] ; " +
+                "LONG_AFFILIATION : [EMAIL]; JS_STYLE : (JS_SCRIPTSIZE|JS_TINY|JS_FOOTNOTESIZE); " +
+                "ACK : [LONG_ACK] (BOLD_ACK|PARAGRAPH_ACK); !JS_FOOTNOTESIZE; ");
+                    //  footnotesize is obviously too large (we learned that)
+        fmv.setFeatureAttribute(fmv.getFeature("BIB"), "vspace_bib", new DoubleDomainVariable("", 1.0, 5.0, 10.0));
+        fmv.setFeatureAttribute(fmv.getFeature("BREF"), "bref_size", new DoubleDomainVariable("", 0.7, 1.0, 10.0));
+        fmv.setFeatureAttribute(fmv.getFeature("BREF"), "cserver_size", new DoubleDomainVariable("", 0.6, 0.9, 10.0));
 
-        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(300);
+        /***
+         * The rest is automatic!
+         * CONFIG GEN (with Choco model/solver)
+         */
+        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(400);
 
+        // Using Mustache to resolve variability within LaTeX files
+        MustacheEngine engine = MustacheEngineBuilder
+                .newBuilder()
+                .addTemplateLocator(new FileSystemTemplateLocator(1, inputFolder, "tex"))
+                .build();
+        Mustache mustache = engine.getMustache(latexFileName);
 
         /*
          * Store each config into a CSV and resolve variability within templates based on a config
