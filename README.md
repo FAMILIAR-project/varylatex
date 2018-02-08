@@ -1,6 +1,6 @@
 # VaryLaTeX
 
-How to submit a research paper, a technical report, a grant proposal , or a curriculum vitae that respect imposed constraints such as formatting instructions and page limits? It is a challenging task, especially when coping with time pressure.
+How to submit a research paper, a technical report, a grant proposal , or a curriculum vitae that respect imposed constraints such as formatting instructions and page limits? It is a challenging task, especially when coping with time pressure, isn't it? 
 
 ![Alt Text](http://phdcomics.com/comics/archive/phd090617s.gif)
 http://phdcomics.com/comics.php?f=1971
