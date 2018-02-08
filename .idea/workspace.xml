@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="77558203-fa88-4f64-a848-4fbee29f88e2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output-FSE/allCompile.sh" afterPath="$PROJECT_DIR$/output-FSE/allCompile.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output-FSE/stats.csv" afterPath="$PROJECT_DIR$/output-FSE/stats.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/BasicDerivationTest.java" afterPath="$PROJECT_DIR$/src/test/java/BasicDerivationTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/VaryLatexTest.java" afterPath="$PROJECT_DIR$/src/test/java/VaryLatexTest.java" />
     </list>
     <ignored path="varylatex.iws" />
@@ -32,8 +28,8 @@
       <file leaf-file-name="VaryLatexTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/VaryLatexTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-247">
-              <caret line="121" column="21" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
+            <state relative-caret-position="210">
+              <caret line="119" column="73" selection-start-line="119" selection-start-column="73" selection-end-line="119" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1363,8 +1359,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/VaryLatexTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-247">
-          <caret line="121" column="21" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
+        <state relative-caret-position="210">
+          <caret line="119" column="73" selection-start-line="119" selection-start-column="73" selection-end-line="119" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -27,21 +27,13 @@ public class VaryLatexTest extends FMLTest {
     @Test
     public void testGenVariantsWithChoco() throws Exception {
 
-
-        String TARGET_FOLDER = "output";
-
         /**
          * TEMPLATE SETTING
          */
         // basic parameter: the LaTeX main file
         String latexFileName = "mySubmission";
-
-        MustacheEngine engine = MustacheEngineBuilder
-                .newBuilder()
-                .addTemplateLocator(new FileSystemTemplateLocator(1, "input/", "tex"))
-                .build();
-        Mustache mustache = engine.getMustache(latexFileName);
-
+        String inputFolder = "input/"; // LaTeX source files
+        String TARGET_FOLDER = "output";
 
         /**
          * FEATURE MODEL
@@ -58,6 +50,12 @@ public class VaryLatexTest extends FMLTest {
         // we derive 100 configurations here
         int NB_REPEAT = 100;
         Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(NB_REPEAT);
+
+        MustacheEngine engine = MustacheEngineBuilder
+                .newBuilder()
+                .addTemplateLocator(new FileSystemTemplateLocator(1, inputFolder, "tex"))
+                .build();
+        Mustache mustache = engine.getMustache(latexFileName);
 
 
         /*
@@ -117,6 +115,10 @@ public class VaryLatexTest extends FMLTest {
 
 
 
+
+    /*
+     * A demonstration of VaryLaTeX with a real-world example (FSE paper)
+     */
 
     @Test
     public void testFSE() throws Exception {
