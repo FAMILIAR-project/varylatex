@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="77558203-fa88-4f64-a848-4fbee29f88e2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output-FSE/allCompile.sh" afterPath="$PROJECT_DIR$/output-FSE/allCompile.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output-FSE/stats.csv" afterPath="$PROJECT_DIR$/output-FSE/stats.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/BasicDerivationTest.java" afterPath="$PROJECT_DIR$/src/test/java/BasicDerivationTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/VaryLatexTest.java" afterPath="$PROJECT_DIR$/src/test/java/VaryLatexTest.java" />
     </list>
@@ -29,8 +32,8 @@
       <file leaf-file-name="VaryLatexTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/VaryLatexTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="146" column="83" selection-start-line="146" selection-start-column="83" selection-end-line="146" selection-end-column="83" />
+            <state relative-caret-position="-247">
+              <caret line="121" column="21" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -322,7 +325,7 @@
       <recent name="$PROJECT_DIR$/input" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaryLatexTest.testGenVariantsWithChoco">
+  <component name="RunManager" selected="JUnit.VaryLatexTest.testFSE">
     <configuration default="false" name="VaryLatexTest.testFSE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="varylatex" />
@@ -715,11 +718,11 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testGenVariantsWithChoco" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testGenerateVariants" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testOneConfiguration" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.FMLCrashTest.testFM" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testFSE" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testFSE" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testGenVariantsWithChoco" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testGenerateVariants" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.VaryLatexTest.testOneConfiguration" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.FMLCrashTest.testFM" />
       </list>
     </recent_temporary>
   </component>
@@ -881,9 +884,6 @@
     <history-entry file="VaryLatexTest_test2WithChoco - 2018.02.08 at 09h 47m 58s.xml">
       <configuration name="VaryLatexTest.test2WithChoco" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="VaryLatexTest_testFSE - 2018.02.07 at 21h 31m 17s.xml">
-      <configuration name="VaryLatexTest.testFSE" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="VaryLatexTest_testFSE - 2018.02.07 at 22h 34m 53s.xml">
       <configuration name="VaryLatexTest.testFSE" configurationId="JUnit" />
     </history-entry>
@@ -897,6 +897,9 @@
       <configuration name="VaryLatexTest.testFSE" configurationId="JUnit" />
     </history-entry>
     <history-entry file="VaryLatexTest_testFSE - 2018.02.08 at 09h 25m 24s.xml">
+      <configuration name="VaryLatexTest.testFSE" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="VaryLatexTest_testFSE - 2018.02.08 at 10h 10m 10s.xml">
       <configuration name="VaryLatexTest.testFSE" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -1360,8 +1363,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/VaryLatexTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="146" column="83" selection-start-line="146" selection-start-column="83" selection-end-line="146" selection-end-column="83" />
+        <state relative-caret-position="-247">
+          <caret line="121" column="21" selection-start-line="121" selection-start-column="21" selection-end-line="121" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
