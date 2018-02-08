@@ -1,4 +1,6 @@
 output-FSE/VaryingVariability-FSE15*
 outputX264/*
 outputX264
+output/*.pdf
 target/
+src/test/java/X264Test.java
