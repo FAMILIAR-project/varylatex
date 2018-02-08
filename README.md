@@ -1,11 +1,9 @@
 # VaryLaTeX
 
-How to submit a research paper, a technical report, a grant proposal , or a curriculum vitae that respect imposed constraints such as formatting instructions and page limits? It is a challenging task, especially when coping with time pressure, isn't it? 
+How to submit a research paper, a technical report, a grant proposal , or a curriculum vitae that respect imposed constraints such as formatting instructions and page limits? It is a challenging task, especially when coping with time pressure, isn't it? VaryLaTeX is a solution based on variability, constraint programming , and machine learning techniques for documents written in LaTeX to meet constraints and deliver on time. 
 
 ![Alt Text](http://phdcomics.com/comics/archive/phd090617s.gif)
 http://phdcomics.com/comics.php?f=1971
-
-VaryLaTeX is a solution based on variability, constraint programming , and machine learning techniques for documents written in LaTeX to meet constraints and deliver on time. 
 
 As a user, you simply have to annotate LaTeX source files with variability information, e.g., (de)activating portions of text, tuning figures' sizes, or tweaking line spacing. Then, a fully automated procedure learns constraints among Boolean and numerical values for avoiding non-acceptable paper variants, and finally, users can further configure their papers (e.g., aesthetic considerations) or pick a (random) paper variant that meets constraints, e.g., page limits. 
 
