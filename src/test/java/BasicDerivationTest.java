@@ -179,7 +179,7 @@ public class BasicDerivationTest extends FMLTest {
                 idConf++;
                 JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(orderedConf);
                 VaryLatexTest.deriveLaTeXFileFromConfiguration(jSonConf, mustache, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
-                VaryLatexTest.serializeConfigurationCSV(orderedConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv");
+                VaryLatexTest.writeCSVLineOfAConfiguration(orderedConf, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv");
             }
 
         }

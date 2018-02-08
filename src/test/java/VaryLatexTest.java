@@ -71,7 +71,7 @@ public class VaryLatexTest extends FMLTest {
             JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(cf.getValues());
 
             deriveLaTeXFileFromConfiguration(jSonConf, mustache, TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
-            serializeConfigurationCSV(cf.getValues(), TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv"); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
+            writeCSVLineOfAConfiguration(cf.getValues(), TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv"); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
         }
 
 
@@ -144,7 +144,7 @@ public class VaryLatexTest extends FMLTest {
          * The rest is automatic!
          * CONFIG GEN (with Choco model/solver)
          */
-        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(400);
+        Collection<FMLChocoConfiguration> scfs = new FMLChocoSolver(fmv).configs(10);
 
         // Using Mustache to resolve variability within LaTeX files
         MustacheEngine engine = MustacheEngineBuilder
@@ -164,7 +164,7 @@ public class VaryLatexTest extends FMLTest {
             JsonObject jSonConf = new ConfigurationToJSon(fmv).confs2JSON(cf.getValues());
 
             deriveLaTeXFileFromConfiguration(jSonConf, mustache, FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".tex");
-            serializeConfigurationCSV(cf.getValues(), FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv"); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
+            writeCSVLineOfAConfiguration(cf.getValues(), FSE_TARGET_FOLDER + "/" + latexFileName + "_" + idConf + ".csv"); // TODO WEIRD (basically we *assume* a sorted collection for CSV headers and cell values)
         }
 
 
@@ -209,10 +209,6 @@ public class VaryLatexTest extends FMLTest {
 
     }
 
-
-
-
-
     /*
     public static void serializeConfigurationJSON(JsonObject conf, String outputFileLocation) throws Exception {
         Gson g = new Gson();
@@ -222,25 +218,21 @@ public class VaryLatexTest extends FMLTest {
 
     }*/
 
-    public static void serializeConfigurationCSV(Map<String, Object> conf, String outputFileLocation) throws Exception {
-
-        FileWriter fw = new FileWriter(new File(outputFileLocation));
-
-        // String str = conf.keySet().stream().sorted().map(ft -> (conf.get(ft) ? "true" : "false")).collect(Collectors.joining(","));
-
-        String str = conf.keySet().stream().sorted().map(ft -> ConfigurationToJSon._convertConfigurationObjectValue(conf.get(ft)).toString()).collect(Collectors.joining(","));
-        fw.write(str + "\n");
-        fw.close();
-
-    }
-
-
-
 
 
     /*
+   * ad-hoc helper to write a CSV line of a configuration (values of options)
+    */
+    public static void writeCSVLineOfAConfiguration(Map<String, Object> conf, String outputFileLocation) throws Exception {
+        FileWriter fw = new FileWriter(new File(outputFileLocation));
+        String str = conf.keySet().stream().sorted().map(ft -> ConfigurationToJSon._convertConfigurationObjectValue(conf.get(ft)).toString()).collect(Collectors.joining(","));
+        fw.write(str + "\n");
+        fw.close();
+    }
+
+    /*
     * ad-hoc helper to derive a latex file variant based on a configuration using Mustache
-    * output is a new texfile 
+    * output is a new texfile
      */
     public static void deriveLaTeXFileFromConfiguration(JsonObject conf, Mustache mustache, String outputLatexFileLocation) throws Exception {
 
