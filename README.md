@@ -5,13 +5,32 @@ How to submit a research paper, a technical report, a grant proposal , or a curr
 ![Alt Text](http://phdcomics.com/comics/archive/phd090617s.gif)
 http://phdcomics.com/comics.php?f=1971
 
+We are working on a more integrated, lightweight, and usable solution. 
+Feel free to contribute, suggest features, provide feedbacks, use cases
+
 As a user, you simply have to annotate LaTeX source files with variability information, e.g., (de)activating portions of text, tuning figures' sizes, or tweaking line spacing. Then, a fully automated procedure learns constraints among Boolean and numerical values for avoiding non-acceptable paper variants, and finally, users can further configure their papers (e.g., aesthetic considerations) or pick a (random) paper variant that meets constraints, e.g., page limits. 
 
-
+## Publications
 
 More details can be found in the following paper, published/presented at 12th International Workshop on Variability Modelling of Software-Intensive Systems https://vamos2018.wordpress.com/:
-
-https://hal.inria.fr/hal-01659161/
-
+"VaryLaTeX: Learning Paper Variants That Meet Constraints" by Mathieu Acher, Paul Temple, Jean-Marc Jézéquel, José A. Galindo, Jabier Martinez, Tewfik Ziadi: https://hal.inria.fr/hal-01659161/
 
 Screencast (demonstration performed in 2015, no sound unfortunately): https://youtu.be/q7C-4_uXgP0 
+
+## Requirements
+
+The code is mainly written in Java with a bunch of bash/R scripts 
+We are using Mustache for the templating engine (https://mustache.github.io/ and specifically on Trimou: http://trimou.org/) and Choco for the solving part (http://www.choco-solver.org/). 
+You also need FAMILIAR: https://github.com/FAMILIAR-project/familiar-language
+
+# VaryVary 
+
+This work benefited from the support of the project ANR-17-CE25-0010-01 VaryVary. 
+We are seeking candidates for working around the topic of machine learning and configurable systems (VaryLaTeX is an interesting case of VaryVary): https://docs.google.com/document/d/1Vr8HByYefWDRDdVeMtToXtpauFwcxxQeXLZtsX7T1UI/edit?usp=sharing
+
+
+
+
+
+
+
