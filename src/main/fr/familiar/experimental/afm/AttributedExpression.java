@@ -1,4 +1,6 @@
+package fr.familiar.experimental.afm;
 
+import fr.familiar.experimental.afm.ArithmeticCompOperator;
 
 /**
  * Created by macher1 on 13/03/2017.

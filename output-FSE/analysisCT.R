@@ -3,7 +3,7 @@ library(rpart.plot)
 library(caret)
 library(readr)
 library(dplyr)
-mystats <- read_csv("~/Downloads/statsFSEVary4.csv", # "~/Documents/SANDBOX/varylatex/output-FSE/stats.csv"
+mystats <- read_csv("~/Downloads/statsFSEVary9.csv", # "~/Documents/SANDBOX/varylatex/output-FSE/stats.csv", # 
                   col_types = cols(ACK = col_factor(levels = c("true",
                                                                "false")), 
                                    BIB = col_factor(levels = c("true",
@@ -35,18 +35,18 @@ sample <- sample.int(n = nrow(stats), size = floor(perc*nrow(stats)), replace = 
 test  <- stats[-sample, ]
 train <- stats[sample, ]
 fit <- rpart(nbPages~.-idConfiguration-sizePDF,data=train,method="class")
-rpart.plot(fit,type=4, extra=0, box.palette=c("palegreen3", "red"))
+#rpart.plot(fit,type=4, extra=0, box.palette=c("palegreen3", "red"))
 pred = predict(fit, test, type="class")
 cm <- confusionMatrix(pred, test$nbPages)
 return (cm$overall['Accuracy'])
 }
 
-# for (perc in 1:9) {
-#   accs <- c()
-#   for (repeatt in 1:50) {
-#     accs[repeatt] <- evalCT(stats=mystats, perc = (perc/10))
-#   }
-#   print(mean(accs))
-# }
+for (perc in 1:9) {
+   accs <- c()
+   for (repeatt in 1:50) {
+     accs[repeatt] <- evalCT(stats=mystats, perc = (perc/10))
+   }
+   print(mean(accs))
+}
 
-evalCT(stats=mystats, perc = (5/10))
+evalCT(stats=mystats, perc = (7/10))

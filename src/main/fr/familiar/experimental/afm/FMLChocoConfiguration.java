@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import java.util.HashMap;
 import java.util.Map;
 

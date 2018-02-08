@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

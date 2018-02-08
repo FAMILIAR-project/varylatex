@@ -1,6 +1,8 @@
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.familiar.FMLTest;
+import fr.familiar.experimental.afm.ConfigurationToJSon;
+import fr.familiar.experimental.afm.ConfigurationToMap;
 import fr.familiar.interpreter.FMLBasicInterpreter;
 import fr.familiar.variable.Comparison;
 import fr.familiar.variable.FeatureModelVariable;
@@ -22,6 +24,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
+ *
+ * basic tests with FAMILIAR feature models
  * Created by macher1 on 07/06/2016.
  */
 public class FMLCrashTest extends FMLTest {

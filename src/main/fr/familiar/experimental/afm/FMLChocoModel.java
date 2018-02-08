@@ -1,5 +1,6 @@
+package fr.familiar.experimental.afm;
+
 import fr.familiar.fm.converter.FeatureModelToExpression;
-import fr.familiar.interpreter.VariableNotExistingException;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
 import gsd.synthesis.Expression;
@@ -24,7 +25,7 @@ import static org.chocosolver.solver.constraints.nary.cnf.LogOp.and;
  */
 public class FMLChocoModel {
 
-    private static Logger _log = Logger.getLogger("FMLChocoModel");
+    private static Logger _log = Logger.getLogger("fr.familiar.experimental.afm.FMLChocoModel");
 
 
     // TODO FIXME (2nd param should be part of fmv

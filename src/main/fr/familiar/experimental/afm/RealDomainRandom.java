@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import org.chocosolver.solver.exception.SolverException;
 import org.chocosolver.solver.search.strategy.selectors.values.RealValueSelector;
 import org.chocosolver.solver.variables.RealVar;

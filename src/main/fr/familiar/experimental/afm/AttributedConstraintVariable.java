@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import fr.familiar.variable.ConstraintVariable;
 
 /**

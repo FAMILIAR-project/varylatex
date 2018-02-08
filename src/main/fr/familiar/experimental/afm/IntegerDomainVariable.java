@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import fr.familiar.interpreter.NSFactory;
 import fr.familiar.parser.NameSpace;
 import fr.familiar.variable.RType;

@@ -29,9 +29,10 @@ import org.trimou.handlebars.LogHelper.Level;
 
 /**
  *
+ * basic tutorial of Mustache
  * @author Martin Kouba
  */
-public class SimpleTest {
+public class SimpleMustacheTest {
 
     public static void main(String[] args) {
 

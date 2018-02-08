@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import fr.familiar.interpreter.FMLShell;
 import fr.familiar.interpreter.NSFactory;
 import fr.familiar.interpreter.VariableNotExistingException;

@@ -1,3 +1,5 @@
+package fr.familiar.experimental.afm;
+
 import fr.familiar.variable.FeatureAttribute;
 import fr.familiar.variable.FeatureModelVariable;
 import fr.familiar.variable.Variable;
@@ -21,7 +23,7 @@ import java.util.logging.Logger;
 public class FMLChocoSolver {
 
 
-    private Logger _log = Logger.getLogger("FMLChocoSolver");
+    private Logger _log = Logger.getLogger("fr.familiar.experimental.afm.FMLChocoSolver");
 
     private Collection<AttributedConstraintVariable> _cstsAtts = new HashSet<>();
     private FeatureModelVariable _fmv ;
@@ -80,7 +82,7 @@ public class FMLChocoSolver {
         /*
         RealVar[] rVars = _model.retrieveRealVars();
         for (int i = 0; i < rVars.length; i++) {
-            strategies.add(RealVarSearch.randomSearch(new RealVar[] { rVars[i] }, r.nextLong()));
+            strategies.add(fr.familiar.experimental.afm.RealVarSearch.randomSearch(new RealVar[] { rVars[i] }, r.nextLong()));
         }*/
 
         IntVar[] biVars = _model.retrieveIntVars(true);
@@ -139,7 +141,7 @@ OLD version: twice iteration
 
             if (sol ==  null) // WEIRD TODO
                 break;
-            FMLChocoConfiguration cfg = mkConfiguration(sol, _model);
+            fr.familiar.experimental.afm.FMLChocoConfiguration cfg = mkConfiguration(sol, _model);
             // treat solution
             cfgs.add(cfg);
         }*/

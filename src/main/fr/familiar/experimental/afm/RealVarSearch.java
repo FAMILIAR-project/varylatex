@@ -1,7 +1,6 @@
+package fr.familiar.experimental.afm;
+
 import org.chocosolver.solver.search.strategy.Search;
-import org.chocosolver.solver.search.strategy.selectors.values.IntDomainRandom;
-import org.chocosolver.solver.search.strategy.selectors.values.IntDomainRandomBound;
-import org.chocosolver.solver.search.strategy.selectors.values.IntValueSelector;
 import org.chocosolver.solver.search.strategy.selectors.values.RealValueSelector;
 import org.chocosolver.solver.search.strategy.selectors.variables.Random;
 import org.chocosolver.solver.search.strategy.strategy.RealStrategy;

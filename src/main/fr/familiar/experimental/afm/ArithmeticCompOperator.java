@@ -1,3 +1,4 @@
+package fr.familiar.experimental.afm;
 /**
  * Created by macher1 on 13/03/2017.
  */

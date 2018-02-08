@@ -3,13 +3,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.familiar.FMLTest;
+import fr.familiar.experimental.afm.*;
 import fr.familiar.parser.DoubleVariable;
 import fr.familiar.variable.*;
 import fr.familiar.variable.Variable;
-import org.apache.spark.SparkConf;
-import org.apache.spark.SparkContext;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.ml.Pipeline;
 import org.apache.spark.ml.PipelineModel;
 import org.apache.spark.ml.PipelineStage;
@@ -17,14 +14,8 @@ import org.apache.spark.ml.classification.DecisionTreeClassificationModel;
 import org.apache.spark.ml.classification.DecisionTreeClassifier;
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator;
 import org.apache.spark.ml.feature.*;
-import org.apache.spark.mllib.tree.DecisionTree;
-import org.apache.spark.mllib.tree.configuration.Algo;
-import org.apache.spark.mllib.tree.configuration.Strategy;
-import org.apache.spark.mllib.tree.impurity.Gini;
-import org.apache.spark.mllib.tree.model.DecisionTreeModel;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
@@ -33,17 +24,9 @@ import org.apache.spark.sql.types.StructType;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.Solution;
 import org.chocosolver.solver.Solver;
-import org.chocosolver.solver.constraints.Constraint;
-import org.chocosolver.solver.constraints.real.RealConstraint;
 import org.chocosolver.solver.search.limits.SolutionCounter;
 import org.chocosolver.solver.search.strategy.Search;
-import org.chocosolver.solver.search.strategy.selectors.values.IntValueSelector;
-import org.chocosolver.solver.search.strategy.selectors.values.RealDomainMax;
-import org.chocosolver.solver.search.strategy.selectors.values.RealDomainMiddle;
-import org.chocosolver.solver.search.strategy.selectors.values.RealValueSelector;
-import org.chocosolver.solver.search.strategy.selectors.variables.*;
 import org.chocosolver.solver.variables.*;
-import org.chocosolver.solver.variables.impl.FixedRealVarImpl;
 import org.chocosolver.util.criteria.Criterion;
 import org.junit.Test;
 import org.trimou.Mustache;
@@ -242,7 +225,7 @@ public class VaryLatexTest extends FMLTest {
 
         solver.setSearch(
 
-                // RealVarSearch.randomSearch(new RealVar[] { fakeR }, new Random().nextLong()),
+                // fr.familiar.experimental.afm.RealVarSearch.randomSearch(new RealVar[] { fakeR }, new Random().nextLong()),
                Search.randomSearch(
                                new IntVar[] { ACK, stretch, LONG_AFFILIATION, vspace }, new Random().nextLong()),
                 Search.realVarSearch(new org.chocosolver.solver.search.strategy.selectors.variables.Random<>(r.nextLong()), new RealDomainRandom(l), fakeR)
@@ -303,13 +286,13 @@ public class VaryLatexTest extends FMLTest {
         // !EMAIL;
         //
         for (FeatureModelVariable fmv : fmvs) {
-            //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
-            //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new DoubleDomainVariable("", 3.0, 5.0, 10.0)); // TODO: type the attribute
+            //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "vspace_tux", new fr.familiar.experimental.afm.IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+            //fmv.setFeatureAttribute(fmv.getFeature("FIGURE_TUX"), "size_tux", new fr.familiar.experimental.afm.DoubleDomainVariable("", 3.0, 5.0, 10.0)); // TODO: type the attribute
 
 
             FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv);
             Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
-            // Collection<FMLChocoConfiguration> cfgs = new FMLChocoSolver(model, fmv).configs((int) fmv.counting());
+            // Collection<fr.familiar.experimental.afm.FMLChocoConfiguration> cfgs = new fr.familiar.experimental.afm.FMLChocoSolver(model, fmv).configs((int) fmv.counting());
             for (FMLChocoConfiguration cfg : cfgs) {
                 if (cfg == null) // TODO weird
                     break;
@@ -363,7 +346,7 @@ public class VaryLatexTest extends FMLTest {
 
         FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv, cstsAtts);
         Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
-        //Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configs(3);
+        //Collection<fr.familiar.experimental.afm.FMLChocoConfiguration> cfgs = fmlChocoSolver.configs(3);
         int c = 0;
         for (FMLChocoConfiguration cfg : cfgs) {
             _log.info("cfg (" + c++ + ") = " + cfg.getValues());
@@ -592,22 +575,22 @@ public class VaryLatexTest extends FMLTest {
 
 
 
-        //fmv.setFeatureAttribute(fmv.getFeature("H264"), "lookahead", new IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
-        //fmv.setFeatureAttribute(fmv.getFeature("H264"), "ref", new DoubleDomainVariable("", 3.0, 5.0, 100.0)); // TODO: type the attribute
+        //fmv.setFeatureAttribute(fmv.getFeature("H264"), "lookahead", new fr.familiar.experimental.afm.IntegerDomainVariable("", 5, 10)); // TODO: type the attribute
+        //fmv.setFeatureAttribute(fmv.getFeature("H264"), "ref", new fr.familiar.experimental.afm.DoubleDomainVariable("", 3.0, 5.0, 100.0)); // TODO: type the attribute
 
 
-        /*Collection<AttributedConstraintVariable> cstsAtts = new HashSet<>();
-        cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("vspace_tux", ArithmeticCompOperator.GE, 7)));
-        cstsAtts.add(new AttributedConstraintVariable(new AttributedExpression("size_tux", ArithmeticCompOperator.GE, 4.9)));
+        /*Collection<fr.familiar.experimental.afm.AttributedConstraintVariable> cstsAtts = new HashSet<>();
+        cstsAtts.add(new fr.familiar.experimental.afm.AttributedConstraintVariable(new fr.familiar.experimental.afm.AttributedExpression("vspace_tux", ArithmeticCompOperator.GE, 7)));
+        cstsAtts.add(new fr.familiar.experimental.afm.AttributedConstraintVariable(new fr.familiar.experimental.afm.AttributedExpression("size_tux", ArithmeticCompOperator.GE, 4.9)));
 
 
 
 
-        FMLChocoSolver fmlChocoSolver = new FMLChocoSolver(fmv, cstsAtts);
-        Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
-        //Collection<FMLChocoConfiguration> cfgs = fmlChocoSolver.configs(3);
+        fr.familiar.experimental.afm.FMLChocoSolver fmlChocoSolver = new fr.familiar.experimental.afm.FMLChocoSolver(fmv, cstsAtts);
+        Collection<fr.familiar.experimental.afm.FMLChocoConfiguration> cfgs = fmlChocoSolver.configsALL();
+        //Collection<fr.familiar.experimental.afm.FMLChocoConfiguration> cfgs = fmlChocoSolver.configs(3);
         int c = 0;
-        for (FMLChocoConfiguration cfg : cfgs) {
+        for (fr.familiar.experimental.afm.FMLChocoConfiguration cfg : cfgs) {
             _log.info("cfg (" + c++ + ") = " + cfg.getValues());
         }*/
 
@@ -693,7 +676,7 @@ public class VaryLatexTest extends FMLTest {
 
         String TARGET_FOLDER = "output";
 
-        Logger.getLogger("ConfigurationToMap").setLevel(Level.WARNING);
+        Logger.getLogger("fr.familiar.experimental.afm.ConfigurationToMap").setLevel(Level.WARNING);
        // Logger.getGlobal().setLevel(Level.OFF);
 
        // _log.setLevel(Level.OFF);
@@ -746,7 +729,7 @@ public class VaryLatexTest extends FMLTest {
 
            // if (idConf > 3)
              //   break ;
-           // Map<String, Object> orderedConf = new ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
+           // Map<String, Object> orderedConf = new fr.familiar.experimental.afm.ConfigurationToMap(fmv).populateAttributeValuesAndConfs2map(cf);
 
             int NB_REPEAT = 10;
             Collection<Map<String, Object>> orderedConfs = new HashSet<Map<String, Object>>();
