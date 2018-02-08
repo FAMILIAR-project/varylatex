@@ -114,8 +114,6 @@ public class VaryLatexTest extends FMLTest {
     }
 
 
-
-
     /*
      * A demonstration of VaryLaTeX with a real-world example (FSE paper)
      */
