@@ -2,7 +2,8 @@
 
 How to submit a research paper, a technical report, a grant proposal , or a curriculum vitae that respect imposed constraints such as formatting instructions and page limits? It is a challenging task, especially when coping with time pressure. 
 
-![ScreenShot] (http://phdcomics.com/comics.php?f=1971)
+![PhD comic] (http://phdcomics.com/comics/archive/phd090617s.gif)
+http://phdcomics.com/comics.php?f=1971
 
 VaryLaTeX is a solution based on variability, constraint programming , and machine learning techniques for documents written in LaTeX to meet constraints and deliver on time. 
 
