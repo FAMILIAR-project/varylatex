@@ -15,7 +15,7 @@ We are working on an integrated, lightweight, and usable solution.
 More details can be found in the following paper, published/presented at 12th International Workshop on Variability Modelling of Software-Intensive Systems https://vamos2018.wordpress.com/:
 "VaryLaTeX: Learning Paper Variants That Meet Constraints" by Mathieu Acher, Paul Temple, Jean-Marc Jézéquel, José A. Galindo, Jabier Martinez, Tewfik Ziadi: https://hal.inria.fr/hal-01659161/
 
-Screencast (demonstration performed in 2015, no sound unfortunately): https://youtu.be/q7C-4_uXgP0 
+Screencast (demonstration performed in 2015, no sound unfortunately): https://www.youtube.com/watch?v=n9pdUddr5m4 
 
 ## Requirements
 
