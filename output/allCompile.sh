@@ -23,9 +23,13 @@ do
     bibtex $latexFileName && printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
     $PDFLATEX $latexFileName | $FILTER && printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
     $PDFLATEX $latexFileName | $FILTER
-    open -a Preview $latexFileName".pdf"
+    # open -a Preview $latexFileName".pdf" # specific to MacOS
+    xdg-open $latexFileName".pdf" # for the demo ;)
     sleep 3
-    nbPages=`mdls -name kMDItemNumberOfPages -raw $latexFileName.pdf`
+    # https://stackoverflow.com/questions/1672580/get-number-of-pages-in-a-pdf-using-a-cmd-batch-file
+    # TODO: pdfinfo is actually very powerful and can be useful to dev an oracle
+    nbPages=`pdfinfo $latexFileName.pdf | grep Pages | sed 's/[^0-9]*//'`
+    # nbPages=`mdls -name kMDItemNumberOfPages -raw $latexFileName.pdf` # works only on MacOS!
     sizePDF=`du -k $latexFileName.pdf | cut -f1`
     idConfiguration="${latexFileName#*mySubmission_}"
     configurationValues=`cat $latexFileName".csv"`

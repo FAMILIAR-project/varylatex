@@ -206,6 +206,9 @@ public class VaryLatexTest extends FMLTest {
         //Check result
         if (pr.waitFor() == 0)
             _log.info("Success!");
+        else {
+            System.err.println("something wrong");
+        }
         pr.destroy();
 
     }

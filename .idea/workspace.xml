@@ -2,76 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77558203-fa88-4f64-a848-4fbee29f88e2" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_16.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jdt_org_eclipse_jdt_core_3_21_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jdt_org_eclipse_jdt_debug_3_15_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jdt_org_eclipse_jdt_launching_3_17_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_commands_3_9_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_contenttype_3_7_600.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_expressions_3_6_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_filesystem_1_7_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_jobs_3_10_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_resources_3_13_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_runtime_3_17_100.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_core_variables_3_4_800.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_debug_core_3_15_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_equinox_app_1_4_400.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_equinox_common_3_11_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_equinox_preferences_3_7_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_equinox_registry_3_8_700.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_osgi_3_15_200.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_platform_org_eclipse_text_3_10_100.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__FAMILIAR_LOCAL_DEP_de_ovgu_featureide_core_FAMILIAR_LOCAL_DEP.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__FAMILIAR_LOCAL_DEP_de_ovgu_featureide_fm_core_FAMILIAR_LOCAL_DEP.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__FAMILIAR_LOCAL_DEP_de_ovgu_featureide_fm_ui_FAMILIAR_LOCAL_DEP.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__FAMILIAR_LOCAL_DEP_de_ovgu_featureide_ui_FAMILIAR_LOCAL_DEP.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_14_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_19_0_rc3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_martiansoftware_jsap_2_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_inria_familiar_FAMILIAR_Standalone_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_inria_familiar_S2T2toFML_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_inria_familiar_TVLPackagedAsMock_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_inria_familiar_org_xtext_example_fmlero_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_inria_familiar_org_xtext_example_fmlero_ui_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__fr_inria_familiar_parent_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_codegen_2_11_0_v20150806_0404.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_codegen_2_20_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_codegen_ecore_2_12_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_codegen_ecore_2_22_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_common_2_12_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_common_2_19_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_ecore_2_12_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_ecore_2_22_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_ecore_xmi_2_12_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_ecore_xmi_2_16_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_mwe2_language_2_8_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_emf_org_eclipse_emf_mwe2_launch_2_8_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xpand_org_eclipse_xpand_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xpand_org_eclipse_xtend_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xpand_org_eclipse_xtend_typesystem_emf_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtend_org_eclipse_xtend_lib_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtend_org_eclipse_xtend_lib_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtend_org_eclipse_xtend_lib_macro_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtend_org_eclipse_xtend_lib_macro_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_common_types_2_9_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_ecore_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_ecore_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_generator_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_generator_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_util_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_util_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_xbase_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_xbase_lib_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_xbase_lib_2_9_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_xtext_2_9_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_xtext_generator_2_10_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_xtext_org_eclipse_xtext_xtext_generator_2_9_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_commons_5_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_tree_5_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_sat4j_org_ow2_sat4j_core_2_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_sat4j_org_ow2_sat4j_core_test_jar_tests_2_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_sat4j_org_ow2_sat4j_pb_2_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xtext_example_fml_org_xtext_example_fml_ui_1_0_0_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output-FSE/allCompile.sh" beforeDir="false" afterPath="$PROJECT_DIR$/output-FSE/allCompile.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output-FSE/stats.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output-FSE/stats.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/allCompile.sh" beforeDir="false" afterPath="$PROJECT_DIR$/output/allCompile.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/stats.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output/x264.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/VaryLatexTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/VaryLatexTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/varylatex.iml" beforeDir="false" afterPath="$PROJECT_DIR$/varylatex.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +82,7 @@
       <recent name="$PROJECT_DIR$/input" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.VaryLatexTest">
+  <component name="RunManager" selected="JUnit.VaryLatexTest.testFSE">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -374,8 +311,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.VaryLatexTest" />
         <item itemvalue="JUnit.VaryLatexTest.testFSE" />
+        <item itemvalue="JUnit.VaryLatexTest" />
         <item itemvalue="JUnit.VaryLatexTest.testGenVariantsWithChoco" />
         <item itemvalue="JUnit.VaryLatexTest.testGenerateVariants" />
         <item itemvalue="JUnit.VaryLatexTest.testOneConfiguration" />
@@ -554,22 +491,26 @@
       <screen x="48" y="48" width="1872" height="1032" />
     </state>
     <state x="528" y="125" width="891" height="823" key="#VaryLatexTest_(1)/48.48.1872.1032@48.48.1872.1032" timestamp="1592242169928" />
-    <state width="1826" height="215" key="GridCell.Tab.0.bottom" timestamp="1592242151951">
+    <state width="1826" height="215" key="GridCell.Tab.0.bottom" timestamp="1592252688716">
       <screen x="48" y="48" width="1872" height="1032" />
     </state>
-    <state width="1826" height="215" key="GridCell.Tab.0.bottom/48.48.1872.1032@48.48.1872.1032" timestamp="1592242151951" />
-    <state width="1826" height="215" key="GridCell.Tab.0.center" timestamp="1592242151951">
+    <state width="1826" height="215" key="GridCell.Tab.0.bottom/48.48.1872.1032@48.48.1872.1032" timestamp="1592252688716" />
+    <state width="1826" height="215" key="GridCell.Tab.0.center" timestamp="1592252688716">
       <screen x="48" y="48" width="1872" height="1032" />
     </state>
-    <state width="1826" height="215" key="GridCell.Tab.0.center/48.48.1872.1032@48.48.1872.1032" timestamp="1592242151951" />
-    <state width="1826" height="215" key="GridCell.Tab.0.left" timestamp="1592242151951">
+    <state width="1826" height="215" key="GridCell.Tab.0.center/48.48.1872.1032@48.48.1872.1032" timestamp="1592252688716" />
+    <state width="1826" height="215" key="GridCell.Tab.0.left" timestamp="1592252688715">
       <screen x="48" y="48" width="1872" height="1032" />
     </state>
-    <state width="1826" height="215" key="GridCell.Tab.0.left/48.48.1872.1032@48.48.1872.1032" timestamp="1592242151951" />
-    <state width="1826" height="215" key="GridCell.Tab.0.right" timestamp="1592242151951">
+    <state width="1826" height="215" key="GridCell.Tab.0.left/48.48.1872.1032@48.48.1872.1032" timestamp="1592252688715" />
+    <state width="1826" height="215" key="GridCell.Tab.0.right" timestamp="1592252688716">
       <screen x="48" y="48" width="1872" height="1032" />
     </state>
-    <state width="1826" height="215" key="GridCell.Tab.0.right/48.48.1872.1032@48.48.1872.1032" timestamp="1592242151951" />
+    <state width="1826" height="215" key="GridCell.Tab.0.right/48.48.1872.1032@48.48.1872.1032" timestamp="1592252688716" />
+    <state x="636" y="133" width="676" height="807" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1592251891880">
+      <screen x="48" y="48" width="1872" height="1032" />
+    </state>
+    <state x="636" y="133" width="676" height="807" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/48.48.1872.1032@48.48.1872.1032" timestamp="1592251891880" />
   </component>
   <component name="XtextAutoBuilderState">
     <installedLanguages>xtend;xtext</installedLanguages>
