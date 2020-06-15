@@ -29,13 +29,15 @@
             <groupId>fr.inria.familiar</groupId>
             <artifactId>FAMILIAR</artifactId>
             <version>1.0.10</version>
+            <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>fr.inria.familiar</groupId>
             <artifactId>FAMILIAR-Standalone</artifactId>
             <version>1.0.10</version>
             <scope>test</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>fr.inria.familiar</groupId>
             <artifactId>FAMILIAR-Test</artifactId>
@@ -44,10 +46,32 @@
         </dependency>
         <dependency>
             <groupId>fr.inria.familiar</groupId>
+            <artifactId>FML3rdPartiesMisc</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.inria.familiar</groupId>
+            <artifactId>FML3rdPartiesForSynthesis</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.inria.familiar</groupId>
+            <artifactId>SPLAR-plugin</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.ui</groupId>
+            <artifactId>console</artifactId>
+            <version>3.2.0-v20070530</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>fr.inria.familiar</groupId>
             <artifactId>parent</artifactId>
             <version>1.0.10</version>
             <scope>test</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>org.xtext.example.fml</groupId>
             <artifactId>org.xtext.example.fml</artifactId>
@@ -72,6 +96,18 @@
             <groupId>org.choco-solver</groupId>
             <artifactId>choco-solver</artifactId>
             <version>4.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.inria.familiar</groupId>
+            <artifactId>FAMILIAR</artifactId>
+            <version>1.0.10</version>
+            <scope>compile</scope>
         </dependency>
 
 
