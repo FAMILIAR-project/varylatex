@@ -1,5 +1,8 @@
 # VaryLaTeX
 
+**VaryLaTeX has been fully rewritten in Python and is now available here, with many new features (just drop your archive into your Web browser):**
+https://github.com/diverse-project/varylatex
+
 How to submit a research paper, a technical report, a grant proposal , or a curriculum vitae that respect imposed constraints such as formatting instructions and page limits? It is a challenging task, especially when coping with time pressure, isn't it? VaryLaTeX is a solution based on variability, constraint programming , and machine learning techniques for documents written in LaTeX to meet constraints and deliver on time. 
 
 ![Alt Text](http://phdcomics.com/comics/archive/phd090617s.gif)
